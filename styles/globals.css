@@ -1,0 +1,4 @@
+* { font-family: 'Alegreya Sans', sans-serif !important; }
+.cert-italic { font-family: 'Alegreya Sans', sans-serif !important; font-weight: 900 !important; font-style: italic !important; }
+html, body { margin: 0; background: #fff; color: #0a1931; }
+a { color: inherit; text-decoration: none; }

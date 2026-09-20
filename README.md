@@ -19,4 +19,3 @@ GitHub stores public certificate records in public/certs.json. Writes commit thr
 The two supplied IDs 2026-9E43903F and 2026-F5E8A071 should return valid file registry records; unknown IDs return 404. Unauthenticated issuance must return 401. Missing payment configuration must return 503, never simulated success.
 
 Configure Vercel's Git integration for automatic redeployment on changes to main. Live payment verification and GitHub writes require credentials and separate end-to-end validation.
-
