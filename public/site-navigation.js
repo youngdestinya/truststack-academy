@@ -26,6 +26,19 @@
     'secure app dev': { icon: '⌘', color: '#334155', tint: 'rgba(51,65,85,.09)' }
     ,'securesme & cap-adit (business track)': { icon: '✓', color: '#d97706', tint: 'rgba(217,119,6,.10)' }
   };
+  const trackPages = {
+    'soc analyst': 'soc-analyst', 'soc analyst track': 'soc-analyst', 'soc analyst & incident response': 'soc-analyst',
+    'digital forensics': 'digital-forensics', 'digital forensics & ir readiness': 'digital-forensics', 'digital forensics & incident response': 'digital-forensics',
+    'threat intelligence': 'threat-intelligence',
+    'penetration testing': 'penetration-testing', 'ethical hacking': 'penetration-testing', 'ethical hacking & penetration testing': 'penetration-testing',
+    'cloud security': 'cloud-security', 'cloud security (aws/azure)': 'cloud-security',
+    'governance & grc': 'governance-grc', 'grc & compliance': 'governance-grc', 'grc': 'governance-grc', 'governance & compliance': 'governance-grc',
+    'malware analysis': 'malware-analysis',
+    'security engineering': 'security-engineering', 'secure app dev': 'security-engineering',
+    'cybersecurity fundamentals': 'cybersecurity-fundamentals',
+    'network security': 'network-security', 'network security & defense': 'network-security'
+  };
+  const trackTarget = (name) => trackPages[name] ? `/courses-tracks.html#${trackPages[name]}` : null;
 
   function addSharedStyles() {
     if (document.getElementById('truststack-shared-identity')) return;
@@ -135,7 +148,7 @@
     if (path.includes('student-lms') && label === 'pricing') return '/courses';
     if (path.includes('courses-tracks') && label === 'view labs') return '/lms';
     if (path.includes('lms-full') && label === 'view all') return '/courses';
-    if ((path.includes('home') || path.includes('lms-full')) && /^(soc analyst track|digital forensics|threat intelligence|penetration testing|cloud security|governance & grc|malware analysis|security engineering|cybersecurity fundamentals|network security|ethical hacking|grc|soc analyst|digital forensics & ir readiness|secure app dev)$/.test(label)) return '/courses';
+    if ((path.includes('home') || path.includes('lms-full')) && trackTarget(label)) return trackTarget(label);
     if (raw.includes('verify certificate') && (element.tagName === 'A' || element.tagName === 'BUTTON')) return '/verify';
     return null;
   }
@@ -151,6 +164,40 @@
       if (target && element.dataset.siteDestination !== target) element.dataset.siteDestination = target;
       if (target && element.tagName === 'SPAN') element.style.cursor = 'pointer';
     });
+    document.querySelectorAll('h1,h2,h3,h4,h5,h6,strong').forEach((heading) => {
+      if (heading.children.length) return;
+      const label = clean(heading.textContent);
+      const target = trackTarget(label);
+      if (!target) return;
+      let card = heading.closest('article,.ts-track-surface,[class*="course-card"],[class*="track-card"],[class~="card"]');
+      if (!card) {
+        let node = heading.parentElement;
+        for (let depth = 0; node && depth < 5; depth += 1, node = node.parentElement) {
+          if (node.children.length > 1 && clean(node.textContent).length < 700) { card = node; break; }
+        }
+      }
+      if (!card) return;
+      const slug = trackPages[label];
+      if (path.includes('courses-tracks')) {
+        card.id = slug;
+        card.style.scrollMarginTop = '92px';
+      }
+      if (path.includes('home') || path.includes('lms-full')) {
+        card.dataset.siteDestination = target;
+        card.setAttribute('role', 'link');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `View ${heading.textContent.trim()} course details`);
+        card.style.cursor = 'pointer';
+        card.querySelectorAll('a,button').forEach((control) => { control.dataset.siteDestination = target; });
+      }
+    });
+    if (path.includes('courses-tracks') && location.hash && !document.documentElement.dataset.trackHashHandled) {
+      const destinationCard = document.getElementById(location.hash.slice(1));
+      if (destinationCard) {
+        document.documentElement.dataset.trackHashHandled = 'true';
+        requestAnimationFrame(() => destinationCard.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      }
+    }
     if (path.includes('home')) {
       document.querySelectorAll('div').forEach((node) => {
         if (clean(node.textContent).startsWith('contact & social') && node.querySelector('a')) node.id = node.id || 'contact';
@@ -185,4 +232,11 @@
     event.stopImmediatePropagation();
     location.href = target;
   }, true);
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const element = event.target && event.target.closest && event.target.closest('[data-site-destination]');
+    if (!element || element.tagName === 'A' || element.tagName === 'BUTTON') return;
+    event.preventDefault();
+    location.href = element.dataset.siteDestination;
+  });
 })();
