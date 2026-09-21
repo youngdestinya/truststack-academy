@@ -4,6 +4,13 @@
 const form=document.getElementById('checkout-form'),button=document.getElementById('pay-button'),statusBox=document.getElementById('status');function show(message,type=''){statusBox.textContent=message;statusBox.className=type;statusBox.style.display='block'}async function verify(reference){show('Confirming your payment…');try{const response=await fetch('/api/paystack/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reference})});const result=await response.json();if(!response.ok||!result.valid)throw new Error(result.error||'Payment could not be confirmed.');show('Payment confirmed. Your enrollment is complete.','success');if(result.verify_url)setTimeout(()=>location.assign(result.verify_url),1200)}catch(error){show(error.message||'We could not confirm the payment. Please contact support.','error')}}const params=new URLSearchParams(location.search),selectedTrack=params.get('track'),reference=params.get('reference')||params.get('trxref');if(selectedTrack&&form.track.querySelector(`option[value="${CSS.escape(selectedTrack)}"]`))form.track.value=selectedTrack;if(reference)verify(reference);form.addEventListener('submit',async event=>{event.preventDefault();if(!form.reportValidity())return;button.disabled=true;button.textContent='Opening secure checkout…';show('Please wait while we connect you to Paystack.');try{const payload={name:form.name.value.trim(),email:form.email.value.trim(),track:form.track.options[form.track.selectedIndex].text};const response=await fetch('/api/paystack/initialize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const result=await response.json();if(!response.ok||!result.url)throw new Error(result.error||'Checkout is temporarily unavailable.');location.assign(result.url)}catch(error){show(error.message||'Checkout is temporarily unavailable. Please try again.','error');button.disabled=false;button.textContent='Pay ₦25,000 securely'}});
 </script><script>
 const trackSelect=document.getElementById('track');
+const brandMark=document.querySelector('.brand .mark');
+const officialLogo=document.createElement('img');
+officialLogo.className='mark';
+officialLogo.src='/truststack-home-logo.png';
+officialLogo.alt='TrustStack Academy official logo';
+officialLogo.style.cssText='object-fit:contain;background:transparent;border-radius:0';
+brandMark.replaceWith(officialLogo);
 function showSelectedCourse(){
   const name=trackSelect.selectedOptions[0]?.textContent?.trim()||'your cybersecurity track';
   const isBundle=trackSelect.value==='bundle';
