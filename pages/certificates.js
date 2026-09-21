@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AdminGate from '../components/AdminGate';
+import { skillsForTrack } from '../lib/certificate-skills';
 function CertificateContent() {
   const [form, setForm] = useState({ name: 'Chinedu Okoro', track: 'Ethical Hacking & Penetration Testing', date: '2026-09-15' });
   const [cert, setCert] = useState(null);
@@ -30,6 +31,7 @@ function CertificateContent() {
             <p style={{ fontSize: 18 }}><span className="cert-italic">Certificate</span> of Completion</p>
             <p style={{ fontSize: 32, fontWeight: 900, marginTop: 16 }}>{cert.student}</p>
             <p style={{ marginTop: 8 }}>{cert.track}</p>
+            {skillsForTrack(cert.track).length > 0 && <div style={{ marginTop: 18, padding: 14, background: '#f1fafc', borderRadius: 10, textAlign: 'left' }}><strong>CORE SKILLS OBTAINED</strong><ul>{skillsForTrack(cert.track).map(skill => <li key={skill}>{skill}</li>)}</ul></div>}
             <p style={{ marginTop: 16, fontSize: 12 }}>ID: {cert.id} • {cert.date_issued} • HASH: {cert.hash_prefix}</p>
             <div style={{ marginTop: 24, paddingTop: 14, borderTop: '1px solid #ccd5df', textAlign: 'left' }}>
               <strong>Destiny Young</strong><br />
