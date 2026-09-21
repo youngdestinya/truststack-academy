@@ -14,6 +14,7 @@
     if (label === 'about' || label === 'our story') return '/home.html#about';
     if (label === 'contact') return '/home.html#contact';
     if (label === 'why truststack' || label === 'why truststack?') return '/home.html#whytruststack';
+    if (label === 'view all articles' || label === 'explore the knowledge base' || label === 'read all articles' || label === 'knowledge base') return '/knowledge-base';
     if (path.includes('student-lms') && label === 'labs') return '/lms';
     if (path.includes('student-lms') && label === 'pricing') return '/courses';
     if (path.includes('courses-tracks') && label === 'view labs') return '/lms';
@@ -29,6 +30,14 @@
       if (target && element.tagName === 'A' && element.getAttribute('href') !== target) element.setAttribute('href', target);
       if (target && element.dataset.siteDestination !== target) element.dataset.siteDestination = target;
     });
+    if (path.includes('home')) {
+      document.querySelectorAll('h3,h4').forEach((heading) => {
+        if (/BVN NIN Linkage Risks|Wireshark for SOC Analysts|AWS Misconfigurations/.test(heading.textContent || '')) {
+          heading.dataset.siteDestination = '/knowledge-base';
+          heading.style.cursor = 'pointer';
+        }
+      });
+    }
     if (document.title === 'React Artifact' && path.includes('courses-tracks')) document.title = 'Courses & Tracks | TrustStack Academy';
   }
 
@@ -36,7 +45,7 @@
   else wire();
   new MutationObserver(wire).observe(document.documentElement, { childList: true, subtree: true });
   document.addEventListener('click', (event) => {
-    const element = event.target && event.target.closest && event.target.closest('a,button');
+    const element = event.target && event.target.closest && event.target.closest('a,button,[data-site-destination]');
     if (!element) return;
     const target = element.dataset.siteDestination || destination(element);
     if (!target) return;
