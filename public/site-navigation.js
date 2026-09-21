@@ -1,6 +1,91 @@
 (function () {
   const path = location.pathname.toLowerCase();
   const clean = (value) => (value || '').replace(/\s+/g, ' ').trim().replace(/[→←]/g, '').trim().toLowerCase();
+  const tracks = {
+    'soc analyst': { icon: '🛡', color: '#00b8d9', tint: 'rgba(0,184,217,.10)' },
+    'soc analyst track': { icon: '🛡', color: '#00b8d9', tint: 'rgba(0,184,217,.10)' },
+    'soc analyst & incident response': { icon: '🛡', color: '#00b8d9', tint: 'rgba(0,184,217,.10)' },
+    'digital forensics': { icon: '⌕', color: '#7c3aed', tint: 'rgba(124,58,237,.09)' },
+    'digital forensics & ir readiness': { icon: '⌕', color: '#7c3aed', tint: 'rgba(124,58,237,.09)' },
+    'digital forensics & incident response': { icon: '⌕', color: '#7c3aed', tint: 'rgba(124,58,237,.09)' },
+    'threat intelligence': { icon: '◉', color: '#2563eb', tint: 'rgba(37,99,235,.09)' },
+    'penetration testing': { icon: '◎', color: '#ef4444', tint: 'rgba(239,68,68,.09)' },
+    'ethical hacking': { icon: '◎', color: '#ef4444', tint: 'rgba(239,68,68,.09)' },
+    'ethical hacking & penetration testing': { icon: '◎', color: '#ef4444', tint: 'rgba(239,68,68,.09)' },
+    'cloud security': { icon: '☁', color: '#4f46e5', tint: 'rgba(79,70,229,.09)' },
+    'cloud security (aws/azure)': { icon: '☁', color: '#4f46e5', tint: 'rgba(79,70,229,.09)' },
+    'network security': { icon: '⌁', color: '#0891b2', tint: 'rgba(8,145,178,.09)' },
+    'network security & defense': { icon: '⌁', color: '#0891b2', tint: 'rgba(8,145,178,.09)' },
+    'web application security': { icon: '</>', color: '#2563eb', tint: 'rgba(37,99,235,.09)' },
+    'linux privilege escalation': { icon: '#', color: '#475569', tint: 'rgba(71,85,105,.09)' },
+    'governance & grc': { icon: '✓', color: '#d97706', tint: 'rgba(217,119,6,.10)' },
+    'grc & compliance': { icon: '✓', color: '#d97706', tint: 'rgba(217,119,6,.10)' },
+    'grc': { icon: '✓', color: '#d97706', tint: 'rgba(217,119,6,.10)' },
+    'malware analysis': { icon: '⌁', color: '#16a34a', tint: 'rgba(22,163,74,.09)' },
+    'security engineering': { icon: '⌘', color: '#334155', tint: 'rgba(51,65,85,.09)' },
+    'secure app dev': { icon: '⌘', color: '#334155', tint: 'rgba(51,65,85,.09)' }
+    ,'securesme & cap-adit (business track)': { icon: '✓', color: '#d97706', tint: 'rgba(217,119,6,.10)' }
+  };
+
+  function addSharedStyles() {
+    if (document.getElementById('truststack-shared-identity')) return;
+    const style = document.createElement('style');
+    style.id = 'truststack-shared-identity';
+    style.textContent = `
+      .ts-track-identity{--ts-track:#00b8d9;--ts-tint:rgba(0,184,217,.10);display:flex!important;align-items:center;gap:.58em}
+      .ts-track-identity:not(.ts-track-has-badge)::before{content:attr(data-ts-icon);display:inline-grid;place-items:center;flex:0 0 auto;width:2.15em;height:2.42em;color:#fff;font-size:.72em;font-family:Arial,sans-serif;font-weight:900;background:linear-gradient(145deg,var(--ts-track),#07182e);clip-path:polygon(50% 0,92% 16%,92% 66%,50% 100%,8% 66%,8% 16%);filter:drop-shadow(0 5px 7px color-mix(in srgb,var(--ts-track) 28%,transparent))}
+      .ts-track-surface{background:linear-gradient(145deg,var(--ts-tint),rgba(255,255,255,.86) 74%)!important;backdrop-filter:blur(10px)}
+      .ts-track-badge-image{width:54px!important;height:62px!important;object-fit:contain!important;padding:9px!important;background:linear-gradient(145deg,var(--ts-track),#07182e)!important;clip-path:polygon(50% 0,92% 16%,92% 66%,50% 100%,8% 66%,8% 16%)!important;filter:drop-shadow(0 6px 8px color-mix(in srgb,var(--ts-track) 28%,transparent))!important}
+      img[data-site-destination="/home.html"]{cursor:pointer}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function brandHomeLinks() {
+    document.querySelectorAll('img').forEach((image) => {
+      const signature = `${image.getAttribute('src') || ''} ${image.getAttribute('alt') || ''}`.toLowerCase();
+      if (!/truststack.*logo|logo.*truststack|truststack.*shield|shield gear logo/.test(signature)) return;
+      image.dataset.siteDestination = '/home.html';
+      image.title = 'TrustStack Academy home';
+    });
+    document.querySelectorAll('a').forEach((link) => {
+      const label = clean(link.textContent);
+      if ((label === 'truststack academy' || label === '⚙ truststack academy') && link.textContent.length < 60) link.href = '/home.html';
+    });
+  }
+
+  function trackBadges() {
+    document.querySelectorAll('h1,h2,h3,h4,h5,h6,a,span,strong,dt,dd').forEach((element) => {
+      if (element.children.length) return;
+      const track = tracks[clean(element.textContent)];
+      if (!track) return;
+      element.classList.add('ts-track-identity');
+      element.dataset.tsIcon = track.icon;
+      element.style.setProperty('--ts-track', track.color);
+      element.style.setProperty('--ts-tint', track.tint);
+      let card = element.closest('article,[class*="course-card"],[class*="track-card"],[class~="card"]');
+      if (!card) {
+        let node = element.parentElement;
+        for (let depth = 0; node && depth < 4; depth += 1, node = node.parentElement) {
+          const text = clean(node.textContent);
+          const matches = Object.keys(tracks).filter((name) => text.includes(name));
+          if (node.children.length > 1 && text.length < 900 && new Set(matches.map((name) => tracks[name].color)).size === 1) { card = node; break; }
+        }
+      }
+      if (card) {
+        card.classList.add('ts-track-surface');
+        card.style.setProperty('--ts-track', track.color);
+        card.style.setProperty('--ts-tint', track.tint);
+        const existingBadge = card.querySelector('[style*="clip-path"],[style*="clipPath"],.badge');
+        const iconImage = card.querySelector('img:not([data-site-destination="/home.html"])');
+        if (iconImage) {
+          iconImage.classList.add('ts-track-badge-image');
+          iconImage.style.setProperty('--ts-track', track.color);
+        }
+        if (existingBadge || iconImage) element.classList.add('ts-track-has-badge');
+      }
+    });
+  }
 
   function destination(element) {
     const label = clean(element.textContent);
@@ -29,6 +114,9 @@
   }
 
   function wire() {
+    addSharedStyles();
+    brandHomeLinks();
+    trackBadges();
     document.querySelectorAll('a,button,span').forEach((element) => {
       const target = destination(element);
       if (target && element.tagName === 'A' && element.getAttribute('href') !== target) element.setAttribute('href', target);

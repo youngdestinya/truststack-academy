@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Script from 'next/script';
 import '../styles/globals.css';
 
 export default function App({ Component, pageProps }) {
@@ -12,6 +13,7 @@ export default function App({ Component, pageProps }) {
         <style>{`* { font-family: 'Alegreya Sans', sans-serif !important; } .cert-italic { font-family: 'Alegreya Sans', sans-serif !important; font-weight: 900 !important; font-style: italic !important; }`}</style>
       </Head>
       <Component {...pageProps} />
+      <Script src="/site-navigation.js" strategy="afterInteractive" />
     </>
   );
 }
