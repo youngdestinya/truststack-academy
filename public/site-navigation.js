@@ -38,7 +38,7 @@
     'cybersecurity fundamentals': 'cybersecurity-fundamentals',
     'network security': 'network-security', 'network security & defense': 'network-security'
   };
-  const trackTarget = (name) => trackPages[name] ? `/courses-tracks.html#${trackPages[name]}` : null;
+  const trackTarget = (name) => trackPages[name] ? `/courses/${trackPages[name]}` : null;
 
   function addSharedStyles() {
     if (document.getElementById('truststack-shared-identity')) return;
