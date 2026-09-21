@@ -96,17 +96,6 @@
       seal.setAttribute('aria-label', 'TrustStack Academy official certificate seal');
       Object.assign(seal.style, { background: 'transparent url(/Cert_Seal.png) center/contain no-repeat', borderRadius: '0' });
     });
-    if (path.includes('certificate-preview')) {
-      const verified = document.querySelector('header > strong');
-      if (verified && !verified.parentElement.querySelector('.ts-official-seal')) {
-        const seal = document.createElement('img');
-        seal.className = 'ts-official-seal';
-        seal.src = '/Cert_Seal.png';
-        seal.alt = 'TrustStack Academy official certificate seal';
-        Object.assign(seal.style, { width: '46px', height: '46px', objectFit: 'contain', marginRight: '8px', verticalAlign: 'middle' });
-        verified.before(seal);
-      }
-    }
   }
 
   function trackBadges() {
