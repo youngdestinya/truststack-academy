@@ -1,5 +1,6 @@
 import { useState } from 'react';
-export default function Certs() {
+import AdminGate from '../components/AdminGate';
+function CertificateContent() {
   const [form, setForm] = useState({ name: 'Chinedu Okoro', track: 'Ethical Hacking & Penetration Testing', date: '2026-09-15' });
   const [cert, setCert] = useState(null);
   const generate = () => {
@@ -37,3 +38,4 @@ export default function Certs() {
     </div>
   );
 }
+export default function Certs(){return <AdminGate title="Certificate preview generator"><CertificateContent/></AdminGate>}

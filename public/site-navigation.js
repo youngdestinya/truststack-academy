@@ -14,6 +14,10 @@
     if (label === 'about' || label === 'our story') return '/home.html#about';
     if (label === 'contact') return '/home.html#contact';
     if (label === 'why truststack' || label === 'why truststack?') return '/home.html#whytruststack';
+    if (label === 'our mission' || label === 'our core values' || label === 'our vision') return '/home.html#about';
+    if (label === 'cap-adit' || label === 'securesme') return '/courses';
+    if (label === 'privacy') return '/privacy';
+    if (label === 'terms') return '/terms';
     if (label === 'view all articles' || label === 'explore the knowledge base' || label === 'read all articles' || label === 'knowledge base') return '/knowledge-base';
     if (path.includes('student-lms') && label === 'labs') return '/lms';
     if (path.includes('student-lms') && label === 'pricing') return '/courses';
@@ -25,17 +29,26 @@
   }
 
   function wire() {
-    document.querySelectorAll('a,button').forEach((element) => {
+    document.querySelectorAll('a,button,span').forEach((element) => {
       const target = destination(element);
       if (target && element.tagName === 'A' && element.getAttribute('href') !== target) element.setAttribute('href', target);
       if (target && element.dataset.siteDestination !== target) element.dataset.siteDestination = target;
+      if (target && element.tagName === 'SPAN') element.style.cursor = 'pointer';
     });
     if (path.includes('home')) {
+      document.querySelectorAll('div').forEach((node) => {
+        if (clean(node.textContent).startsWith('contact & social') && node.querySelector('a')) node.id = node.id || 'contact';
+      });
       document.querySelectorAll('h3,h4').forEach((heading) => {
         if (/BVN NIN Linkage Risks|Wireshark for SOC Analysts|AWS Misconfigurations/.test(heading.textContent || '')) {
           heading.dataset.siteDestination = '/knowledge-base';
           heading.style.cursor = 'pointer';
         }
+      });
+    }
+    if (path.includes('student-lms')) {
+      document.querySelectorAll('video').forEach((video) => {
+        if (!video.getAttribute('src') && !video.querySelector('source')) { video.src='/truststack-academy-intro.mp4'; video.controls=true; video.preload='metadata'; }
       });
     }
     if (document.title === 'React Artifact' && path.includes('courses-tracks')) document.title = 'Courses & Tracks | TrustStack Academy';

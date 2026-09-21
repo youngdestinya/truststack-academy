@@ -1,13 +1,11 @@
-export default function Verify() { return null; }
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-export function getServerSideProps({ query }) {
-  const search = new URLSearchParams();
-  if (typeof query.id === 'string') search.set('id', query.id);
-  const suffix = search.toString();
-  return {
-    redirect: {
-      destination: `/verify-certificate.html${suffix ? `?${suffix}` : ''}`,
-      permanent: false,
-    },
-  };
+export default function Verify() {
+  const router = useRouter();
+  const [id,setId]=useState(''); const [result,setResult]=useState(undefined); const [loading,setLoading]=useState(false);
+  useEffect(()=>{ if(router.isReady && router.query.id){ const value=String(router.query.id).toUpperCase(); setId(value); lookup(value); } },[router.isReady,router.query.id]);
+  async function lookup(value=id){ const clean=value.trim().toUpperCase(); if(!clean)return; setLoading(true); const r=await fetch(`/api/verify/${encodeURIComponent(clean)}`); const data=await r.json(); setResult(r.ok?data:null); setLoading(false); }
+  return <><Head><title>Verify a Certificate | TrustStack Academy</title><meta name="description" content="Verify a TrustStack Academy certificate against the official certificate registry."/></Head><div className="top"/><header><a href="/home.html">⚙ TrustStack Academy</a><nav><a href="/home.html">Main website</a><a href="/courses">Courses</a><a href="/lms">LMS</a></nav></header><main><p className="eyebrow">OFFICIAL REGISTRY</p><h1>Verify a certificate</h1><p className="lead">Enter the certificate ID printed on the learner’s certificate. A match confirms that the record exists in TrustStack Academy’s official registry.</p><div className="search"><input value={id} onChange={e=>setId(e.target.value)} onKeyDown={e=>e.key==='Enter'&&lookup()} placeholder="Example: 2026-9E43903F"/><button onClick={()=>lookup()} disabled={loading}>{loading?'Checking…':'Verify certificate'}</button></div>{result&&<section><div className="ok">✓ Registry record found</div><dl><div><dt>Learner</dt><dd>{result.student}</dd></div><div><dt>Programme</dt><dd>{result.track}</dd></div><div><dt>Certificate ID</dt><dd>{result.id}</dd></div><div><dt>Date issued</dt><dd>{result.date_issued}</dd></div></dl><p className="note">This result verifies the Academy registry record only. It does not claim blockchain anchoring or third-party accreditation.</p></section>}{result===null&&<section className="bad"><div className="notfound">No registry record found</div><p>Check the certificate ID and try again. Certificate IDs use the format YYYY-HEX8.</p></section>}<p className="help">Need help? Email <a href="mailto:hello@truststackacademy.com">hello@truststackacademy.com</a>.</p></main><style jsx>{`*{box-sizing:border-box}.top{height:6px;background:linear-gradient(90deg,#00c6ff,#70ef78,#c8fa00)}header{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100% - 1000px)/2));border-bottom:1px solid #e5eaf0}header>a{font-size:20px;font-weight:900;color:#0a1931;text-decoration:none}nav{display:flex;gap:24px}nav a{color:#475569;text-decoration:none;font-weight:700}main{max-width:760px;margin:0 auto;padding:80px 24px}.eyebrow{color:#00aee5;font-weight:900;letter-spacing:.2em}h1{font-size:52px;line-height:1;color:#0a1931;margin:12px 0 18px}.lead{font-size:19px;line-height:1.55;color:#64748b}.search{display:flex;gap:10px;margin:34px 0}.search input{flex:1;height:52px;border:1px solid #cbd5e1;border-radius:10px;padding:0 16px;font-size:16px;text-transform:uppercase}.search button{border:0;border-radius:10px;padding:0 22px;background:#0a1931;color:#fff;font-weight:900}section{border:1px solid #b7e4c7;background:#f3fff7;border-radius:18px;padding:26px}.bad{border-color:#fecaca;background:#fff7f7}.ok{color:#137333;font-weight:900;font-size:18px}.notfound{color:#b42318;font-weight:900;font-size:18px}dl{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:25px 0}dt{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#64748b;font-weight:900}dd{margin:5px 0 0;color:#0a1931;font-weight:800}.note,.help{color:#64748b;font-size:14px;line-height:1.5}.help{margin-top:28px}@media(max-width:650px){nav{display:none}h1{font-size:40px}.search{flex-direction:column}.search button{height:50px}dl{grid-template-columns:1fr}}`}</style></>;
 }

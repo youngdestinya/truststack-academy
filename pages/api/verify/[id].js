@@ -9,6 +9,6 @@ export default async function handler(req,res){
  if(!cert)return res.status(404).json({valid:false,error:'Certificate ID not found',checks:['file_lookup: failed']});
  const hash=crypto.createHash('sha256').update(JSON.stringify([cert.id,cert.student,cert.track,cert.date_issued])).digest('hex');
  const valid=cert.status==='verified';
- return res.json({...cert,payment_digest:undefined,valid,checks:['file_lookup: ok',hash===cert.hash_full?'hash_match: ok':'hash_match: not verified','signature_valid: not configured','blockchain_anchored: not verified'],message:'VERIFIED FILE-BASED'});
+ return res.json({id:cert.id,student:cert.student,track:cert.track,date_issued:cert.date_issued,status:valid?'verified':'not verified',valid,message:'OFFICIAL REGISTRY RECORD'});
  }catch{return res.status(503).json({valid:false,error:'Certificate registry unavailable'});}
 }

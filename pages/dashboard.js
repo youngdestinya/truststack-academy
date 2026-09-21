@@ -1,5 +1,6 @@
 import { useState } from 'react';
-export default function Dashboard() {
+import AdminGate from '../components/AdminGate';
+function DashboardContent() {
   const labs = Array.from({ length: 12 }, (_, i) => ({ id: i+1, title: `Lab ${i+1}: ${['Recon','Scanning','Exploitation','Post-Exploitation','Pivoting','Privesc','Persistence','Cleanup','SIEM','Forensics','Cloud','Report'][i]}`, done: i < 3 }));
   const [checked, setChecked] = useState(labs.map(l => l.done));
   const progress = Math.round((checked.filter(Boolean).length / 12) * 100);
@@ -32,3 +33,4 @@ export default function Dashboard() {
     </div>
   );
 }
+export default function Dashboard(){return <AdminGate title="Learner dashboard"><DashboardContent/></AdminGate>}
