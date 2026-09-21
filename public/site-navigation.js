@@ -195,6 +195,28 @@
         });
       }
     });
+    if (path.includes('home')) {
+      const curriculum = document.getElementById('curriculum');
+      curriculum?.querySelectorAll('div').forEach((title) => {
+        if (title.children.length || !trackPages[clean(title.textContent)]) return;
+        const card = title.parentElement;
+        if (!card || !card.classList.contains('group')) return;
+        const slug = trackPages[clean(title.textContent)];
+        const courseUrl = `/courses/${slug}`;
+        if (card.dataset.siteDestination !== courseUrl) card.dataset.siteDestination = courseUrl;
+        card.setAttribute('role', 'link');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `View ${title.textContent.trim()} course details`);
+        card.style.cursor = 'pointer';
+        const enroll = Array.from(card.querySelectorAll('div')).find((node) => !node.children.length && /^enroll\b/i.test(node.textContent.trim()));
+        if (enroll) {
+          enroll.dataset.siteDestination = `/pay?track=${slug}`;
+          enroll.setAttribute('role', 'button');
+          enroll.setAttribute('tabindex', '0');
+          enroll.setAttribute('aria-label', `Enroll in ${title.textContent.trim()}`);
+        }
+      });
+    }
     if (path.includes('courses-tracks') && location.hash && !document.documentElement.dataset.trackHashHandled) {
       const destinationCard = document.getElementById(location.hash.slice(1));
       if (destinationCard) {
