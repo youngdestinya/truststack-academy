@@ -54,6 +54,33 @@
     });
   }
 
+  function officialCertificateSeals() {
+    document.querySelectorAll('img').forEach((image) => {
+      const label = `${image.getAttribute('alt') || ''} ${image.getAttribute('title') || ''}`.toLowerCase();
+      if (!/cert(ificate)? seal|official seal/.test(label)) return;
+      if (!image.src.endsWith('/Cert_Seal.png')) image.src = '/Cert_Seal.png';
+      image.alt = 'TrustStack Academy official certificate seal';
+    });
+    document.querySelectorAll('.seal').forEach((seal) => {
+      if (seal.tagName === 'IMG') return;
+      seal.textContent = '';
+      seal.setAttribute('role', 'img');
+      seal.setAttribute('aria-label', 'TrustStack Academy official certificate seal');
+      Object.assign(seal.style, { background: 'transparent url(/Cert_Seal.png) center/contain no-repeat', borderRadius: '0' });
+    });
+    if (path.includes('certificate-preview')) {
+      const verified = document.querySelector('header > strong');
+      if (verified && !verified.parentElement.querySelector('.ts-official-seal')) {
+        const seal = document.createElement('img');
+        seal.className = 'ts-official-seal';
+        seal.src = '/Cert_Seal.png';
+        seal.alt = 'TrustStack Academy official certificate seal';
+        Object.assign(seal.style, { width: '46px', height: '46px', objectFit: 'contain', marginRight: '8px', verticalAlign: 'middle' });
+        verified.before(seal);
+      }
+    }
+  }
+
   function trackBadges() {
     document.querySelectorAll('h1,h2,h3,h4,h5,h6,a,span,strong,dt,dd').forEach((element) => {
       if (element.children.length) return;
@@ -116,6 +143,7 @@
   function wire() {
     addSharedStyles();
     brandHomeLinks();
+    officialCertificateSeals();
     trackBadges();
     document.querySelectorAll('a,button,span').forEach((element) => {
       const target = destination(element);
