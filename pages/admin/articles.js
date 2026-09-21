@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 
-const blank = { title:'',slug:'',excerpt:'',content:'',categories:'',tags:'',status:'draft',publishDate:'',seoTitle:'',metaDescription:'',focusKeyword:'',canonical:'',ogTitle:'',ogDescription:'',noindex:false,nofollow:false,image:null,imageTitle:'',imageAlt:'',imageCaption:'',imageDescription:'' };
+const blank = { title:'',slug:'',excerpt:'',content:'',categories:'',tags:'',status:'draft',publishDate:'',seoTitle:'',metaDescription:'',focusKeyword:'',canonical:'',ogTitle:'',ogDescription:'',noindex:false,nofollow:false,image:null,imageTitle:'',imageAlt:'',imageCaption:'',imageDescription:'',schemaType:'Article' };
 export default function ArticleAdmin(){
  const [key,setKey]=useState(''),[auth,setAuth]=useState(false),[form,setForm]=useState(blank),[message,setMessage]=useState(''),[busy,setBusy]=useState(false);
  const update=(name,value)=>setForm({...form,[name]:value});

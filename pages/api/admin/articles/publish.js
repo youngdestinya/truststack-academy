@@ -28,6 +28,7 @@ export default async function handler(req, res) {
       rank_math_title: article.seoTitle || article.title,
       rank_math_description: article.metaDescription || '',
       rank_math_focus_keyword: article.focusKeyword || '',
+      truststack_article_schema: JSON.stringify({ '@context': 'https://schema.org', '@type': article.schemaType || 'Article', headline: article.seoTitle || article.title, description: article.metaDescription || article.excerpt || '', image: article.image?.url || undefined, author: { '@type': 'Organization', name: 'TrustStack Academy' }, publisher: { '@type': 'Organization', name: 'TrustStack Academy' } }),
     };
     const post = await wpFetch('/posts', { method: 'POST', body: JSON.stringify({ title: article.title, slug: article.slug, content: article.content, excerpt: article.excerpt, status: article.status || 'draft', date: article.publishDate || undefined, categories, tags, featured_media: featured_media || undefined, meta }) });
     return res.json({ success: true, id: post.id, status: post.status, link: post.link, editLink: `${wordpressConfig().site}/wp-admin/post.php?post=${post.id}&action=edit` });
