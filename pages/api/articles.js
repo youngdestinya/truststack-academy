@@ -1,14 +1,12 @@
-import { config, fallbackArticles } from '../../lib/wordpress';
+import { getArticleRegistry, fallbackArticles } from '../../lib/articles';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end();
-  const wp = config();
-  if (!wp.site) return res.json({ source: 'preview', articles: fallbackArticles });
+  res.setHeader('Cache-Control', 'no-store');
   try {
-    const response = await fetch(`${wp.site}/wp-json/wp/v2/posts?status=publish&per_page=12&_embed=1`);
-    if (!response.ok) throw new Error();
-    const posts = await response.json();
-    const articles = posts.map((post) => ({ id: post.id, slug: post.slug, title: post.title.rendered, excerpt: post.excerpt.rendered.replace(/<[^>]+>/g, ''), author: post._embedded?.author?.[0]?.name || 'TrustStack Team', image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '', category: post._embedded?.['wp:term']?.[0]?.[0]?.name || 'Field Notes', link: post.link }));
-    return res.json({ source: 'wordpress', articles });
-  } catch { return res.status(502).json({ source: 'preview', articles: fallbackArticles, warning: 'WordPress feed unavailable' }); }
+    const registry = await getArticleRegistry();
+    const now = Date.now();
+    const articles = (registry.articles || []).filter((article) => article.status === 'publish' || (article.status === 'future' && article.publishDate && Date.parse(article.publishDate) <= now));
+    return res.json({ source: 'truststack', articles: articles.length ? articles : fallbackArticles });
+  } catch { return res.status(200).json({ source: 'preview', articles: fallbackArticles, warning: 'Article registry unavailable' }); }
 }

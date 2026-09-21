@@ -3,7 +3,7 @@
 Next.js Pages Router application adapted from the supplied Truststack handoff. Run `npm ci`, `npm run build`, and `npm start`. Deploy with Vercel using Node 24.x, framework Next.js, and repository root `./`.
 
 ## Configuration
-Set server-only GITHUB_TOKEN (repository Contents read/write), GITHUB_REPO=youngdestinya/truststack-academy, ADMIN_KEY (a strong unique value), PAYSTACK_SECRET_KEY, and NEXT_PUBLIC_BASE_URL to the deployed origin. Never commit credentials. See .env.example.
+Set server-only GITHUB_TOKEN (repository Contents read/write), GITHUB_REPO=youngdestinya/truststack-academy, ADMIN_KEY (a strong unique value), PAYSTACK_SECRET_KEY, and NEXT_PUBLIC_BASE_URL to the deployed origin. The native article publisher stores sanitized articles in public/articles.json and featured media in public/article-images. Never commit credentials. See .env.example.
 
 GitHub stores public certificate records in public/certs.json. Writes commit through the GitHub API with conflict retries. When configured, verification reads the latest GitHub registry. Otherwise it reads bundled sample records. Payment checkout remains unavailable until both Paystack and GitHub credentials are configured. Checkout uses Paystack redirect and verifies success, NGN currency and 2500000 kobo before saving; a digest of the payment reference prevents duplicate issuance.
 
