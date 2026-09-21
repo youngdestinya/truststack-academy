@@ -51,6 +51,9 @@
         if (!video.getAttribute('src') && !video.querySelector('source')) { video.src='/truststack-academy-intro.mp4'; video.controls=true; video.preload='metadata'; }
       });
     }
+    document.querySelectorAll('img[alt*="Sample Certificate"],img[alt*="sample certificate"]').forEach((image) => {
+      image.dataset.siteDestination='/sample-certificate'; image.style.cursor='pointer'; image.title='View the official sample certificate';
+    });
     if (document.title === 'React Artifact' && path.includes('courses-tracks')) document.title = 'Courses & Tracks | TrustStack Academy';
   }
 
