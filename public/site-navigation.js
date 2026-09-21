@@ -188,7 +188,11 @@
         card.setAttribute('tabindex', '0');
         card.setAttribute('aria-label', `View ${heading.textContent.trim()} course details`);
         card.style.cursor = 'pointer';
-        card.querySelectorAll('a,button').forEach((control) => { control.dataset.siteDestination = target; });
+        card.querySelectorAll('a,button').forEach((control) => {
+          const isEnrollment = /enroll|pay|start learning/i.test(control.textContent || '');
+          control.dataset.siteDestination = isEnrollment ? `/pay?track=${slug}` : target;
+          if (control.tagName === 'A') control.setAttribute('href', control.dataset.siteDestination);
+        });
       }
     });
     if (path.includes('courses-tracks') && location.hash && !document.documentElement.dataset.trackHashHandled) {
