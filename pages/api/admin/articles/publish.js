@@ -10,6 +10,7 @@ export default async function handler(req, res) {
   if (!wordpressConfig().configured) return res.status(503).json({ error: 'WordPress is not connected. Configure WORDPRESS_SITE_URL, WORDPRESS_USERNAME and WORDPRESS_APP_PASSWORD in Vercel.' });
   const article = req.body || {};
   if (!article.title?.trim() || !article.content?.trim()) return res.status(400).json({ error: 'Title and article content are required.' });
+  if (article.image?.data && !article.image?.alt?.trim()) return res.status(400).json({ error: 'Featured image alternative text is required for accessibility and social SEO.' });
   try {
     const [categories, tags, featured_media] = await Promise.all([
       ensureTerms('categories', article.categories || []),
