@@ -110,6 +110,8 @@
   }
 
   function trackBadges() {
+    // Certificate surfaces use the official seal, not the career-card tint or badge.
+    if (/(certificate|verify)/.test(path)) return;
     document.querySelectorAll('h1,h2,h3,h4,h5,h6,a,span,strong,dt,dd').forEach((element) => {
       if (element.children.length) return;
       const track = tracks[clean(element.textContent)];
