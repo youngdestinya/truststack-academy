@@ -1,7 +1,7 @@
 export async function getServerSideProps() {
   return {
     redirect: {
-      destination: '/student-lms.html',
+      destination: '/home.html',
       permanent: false,
     },
   };

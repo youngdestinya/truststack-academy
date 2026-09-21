@@ -39,6 +39,16 @@
     'network security': 'network-security', 'network security & defense': 'network-security'
   };
   const trackTarget = (name) => trackPages[name] ? `/courses/${trackPages[name]}` : null;
+  const courseModules = {
+    'soc-analyst': ['Windows, Linux and network log analysis', 'SIEM queries, dashboards and detection rules', 'Incident triage, escalation and playbooks'],
+    'digital-forensics': ['Evidence handling and chain of custody', 'Forensic imaging and integrity verification', 'Memory acquisition and Volatility analysis'],
+    'threat-intelligence': ['OSINT collection and source validation', 'Indicators, TTPs and ATT&CK mapping', 'Threat actor and campaign analysis'],
+    'penetration-testing': ['Reconnaissance and service enumeration', 'Vulnerability validation and exploitation', 'Web and API security testing'],
+    'cloud-security': ['IAM hardening and least privilege', 'Network, storage and secrets security', 'Cloud posture assessment and remediation'],
+    'governance-grc': ['Risk assessment and treatment planning', 'Policy and control design', 'NDPA and privacy compliance operations'],
+    'malware-analysis': ['Static analysis and file characteristics', 'Dynamic behavioural analysis', 'YARA rules and indicator development'],
+    'security-engineering': ['Threat modelling and security requirements', 'Secure development and code review', 'DevSecOps pipelines and automated testing'],
+  };
 
   function addSharedStyles() {
     if (document.getElementById('truststack-shared-identity')) return;
@@ -49,6 +59,11 @@
       .ts-track-identity:not(.ts-track-has-badge)::before{content:attr(data-ts-icon);display:inline-grid;place-items:center;flex:0 0 auto;width:2.15em;height:2.42em;color:#fff;font-size:.72em;font-family:Arial,sans-serif;font-weight:900;background:linear-gradient(145deg,var(--ts-track),#07182e);clip-path:polygon(50% 0,92% 16%,92% 66%,50% 100%,8% 66%,8% 16%);filter:drop-shadow(0 5px 7px color-mix(in srgb,var(--ts-track) 28%,transparent))}
       .ts-track-surface{background:linear-gradient(145deg,var(--ts-tint),rgba(255,255,255,.86) 74%)!important;backdrop-filter:blur(10px)}
       .ts-track-badge-image{width:54px!important;height:62px!important;object-fit:contain!important;padding:9px!important;background:linear-gradient(145deg,var(--ts-track),#07182e)!important;clip-path:polygon(50% 0,92% 16%,92% 66%,50% 100%,8% 66%,8% 16%)!important;filter:drop-shadow(0 6px 8px color-mix(in srgb,var(--ts-track) 28%,transparent))!important}
+      .ts-card-modules{margin-top:1rem;padding-top:.85rem;border-top:1px solid rgba(10,25,49,.1)}
+      .ts-card-modules strong{display:block;color:#41516a;font-size:.7rem;letter-spacing:.12em;font-weight:900;margin-bottom:.4rem}
+      .ts-card-modules ul{margin:0;padding-left:1rem;color:#33445c;font-size:.81rem;line-height:1.35}
+      .ts-card-modules li{margin:.32rem 0}
+      .ts-card-modules li::marker{color:var(--ts-track,#00b8d9)}
       img[data-site-destination="/home.html"]{cursor:pointer}
     `;
     document.head.appendChild(style);
@@ -214,6 +229,21 @@
           enroll.setAttribute('role', 'button');
           enroll.setAttribute('tabindex', '0');
           enroll.setAttribute('aria-label', `Enroll in ${title.textContent.trim()}`);
+        }
+        if (enroll && !card.querySelector('.ts-card-modules')) {
+          const preview = document.createElement('div');
+          preview.className = 'ts-card-modules';
+          preview.style.setProperty('--ts-track', tracks[clean(title.textContent)]?.color || '#00b8d9');
+          const label = document.createElement('strong');
+          label.textContent = 'CORE MODULES';
+          const list = document.createElement('ul');
+          courseModules[slug].forEach((module) => {
+            const item = document.createElement('li');
+            item.textContent = module;
+            list.appendChild(item);
+          });
+          preview.append(label, list);
+          card.insertBefore(preview, enroll.parentElement);
         }
       });
     }
