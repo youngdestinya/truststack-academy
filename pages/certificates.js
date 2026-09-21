@@ -34,7 +34,7 @@ function CertificateContent() {
             {skillsForTrack(cert.track).length > 0 && <div style={{ marginTop: 18, padding: 14, background: '#f1fafc', borderRadius: 10, textAlign: 'left' }}><strong>CORE SKILLS OBTAINED</strong><ul>{skillsForTrack(cert.track).map(skill => <li key={skill}>{skill}</li>)}</ul></div>}
             <p style={{ marginTop: 16, fontSize: 12 }}>ID: {cert.id} • {cert.date_issued} • HASH: {cert.hash_prefix}</p>
             <div style={{ marginTop: 24, paddingTop: 14, borderTop: '1px solid #ccd5df', textAlign: 'left' }}>
-              <strong>Destiny Young</strong><br />
+              <strong className="cert-signature">Destiny Young</strong><br />
               Founder/Chief Technology Officer, Truststack Technologies<br />
               For: Truststack Academy
             </div>
