@@ -31,6 +31,11 @@ function CertificateContent() {
             <p style={{ fontSize: 32, fontWeight: 900, marginTop: 16 }}>{cert.student}</p>
             <p style={{ marginTop: 8 }}>{cert.track}</p>
             <p style={{ marginTop: 16, fontSize: 12 }}>ID: {cert.id} • {cert.date_issued} • HASH: {cert.hash_prefix}</p>
+            <div style={{ marginTop: 24, paddingTop: 14, borderTop: '1px solid #ccd5df', textAlign: 'left' }}>
+              <strong>Destiny Young</strong><br />
+              Founder/Chief Technology Officer, Truststack Technologies<br />
+              For: Truststack Academy
+            </div>
             <p style={{ fontSize: 10, wordBreak: 'break-all', opacity: 0.6, marginTop: 8 }}>{cert.hash_full}</p>
           </div>
         </div>
