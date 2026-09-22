@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import {makeCert,saveCert} from '../../../lib/certs';
+import {checkoutProduct} from '../../../lib/checkout-pricing';
 export default async function handler(req,res){
  if(req.method!=='POST')return res.status(405).end();
  if(!process.env.PAYSTACK_SECRET_KEY||!process.env.GITHUB_TOKEN)return res.status(503).json({valid:false,error:'Payments are not configured yet'});
@@ -8,8 +9,9 @@ export default async function handler(req,res){
  try{
  const r=await fetch(`https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,{headers:{Authorization:`Bearer ${process.env.PAYSTACK_SECRET_KEY}`}});
  const j=await r.json(),d=j.data;
- if(!r.ok||!j.status||d?.status!=='success'||d.currency!=='NGN'||d.amount!==2500000)return res.status(400).json({valid:false,error:'Payment has not been verified'});
- const cert=makeCert({student:d.metadata?.student,track:d.metadata?.track});
+ const product=checkoutProduct(d?.metadata?.track_slug || d?.metadata?.track);
+ if(!r.ok||!j.status||d?.status!=='success'||d.currency!=='NGN'||!product||d.amount!==product.amount)return res.status(400).json({valid:false,error:'Payment has not been verified'});
+ const cert=makeCert({student:d.metadata?.student,track:product.title});
  cert.payment_digest=crypto.createHash('sha256').update(reference).digest('hex');
  const saved=await saveCert(cert);
  return res.json({valid:true,id:saved.id,verify_url:saved.verify_url});

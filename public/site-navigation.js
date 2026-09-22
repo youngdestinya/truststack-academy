@@ -153,7 +153,8 @@
   function destination(element) {
     const label = clean(element.textContent);
     const raw = (element.textContent || '').toLowerCase();
-    if (/^enroll( at| now| bundle|$)/.test(label) || /^pay( in naira|$)/.test(label)) return '/pay';
+    if (/^enroll bundle\b|^get bundle\b|^pay ₦150k bundle\b/.test(label)) return '/pay?track=bundle';
+    if (/^enroll( at| now|$)/.test(label) || /^pay( in naira|$)/.test(label)) return '/pay';
     if (label === 'home' || label === 'enter main website' || label === 'main website') return '/home.html';
     if (label === 'courses' || label === 'tracks' || label === 'explore courses' || label === 'view all courses' || label === 'browse tracks' || label === 'browse 8 tracks') return '/courses';
     if (label === 'certificates' || label === 'verify' || label === 'verify certificate' || label === 'verify a certificate') return '/verify';
