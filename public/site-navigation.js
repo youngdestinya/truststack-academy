@@ -182,7 +182,8 @@
     officialCertificateSeals();
     trackBadges();
     document.querySelectorAll('a,button,span').forEach((element) => {
-      const target = destination(element);
+      const explicitHref = element.tagName === 'A' ? element.getAttribute('href') : null;
+      const target = explicitHref?.startsWith('/pay?track=') ? explicitHref : destination(element);
       if (target && element.tagName === 'A' && element.getAttribute('href') !== target) element.setAttribute('href', target);
       if (target && element.dataset.siteDestination !== target) element.dataset.siteDestination = target;
       if (target && element.tagName === 'SPAN') element.style.cursor = 'pointer';
