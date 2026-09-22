@@ -1,0 +1,12 @@
+// Display data for the legacy static Courses & Tracks page.
+// Keep titles, order, levels, and slugs aligned with lib/course-catalog.js.
+window.truststackTracks = [
+  { num:'01', slug:'soc-analyst', title:'SOC Analyst Track', level:'Beginner', desc:'Monitor security events, investigate alerts and respond to incidents in a modern security operations centre.', bullets:'SIEM, log analysis, incident triage', price:'₦25,000', icon:'radar', popular:true },
+  { num:'02', slug:'digital-forensics', title:'Digital Forensics', level:'Intermediate', desc:'Preserve evidence, reconstruct attacks and produce defensible findings from disk, memory and timeline investigations.', bullets:'Evidence, disk and memory analysis', price:'₦25,000', icon:'search' },
+  { num:'03', slug:'threat-intelligence', title:'Threat Intelligence', level:'Intermediate', desc:'Turn threat data into actionable intelligence through OSINT, adversary tracking and structured reporting.', bullets:'OSINT, TTPs, intelligence reporting', price:'₦25,000', icon:'network' },
+  { num:'04', slug:'penetration-testing', title:'Penetration Testing', level:'Advanced', desc:'Practise authorised reconnaissance, vulnerability validation, web testing and remediation-focused reporting.', bullets:'Reconnaissance, web testing, reporting', price:'₦25,000', icon:'shield' },
+  { num:'05', slug:'cloud-security', title:'Cloud Security', level:'Intermediate', desc:'Secure cloud identities, workloads and data across AWS and Azure with practical configuration reviews.', bullets:'IAM, posture assessment, response', price:'₦25,000', icon:'cloud' },
+  { num:'06', slug:'governance-grc', title:'Governance & GRC', level:'Beginner', desc:'Turn security and privacy obligations into policies, risk controls, evidence and audit-ready plans.', bullets:'Risk, controls, privacy compliance', price:'₦25,000', icon:'briefcase' },
+  { num:'07', slug:'malware-analysis', title:'Malware Analysis', level:'Advanced', desc:'Safely examine suspicious files, identify malicious behaviour and create useful detection artefacts.', bullets:'Static analysis, behaviour, YARA', price:'₦25,000', icon:'linux' },
+  { num:'08', slug:'security-engineering', title:'Security Engineering', level:'CAP-ADIT', desc:'Design and build secure systems through architecture, threat modelling, code review and DevSecOps.', bullets:'Architecture, secure code, DevSecOps', price:'₦25,000', icon:'code' }
+];
