@@ -264,6 +264,23 @@
         requestAnimationFrame(() => destinationCard.scrollIntoView({ behavior: 'smooth', block: 'start' }));
       }
     }
+    if (path.includes('courses-tracks')) {
+      document.querySelectorAll('div').forEach((node) => {
+        if (node.children.length || clean(node.textContent) !== '2026-9e43903f') return;
+        node.dataset.siteDestination = '/verify?id=2026-9E43903F&view=certificate';
+        node.setAttribute('role', 'link');
+        node.setAttribute('tabindex', '0');
+        node.setAttribute('aria-label', 'Verify sample certificate 2026-9E43903F');
+        node.title = 'Open the official sample certificate record';
+        node.style.cursor = 'pointer';
+        node.style.textDecoration = 'underline';
+        node.style.textUnderlineOffset = '4px';
+      });
+      document.querySelectorAll('footer div').forEach((node) => {
+        if (!node.textContent.trim().startsWith('Font rule:') || node.textContent.length > 350) return;
+        node.textContent = 'Explore hands-on cybersecurity career tracks, compare practical labs, and enroll in Naira. Each completed track is designed to build demonstrable skills and lead to a verifiable TrustStack Academy certificate.';
+      });
+    }
     if (path.includes('home')) {
       document.querySelectorAll('div').forEach((node) => {
         if (clean(node.textContent).startsWith('contact & social') && node.querySelector('a')) node.id = node.id || 'contact';

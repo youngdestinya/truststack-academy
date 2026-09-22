@@ -6,6 +6,7 @@ import { skillsForTrack } from '../lib/certificate-skills';
 export default function Verify(){
  const router=useRouter(); const [id,setId]=useState(''); const [result,setResult]=useState(undefined); const [loading,setLoading]=useState(false); const [showCertificate,setShowCertificate]=useState(false);
  useEffect(()=>{if(router.isReady&&router.query.id){const v=String(router.query.id).toUpperCase();setId(v);lookup(v)}},[router.isReady,router.query.id]);
+ useEffect(()=>{if(result&&router.query.view==='certificate')setShowCertificate(true)},[result,router.query.view]);
  async function lookup(value=id){const v=value.trim().toUpperCase();if(!v)return;setShowCertificate(false);setLoading(true);try{const r=await fetch(`/api/verify/${encodeURIComponent(v)}`);const data=await r.json();setResult(r.ok?data:null)}catch{setResult(null)}finally{setLoading(false)}}
  function sample(){const v='2026-9E43903F';setId(v);lookup(v)}
  return <><Head><title>Verify a Certificate | TrustStack Academy</title><meta name="description" content="Verify a TrustStack Academy certificate against the official Academy registry."/></Head><div className="top"/><header><a className="brand" href="/home.html"><img src="/truststack-home-logo.png" alt="TrustStack Academy logo"/><b>TrustStack Academy</b></a><nav><a href="/home.html">Home</a><a href="/courses">Courses</a><a href="/lms">LMS</a><a className="active" href="/verify">Verify</a></nav></header>
