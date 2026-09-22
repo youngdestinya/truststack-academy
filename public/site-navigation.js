@@ -71,10 +71,27 @@
 
   function brandHomeLinks() {
     document.querySelectorAll('img').forEach((image) => {
-      const signature = `${image.getAttribute('src') || ''} ${image.getAttribute('alt') || ''}`.toLowerCase();
-      if (!/truststack.*logo|logo.*truststack|truststack.*shield|shield gear logo/.test(signature)) return;
+      const source = (image.getAttribute('src') || '').toLowerCase();
+      const label = (image.getAttribute('alt') || '').toLowerCase();
+      const signature = source.startsWith('data:') ? label : source + ' ' + label;
+      if (/seal|certificate/.test(label) && !/logo/.test(label)) return;
+      if (!/truststack.*logo|logo.*truststack|truststack.*shield|shield gear logo/.test(signature) && label !== 'truststack academy') return;
       image.dataset.siteDestination = '/home.html';
       image.title = 'TrustStack Academy home';
+      let brand = image.parentElement;
+      for (let depth = 0; brand && depth < 4; depth++, brand = brand.parentElement) {
+        const label = clean(brand.textContent);
+        if (!label.includes('truststack academy') || label.length > 85) continue;
+        if (brand.tagName === 'A') brand.href = '/home.html';
+        else if (!brand.closest('a') && !brand.matches('button,[role="button"]')) {
+          brand.setAttribute('role', 'link');
+          brand.tabIndex = 0;
+        }
+        brand.dataset.siteDestination = '/home.html';
+        brand.title = 'Go to TrustStack Academy homepage';
+        brand.style.cursor = 'pointer';
+        break;
+      }
     });
     document.querySelectorAll('a').forEach((link) => {
       const label = clean(link.textContent);
