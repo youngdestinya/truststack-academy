@@ -242,6 +242,25 @@
     else nav.appendChild(scholarship);
   }
 
+  function linkOurStory() {
+    if (!path.includes('home')) return;
+    const control = Array.from(document.querySelectorAll('#about a, #about button'))
+      .find((element) => clean(element.textContent) === 'our story');
+    if (!control) return;
+    if (control.tagName === 'A') {
+      control.href = '/about';
+      control.dataset.siteDestination = '/about';
+      return;
+    }
+    const link = document.createElement('a');
+    link.href = '/about';
+    link.dataset.siteDestination = '/about';
+    link.className = control.className;
+    link.innerHTML = control.innerHTML;
+    link.setAttribute('aria-label', 'Read the TrustStack Academy story');
+    control.replaceWith(link);
+  }
+
   function brandHomeLinks() {
     document.querySelectorAll('img').forEach((image) => {
       const source = (image.getAttribute('src') || '').toLowerCase();
@@ -465,6 +484,7 @@
     addSharedStyles();
     repurposeEnrollmentSection();
     updateMainNavigation();
+    linkOurStory();
     decorateHeaderMenus();
     brandHomeLinks();
     officialCertificateSeals();
