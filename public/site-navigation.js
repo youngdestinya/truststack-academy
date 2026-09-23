@@ -160,7 +160,7 @@
 
   function repurposeEnrollmentSection() {
     if (!path.includes('home')) return;
-    const heading = Array.from(document.querySelectorAll('h2')).find((node) => clean(node.textContent) === 'pay in naira. build in public.');
+    const heading = Array.from(document.querySelectorAll('h2')).find((node) => /pay in naira\.\s*build in public\./i.test(node.textContent || ''));
     const section = heading?.closest('section');
     const layout = heading?.parentElement?.parentElement;
     if (!section || !layout || section.dataset.tsRepurposed === 'true') return;
