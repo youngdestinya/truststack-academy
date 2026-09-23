@@ -287,6 +287,20 @@
       });
     }
     if (path.includes('home')) {
+      const legalResources = [
+        { current: 'our mission', label: 'NDPA 2023', href: 'https://ndpc.gov.ng/download/nigeria-data-protection-act-2023' },
+        { current: 'our core values', label: 'GAID 2025', href: 'https://ndpc.gov.ng/wp-content/uploads/2025/07/NDP-ACT-GAID-2025-MARCH-20TH.pdf' },
+        { current: 'our vision', label: 'Cybercrime Act 2024', href: 'https://cert.gov.ng/ngcert/resources/CyberCrime__Prohibition_Prevention_etc__Act__2024.pdf' }
+      ];
+      document.querySelectorAll('footer a').forEach((link) => {
+        const resource = legalResources.find((item) => clean(link.textContent) === item.current);
+        if (!resource) return;
+        link.textContent = resource.label;
+        link.setAttribute('href', resource.href);
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+        link.setAttribute('aria-label', `${resource.label} — open official resource`);
+      });
       document.querySelectorAll('div').forEach((node) => {
         if (clean(node.textContent).startsWith('contact & social') && node.querySelector('a')) node.id = node.id || 'contact';
       });
