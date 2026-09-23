@@ -114,6 +114,8 @@
       .ts-enrolment-choice:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.55)!important;background:rgba(255,255,255,.09)!important}
       .ts-enrolment-bundle{background:linear-gradient(110deg,rgba(0,184,217,.18),rgba(10,25,49,.82))!important;border-color:rgba(212,175,55,.42)!important}
       .ts-enrolment-choice:not(.ts-enrolment-bundle) a{color:#06162d!important;white-space:nowrap}
+      .ts-trust-strip{background:#00c7e8!important;border-color:rgba(6,22,45,.14)!important;color:#06162d!important}
+      .ts-trust-strip *{color:#06162d!important;opacity:1!important}
       .ts-builder-profile{align-items:center!important;text-align:center!important;justify-content:center!important}
       .ts-builder-profile-head{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
       .ts-builder-profile-name{display:flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important}
@@ -549,6 +551,11 @@
       });
     }
     if (path.includes('home')) {
+      document.querySelectorAll('div').forEach((node) => {
+        if (node.children.length || clean(node.textContent) !== 'built on real tools. designed for africa. ready for the world.') return;
+        const strip = node.parentElement?.parentElement;
+        if (strip) strip.classList.add('ts-trust-strip');
+      });
       const homeFooter = document.querySelector('footer');
       if (homeFooter) {
         homeFooter.classList.add('ts-home-footer');
