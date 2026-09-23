@@ -16,6 +16,7 @@ const pages = {
   '/contact': ['Contact TrustStack Academy | Training, Support and Partnerships', 'Contact TrustStack Academy for course guidance, learner support, enterprise cybersecurity training, partnerships and media enquiries.'],
   '/dashboard': ['Learner Dashboard | TrustStack Academy', 'Access your TrustStack Academy learning dashboard, course progress and certificate records.'],
   '/knowledge-base': ['Cybersecurity Knowledge Base | TrustStack Academy', 'Read practical SOC playbooks, Nigerian data protection guidance, cloud security notes and Africa-focused cybersecurity analysis.'],
+  '/learner': ['Verify a TrustStack Learner | Official Learner Registry', 'Confirm a TrustStack Academy learner ID, current career track and programme status through the official privacy-aware learner registry.'],
   '/privacy': ['Privacy Policy | TrustStack Academy', 'Learn how TrustStack Academy collects, uses, protects and retains learner information under the Nigeria Data Protection Act 2023.'],
   '/sample-certificate': ['Official Sample Certificate | TrustStack Academy', 'View and verify the official TrustStack Academy sample completion certificate and its registry record.'],
   '/scholarship': ['Cybersecurity Scholarship | TrustStack Academy', 'Join the TrustStack Academy scholarship waitlist for practical cybersecurity, data protection and digital compliance training in Africa.'],

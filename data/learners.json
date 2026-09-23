@@ -1,0 +1,20 @@
+{
+  "learners": [
+    {
+      "id": "TSA-2026-04F82A",
+      "display_name": "Chinedu Okoro",
+      "track": "Digital Forensics",
+      "status": "Active Learner",
+      "enrolled_on": "2026-09-20",
+      "public_profile": true,
+      "verified_skills": ["Evidence handling", "Forensic imaging", "Memory analysis"],
+      "verify_url": "https://truststack-academy.vercel.app/learner?id=TSA-2026-04F82A"
+    }
+  ],
+  "meta": {
+    "format": "TSA-YYYY-HEX6",
+    "total": 1,
+    "privacy": "Names and skill details are public only where public_profile is true",
+    "version": "1.0.0"
+  }
+}

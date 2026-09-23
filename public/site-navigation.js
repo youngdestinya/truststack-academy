@@ -364,6 +364,7 @@
       ['Knowledge Base', '/knowledge-base'],
       ['Free CDPO Course', '/cdpo'],
       ['Career Badges', '/career-badges'],
+      ['Verify Learner', '/learner'],
       ['Verify Certificate', '/verify'],
       ['Scholarship', '/scholarship'],
       ['Privacy Policy', '/privacy'],
