@@ -119,7 +119,7 @@
       .ts-social-strip{display:flex!important;align-items:center;gap:.55rem!important}
       .ts-social-strip a{display:grid;place-items:center;width:30px;height:30px;border-radius:999px;color:#fff!important;box-shadow:0 4px 12px rgba(6,22,45,.16);transition:transform .18s ease,box-shadow .18s ease}
       .ts-social-strip a:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 7px 16px rgba(6,22,45,.24)}
-      .ts-social-strip svg{width:15px;height:15px;fill:currentColor}
+      .ts-social-strip svg{width:15px;height:15px;color:#fff!important;fill:#fff!important}
       .ts-social-linkedin{background:#0a66c2}.ts-social-x{background:#050505}.ts-social-facebook{background:#1877f2}.ts-social-youtube{background:#ff0000}
       .ts-builder-profile{align-items:center!important;text-align:center!important;justify-content:center!important}
       .ts-builder-profile-head{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
