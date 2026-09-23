@@ -105,6 +105,14 @@
       .ts-home-footer .ts-footer-light-panel input::placeholder{color:#8290a5!important}
       .ts-home-footer .ts-footer-light-panel button{color:#fff!important}
       .ts-home-footer .ts-footer-light-panel button:hover{color:#38bdf8!important}
+      .ts-enrolment-section{position:relative;overflow:hidden;background:linear-gradient(118deg,#06162d 0%,#0a2849 52%,#063b54 100%)!important;color:#fff!important}
+      .ts-enrolment-section::before{content:'';position:absolute;inset:-45% auto auto -8%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.22),transparent 68%);pointer-events:none}
+      .ts-enrolment-section::after{content:'';position:absolute;right:-9%;bottom:-80%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.2),transparent 67%);pointer-events:none}
+      .ts-enrolment-section>div{position:relative;z-index:1}
+      .ts-enrolment-panel{background:rgba(4,17,36,.72)!important;border-color:rgba(106,219,255,.3)!important;box-shadow:0 24px 70px rgba(0,0,0,.24);backdrop-filter:blur(18px)}
+      .ts-enrolment-choice{transition:transform .2s ease,border-color .2s ease,background .2s ease}
+      .ts-enrolment-choice:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.55)!important;background:rgba(255,255,255,.09)!important}
+      .ts-enrolment-bundle{background:linear-gradient(110deg,rgba(0,184,217,.18),rgba(10,25,49,.82))!important;border-color:rgba(212,175,55,.42)!important}
       .ts-builder-profile{align-items:center!important;text-align:center!important;justify-content:center!important}
       .ts-builder-profile-head{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
       .ts-builder-profile-name{display:flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important}
@@ -148,6 +156,22 @@
       document.head.appendChild(theme);
     }
     theme.content = '#0A1931';
+  }
+
+  function repurposeEnrollmentSection() {
+    if (!path.includes('home')) return;
+    const heading = Array.from(document.querySelectorAll('h2')).find((node) => clean(node.textContent) === 'pay in naira. build in public.');
+    const section = heading?.closest('section');
+    const layout = heading?.parentElement?.parentElement;
+    if (!section || !layout || section.dataset.tsRepurposed === 'true') return;
+    section.dataset.tsRepurposed = 'true';
+    section.classList.add('ts-enrolment-section');
+    const copy = layout.children[0];
+    const panel = layout.children[1];
+    if (!copy || !panel) return;
+    copy.innerHTML = `<div class="text-[11px] font-bold tracking-[0.2em] text-[#71e4ff]">YOUR CAREER, YOUR PACE</div><h2 class="mt-3 text-[42px] lg:text-[52px] font-[800] leading-[0.96] tracking-tight">Choose the Path.<br><span style="color:#71e4ff">Build the Proof.</span></h2><p class="mt-4 text-[15px] leading-6 text-white/75 max-w-[500px]">Start with one role-ready track or unlock the complete eight-track pathway. Every option combines practical labs, portfolio evidence and a verifiable TrustStack certificate.</p><div class="mt-6 flex flex-wrap gap-3"><a href="/courses" data-site-destination="/courses" class="h-11 px-6 rounded-full bg-[#00b8d9] text-[#06162d] text-[13px] font-bold flex items-center">Explore Career Tracks</a><a href="/career-badges" data-site-destination="/career-badges" class="h-11 px-6 rounded-full border border-white/35 text-white text-[13px] font-bold flex items-center">View Career Badges</a></div>`;
+    panel.className = 'ts-enrolment-panel rounded-[24px] border p-5 md:p-6';
+    panel.innerHTML = `<div class="flex flex-wrap gap-2 text-[10px] font-bold"><span class="px-2 py-1 rounded-full bg-white/10">FLEXIBLE LEARNING</span><span class="px-2 py-1 rounded-full bg-[#00D4FF]/20 text-[#71e4ff]">VERIFIABLE SKILLS</span><span class="px-2 py-1 rounded-full bg-[#D4AF37]/20 text-[#f6d761]">SAVE 25% ON BUNDLE</span></div><div class="ts-enrolment-choice mt-6 bg-white/[.06] rounded-[16px] p-5 border border-white/10"><div class="flex justify-between gap-4 items-start"><div><div class="font-bold text-[16px]">Build One Specialist Skill</div><div class="mt-2 text-[12px] leading-5 text-white/65">Choose any career track and focus on the role you want next.</div></div><div class="shrink-0 text-[10px] px-2 py-1 rounded-full bg-[#00b8d9] text-[#06162d] font-bold">FOCUSED PATH</div></div><div class="mt-5 flex items-center justify-between"><div class="font-extrabold text-[21px]">₦25k <span class="font-normal text-white/50 text-[11px]">per track</span></div><a href="/courses" data-site-destination="/courses" class="px-4 py-2 rounded-full bg-white text-[#06162d] text-[12px] font-bold">Choose a Track</a></div></div><div class="ts-enrolment-choice ts-enrolment-bundle mt-3 rounded-[16px] p-5 border"><div class="flex items-center justify-between gap-4"><div><div class="text-[15px] font-bold text-white">Build a Complete Security Portfolio</div><div class="mt-1 text-[11px] text-white/65">All 8 role-based tracks · ₦200k value · <span class="text-[#f6d761]">Save ₦50k</span></div></div><div class="text-right shrink-0"><div class="font-extrabold text-[20px] text-white">₦150k</div><a href="/pay?track=bundle" data-site-destination="/pay?track=bundle" class="text-[11px] font-bold text-[#71e4ff]">Choose bundle →</a></div></div></div><div class="mt-4 text-[11px] text-white/55 text-center">Practical labs · Portfolio evidence · Verifiable certificates · Naira payment</div>`;
   }
 
   function applyStaticSeo() {
@@ -412,6 +436,7 @@
     addHomeFavicon();
     applyStaticSeo();
     addSharedStyles();
+    repurposeEnrollmentSection();
     decorateHeaderMenus();
     brandHomeLinks();
     officialCertificateSeals();
