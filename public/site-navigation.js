@@ -96,6 +96,15 @@
       .ts-footer-resources a{display:flex;align-items:center;gap:.55rem;color:rgba(255,255,255,.62);font-size:13px;line-height:1.35;text-decoration:none;transition:color .18s ease,transform .18s ease}
       .ts-footer-resources a::before{content:'›';display:grid;place-items:center;width:16px;height:16px;border-radius:50%;background:rgba(212,175,55,.14);color:#d4af37;font-size:14px;font-weight:900}
       .ts-footer-resources a:hover{color:#fff;transform:translateX(3px)}
+      .ts-home-footer{color:#fff!important}
+      .ts-home-footer :where(p,span,a){color:#fff!important}
+      .ts-home-footer :where(a,button){transition:color .18s ease!important}
+      .ts-home-footer :where(a,button):hover{color:#38bdf8!important}
+      .ts-home-footer .ts-footer-light-panel,.ts-home-footer .ts-footer-light-panel :where(p,span){color:#0a1931!important}
+      .ts-home-footer .ts-footer-light-panel input{color:#0a1931!important}
+      .ts-home-footer .ts-footer-light-panel input::placeholder{color:#8290a5!important}
+      .ts-home-footer .ts-footer-light-panel button{color:#fff!important}
+      .ts-home-footer .ts-footer-light-panel button:hover{color:#38bdf8!important}
       .ts-builder-profile{align-items:center!important;text-align:center!important;justify-content:center!important}
       .ts-builder-profile-head{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
       .ts-builder-profile-name{display:flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important}
@@ -514,6 +523,21 @@
       });
     }
     if (path.includes('home')) {
+      const homeFooter = document.querySelector('footer');
+      if (homeFooter) {
+        homeFooter.classList.add('ts-home-footer');
+        homeFooter.querySelectorAll('input').forEach((input) => {
+          let panel = input.parentElement;
+          while (panel && panel !== homeFooter) {
+            const background = getComputedStyle(panel).backgroundColor;
+            if (background === 'rgb(255, 255, 255)' || background === 'rgba(255, 255, 255, 1)') {
+              panel.classList.add('ts-footer-light-panel');
+              break;
+            }
+            panel = panel.parentElement;
+          }
+        });
+      }
       const legalResources = [
         { current: 'our mission', label: 'NDPA 2023', href: 'https://ndpc.gov.ng/download/nigeria-data-protection-act-2023' },
         { current: 'our core values', label: 'GAID 2025', href: 'https://ndpc.gov.ng/wp-content/uploads/2025/07/NDP-ACT-GAID-2025-MARCH-20TH.pdf' },
