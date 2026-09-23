@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 
 const origin = 'https://truststack-academy.vercel.app';
 const defaults = {
-  title: 'TrustStack Academy | Practical Cybersecurity Training in Africa',
-  description: 'Build job-ready cybersecurity and data protection skills through practical labs, Naira-priced career tracks and verifiable TrustStack Academy credentials.',
+  title: 'TrustStack Academy | Learn Cybersecurity by Doing',
+  description: 'Build practical cybersecurity skills through eight role-based tracks, guided labs, Naira pricing and verifiable TrustStack learner credentials.',
 };
 
 const pages = {
@@ -33,7 +33,7 @@ export default function SiteSeo() {
   const [title, description] = match || [defaults.title, defaults.description];
   const cleanPath = (router.asPath || pathname).split('?')[0];
   const canonical = `${origin}${cleanPath === '/' ? '/' : cleanPath}`;
-  const image = `${origin}/cdpo-og.png`;
+  const image = `${origin}${pathname.startsWith('/cdpo') ? '/cdpo-og.png' : '/hero-cyber-lab-v2.jpg'}`;
   return <Head>
     <title key="site-title">{title}</title>
     <meta key="site-description" name="description" content={description}/>

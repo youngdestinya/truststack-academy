@@ -185,7 +185,7 @@
   function applyStaticSeo() {
     if (!path.endsWith('.html')) return;
     const seo = path.includes('home')
-      ? ['TrustStack Academy | Practical Cybersecurity Training in Africa','Build job-ready cybersecurity skills through hands-on labs, Naira-priced career tracks and verifiable TrustStack Academy certificates.','/home.html',false]
+      ? ['TrustStack Academy | Learn Cybersecurity by Doing','Build practical cybersecurity skills through eight role-based tracks, guided labs, Naira pricing and verifiable TrustStack learner credentials.','/home.html',false]
       : path.includes('courses-tracks')
         ? ['Cybersecurity Career Tracks | TrustStack Academy','Compare eight practical cybersecurity career tracks covering SOC analysis, digital forensics, cloud security, GRC and offensive security.','/courses-tracks.html',false]
       : path.includes('lms') || path.includes('student-lms')
@@ -211,8 +211,13 @@
     upsertMeta('meta[property="og:title"]','property','og:title',title);
     upsertMeta('meta[property="og:description"]','property','og:description',description);
     upsertMeta('meta[property="og:type"]','property','og:type','website');
-    upsertMeta('meta[property="og:image"]','property','og:image',`${origin}/cdpo-og.png`);
+    const socialImage = path.includes('home') ? `${origin}/hero-cyber-lab-v2.jpg` : `${origin}/cdpo-og.png`;
+    upsertMeta('meta[property="og:image"]','property','og:image',socialImage);
+    upsertMeta('meta[property="og:image:alt"]','property','og:image:alt',path.includes('home')?'TrustStack Academy practical cybersecurity learning lab':'TrustStack Academy course preview');
     upsertMeta('meta[name="twitter:card"]','name','twitter:card','summary_large_image');
+    upsertMeta('meta[name="twitter:title"]','name','twitter:title',title);
+    upsertMeta('meta[name="twitter:description"]','name','twitter:description',description);
+    upsertMeta('meta[name="twitter:image"]','name','twitter:image',socialImage);
     let canonical = document.head.querySelector('link[rel="canonical"]');
     if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
     canonical.href = `${origin}${canonicalPath}`;
