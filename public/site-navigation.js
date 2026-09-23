@@ -262,6 +262,13 @@
     socials?.classList.add('ts-builder-socials');
   }
 
+  function removeSampleTestimonials() {
+    if (!path.includes('home')) return;
+    const heading = Array.from(document.querySelectorAll('h1,h2,h3')).find((node) => clean(node.textContent) === 'what our learners say');
+    const section = heading?.closest('section');
+    if (section) section.remove();
+  }
+
   function trackBadges() {
     // Certificate surfaces use the official seal, not the career-card tint or badge.
     if (/(certificate|verify)/.test(path)) return;
@@ -332,6 +339,7 @@
     redesignKnowledgeBaseRow();
     addFooterResources();
     refineBuilderProfile();
+    removeSampleTestimonials();
     document.querySelectorAll('a,button,span').forEach((element) => {
       const explicitHref = element.tagName === 'A' ? element.getAttribute('href') : null;
       const target = explicitHref?.startsWith('/pay?track=') ? explicitHref : destination(element);
