@@ -224,6 +224,24 @@
     });
   }
 
+  function updateMainNavigation() {
+    const nav = document.querySelector('header nav');
+    if (!nav) return;
+    Array.from(nav.querySelectorAll('a')).forEach((link) => {
+      const label = clean(link.textContent);
+      if (label === 'cap-adit' || label === 'securesme') link.remove();
+    });
+    const links = Array.from(nav.querySelectorAll('a'));
+    if (links.some((link) => clean(link.textContent) === 'scholarship')) return;
+    const contact = links.find((link) => clean(link.textContent) === 'contact');
+    const scholarship = document.createElement('a');
+    scholarship.href = '/scholarship';
+    scholarship.textContent = 'Scholarship';
+    scholarship.dataset.siteDestination = '/scholarship';
+    if (contact) nav.insertBefore(scholarship, contact);
+    else nav.appendChild(scholarship);
+  }
+
   function brandHomeLinks() {
     document.querySelectorAll('img').forEach((image) => {
       const source = (image.getAttribute('src') || '').toLowerCase();
@@ -425,6 +443,7 @@
     if (label === 'pay') return '/pay';
     if (label === 'about' || label === 'our story') return '/about';
     if (label === 'contact' || label === 'contact us') return '/contact';
+    if (label === 'scholarship') return '/scholarship';
     if (label === 'why truststack' || label === 'why truststack?') return '/home.html#whytruststack';
     if (label === 'our mission' || label === 'our core values' || label === 'our vision') return '/home.html#about';
     if (label === 'cap-adit' || label === 'securesme') return '/courses';
@@ -445,6 +464,7 @@
     applyStaticSeo();
     addSharedStyles();
     repurposeEnrollmentSection();
+    updateMainNavigation();
     decorateHeaderMenus();
     brandHomeLinks();
     officialCertificateSeals();
