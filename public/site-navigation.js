@@ -115,6 +115,31 @@
     document.head.appendChild(style);
   }
 
+  function addHomeFavicon() {
+    if (!path.includes('home')) return;
+    [
+      ['icon', '/Truststack_Logo_PNG.png', 'image/png'],
+      ['shortcut icon', '/Truststack_Logo_PNG.png', 'image/png'],
+      ['apple-touch-icon', '/Truststack_Logo_PNG.png', 'image/png']
+    ].forEach(([rel, href, type]) => {
+      let link = document.head.querySelector(`link[rel="${rel}"]`);
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = rel;
+        document.head.appendChild(link);
+      }
+      link.href = href;
+      link.type = type;
+    });
+    let theme = document.head.querySelector('meta[name="theme-color"]');
+    if (!theme) {
+      theme = document.createElement('meta');
+      theme.name = 'theme-color';
+      document.head.appendChild(theme);
+    }
+    theme.content = '#0A1931';
+  }
+
   function brandHomeLinks() {
     document.querySelectorAll('img').forEach((image) => {
       const source = (image.getAttribute('src') || '').toLowerCase();
@@ -332,6 +357,7 @@
   }
 
   function wire() {
+    addHomeFavicon();
     addSharedStyles();
     brandHomeLinks();
     officialCertificateSeals();
