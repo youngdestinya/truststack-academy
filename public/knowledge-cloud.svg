@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" role="img" aria-labelledby="t d">
+  <title id="t">Cloud security misconfiguration</title><desc id="d">A cloud architecture diagram with a warning indicator and protected infrastructure nodes.</desc>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111a3c"/><stop offset="1" stop-color="#6036b5"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="13" stdDeviation="13" flood-opacity=".3"/></filter></defs>
+  <rect width="800" height="460" fill="url(#g)"/><g opacity=".2" fill="none" stroke="#c7a9ff" stroke-width="2"><circle cx="400" cy="230" r="175"/><circle cx="400" cy="230" r="130"/><circle cx="400" cy="230" r="85"/></g>
+  <g stroke="#aa7cff" stroke-width="5"><path d="M196 126 330 209M604 126 470 209M196 334l134-83M604 334l-134-83"/></g>
+  <g filter="url(#s)"><g fill="#fff"><rect x="116" y="76" width="160" height="98" rx="20"/><rect x="524" y="76" width="160" height="98" rx="20"/><rect x="116" y="286" width="160" height="98" rx="20"/><rect x="524" y="286" width="160" height="98" rx="20"/></g><g fill="#e9e2ff"><path d="M154 124h84M562 124h84M154 334h84M562 334h84" stroke="#6941c6" stroke-width="12" stroke-linecap="round"/></g><path d="M400 133c41 0 61 23 65 50 29 2 50 20 50 47 0 30-24 52-56 52H340c-33 0-58-22-58-53 0-28 22-48 50-49 7-28 30-47 68-47Z" fill="#fff"/><path d="m400 178 46 84h-92Z" fill="#f5b82e"/><path d="M400 203v29M400 246v2" stroke="#081a35" stroke-width="9" stroke-linecap="round"/></g>
+  <g fill="#fff" font-family="Arial,sans-serif" font-weight="700"><text x="58" y="52" font-size="22" letter-spacing="4">CLOUD • CONFIGURATION • CONTROL</text><text x="582" y="430" font-size="18" opacity=".85">FIELD NOTE 03</text></g>
+</svg>

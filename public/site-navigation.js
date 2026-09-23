@@ -69,12 +69,38 @@
       .ts-card-modules ul{margin:0;padding-left:1rem;color:#33445c;font-size:.81rem;line-height:1.35}
       .ts-card-modules li{margin:.32rem 0}
       .ts-card-modules li::marker{color:var(--ts-track,#00b8d9)}
+      .ts-kb-section{max-width:1280px!important;margin:0 auto!important;padding:5rem 1.5rem 5.5rem!important;background:#f7f9fc}
+      .ts-kb-heading{text-align:center;margin:0 auto 3rem;max-width:760px}
+      .ts-kb-kicker{display:flex;align-items:center;justify-content:center;gap:.8rem;color:#00aee5;font-size:.78rem;font-weight:900;letter-spacing:.19em;text-transform:uppercase}
+      .ts-kb-dots{letter-spacing:.24em;color:#e1ad16;font-size:1rem}
+      .ts-kb-heading h2{margin:.65rem 0 .8rem;color:#081a35;font-size:clamp(2.5rem,5vw,4.25rem);line-height:.98;font-weight:900}
+      .ts-kb-heading h2 span{color:#00aee5}
+      .ts-kb-heading p{margin:0;color:#68758a;font-size:1.03rem;line-height:1.55}
+      .ts-kb-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+      .ts-kb-card{display:flex;min-width:0;flex-direction:column;overflow:hidden;border:1px solid #dfe6ee;border-radius:18px;background:#fff;box-shadow:0 14px 38px rgba(8,26,53,.07);transition:transform .2s ease,box-shadow .2s ease;text-decoration:none!important;color:inherit!important}
+      .ts-kb-card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(8,26,53,.13)}
+      .ts-kb-image{position:relative;height:230px;overflow:hidden;background:#0b1f3a}
+      .ts-kb-image img{width:100%!important;height:100%!important;object-fit:cover!important;display:block;transition:transform .35s ease}
+      .ts-kb-card:hover .ts-kb-image img{transform:scale(1.035)}
+      .ts-kb-category{display:flex;align-items:center;min-height:58px;padding:.9rem 1.25rem;background:var(--ts-kb-accent);color:#fff;font-size:.76rem;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+      .ts-kb-body{display:flex;flex:1;flex-direction:column;padding:1.35rem 1.35rem 1.55rem}
+      .ts-kb-meta{display:flex;align-items:center;gap:.55rem;color:#7b8798;font-size:.78rem;font-weight:700}
+      .ts-kb-title{margin:1rem 0 .75rem;color:#081a35;font-size:1.25rem;line-height:1.22;font-weight:900}
+      .ts-kb-excerpt{margin:0;color:#637086;font-size:.94rem;line-height:1.58}
+      .ts-kb-read{display:inline-flex;align-items:center;gap:.55rem;margin-top:auto;padding-top:1.5rem;color:var(--ts-kb-accent);font-size:.82rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
+      .ts-kb-read b{font-size:1.25rem;line-height:1}
+      .ts-kb-footer{display:flex;justify-content:center;align-items:center;gap:.7rem;margin-top:2.4rem}
+      .ts-kb-page,.ts-kb-all{display:inline-grid;place-items:center;min-width:46px;height:46px;border:1px solid #dce4ed;border-radius:10px;background:#fff;color:#081a35;font-weight:900;text-decoration:none!important}
+      .ts-kb-page[aria-current="page"]{background:#081a35;color:#fff;border-color:#081a35}
+      .ts-kb-all{padding:0 1.2rem;color:#fff;background:#00aee5;border-color:#00aee5;text-transform:uppercase;letter-spacing:.06em;font-size:.76rem}
       img[data-site-destination="/home.html"]{cursor:pointer}
       @media (min-width:1024px){
         .ts-home-header-inner{width:fit-content!important;max-width:calc(100% - 48px)!important;margin-left:auto!important;margin-right:auto!important}
         .ts-home-header-inner>nav{margin-left:2.5rem!important;margin-right:0!important}
         .ts-home-header-inner>nav+div{width:0!important;margin-left:0!important;overflow:hidden!important}
       }
+      @media (max-width:900px){.ts-kb-row{grid-template-columns:1fr 1fr}.ts-kb-card:last-child{grid-column:1/-1;max-width:calc(50% - .75rem);width:100%;justify-self:center}}
+      @media (max-width:640px){.ts-kb-section{padding:4rem 1.1rem!important}.ts-kb-heading{margin-bottom:2rem}.ts-kb-row{grid-template-columns:1fr}.ts-kb-card:last-child{grid-column:auto;max-width:none}.ts-kb-image{height:210px}.ts-kb-footer{flex-wrap:wrap}}
     `;
     document.head.appendChild(style);
   }
@@ -123,6 +149,40 @@
       seal.setAttribute('aria-label', 'TrustStack Academy official certificate seal');
       Object.assign(seal.style, { background: 'transparent url(/Cert_Seal.png) center/contain no-repeat', borderRadius: '0' });
     });
+  }
+
+  function redesignKnowledgeBaseRow() {
+    if (!path.includes('home')) return;
+    const title = Array.from(document.querySelectorAll('h1,h2,h3')).find((heading) => clean(heading.textContent) === 'knowledge base');
+    const section = title?.closest('section');
+    if (!section || section.dataset.tsKnowledgeRedesign === 'true') return;
+    section.dataset.tsKnowledgeRedesign = 'true';
+    section.id = 'knowledge-base';
+    section.className = 'ts-kb-section';
+    section.innerHTML = '';
+    const articles = [
+      { slug:'bvn-nin-linkage-risks', image:'/knowledge-bvn-nin.svg', category:'Threat Intelligence', accent:'#087fa8', title:'BVN NIN Linkage Risks: How Nigerian Fintechs Leak PII', excerpt:'A practical review of identity-linkage exposure, weak API controls and the safeguards Nigerian fintech teams should prioritise.', meta:'Destiny Young · 6 min read' },
+      { slug:'wireshark-cbn-fraud-patterns', image:'/knowledge-wireshark.svg', category:'SOC Playbook', accent:'#d98312', title:'Wireshark for SOC Analysts: Detecting CBN Fraud Patterns', excerpt:'Learn useful Wireshark filters and investigation techniques for identifying suspicious payment and webhook activity.', meta:'TrustStack Team · 8 min read' },
+      { slug:'aws-misconfigurations-nigerian-startups', image:'/knowledge-cloud.svg', category:'Cloud Security', accent:'#6941c6', title:'AWS Misconfigurations Costing Nigerian Startups Millions', excerpt:'A remediation guide for exposed storage, excessive permissions and missing MFA in fast-growing cloud environments.', meta:'Destiny Young · 5 min read' }
+    ];
+    const heading = document.createElement('div');
+    heading.className = 'ts-kb-heading';
+    heading.innerHTML = '<div class="ts-kb-kicker"><span class="ts-kb-dots">● ● ●</span> Field Notes</div><h2>Latest <span>Knowledge & Insights</span></h2><p>Practical cybersecurity guides, SOC playbooks and Africa-focused threat analysis from the TrustStack team.</p>';
+    const row = document.createElement('div');
+    row.className = 'ts-kb-row';
+    articles.forEach((article) => {
+      const card = document.createElement('a');
+      card.className = 'ts-kb-card';
+      card.href = `/knowledge-base?article=${article.slug}`;
+      card.style.setProperty('--ts-kb-accent', article.accent);
+      card.setAttribute('aria-label', `Read ${article.title}`);
+      card.innerHTML = `<div class="ts-kb-image"><img src="${article.image}" alt="Illustration for ${article.title}" loading="lazy"></div><div class="ts-kb-category">${article.category}</div><div class="ts-kb-body"><div class="ts-kb-meta"><span aria-hidden="true">◷</span> ${article.meta}</div><h3 class="ts-kb-title">${article.title}</h3><p class="ts-kb-excerpt">${article.excerpt}</p><span class="ts-kb-read">Read article <b aria-hidden="true">→</b></span></div>`;
+      row.appendChild(card);
+    });
+    const footer = document.createElement('div');
+    footer.className = 'ts-kb-footer';
+    footer.innerHTML = '<span class="ts-kb-page" aria-current="page">1</span><a class="ts-kb-all" href="/knowledge-base">View all articles →</a>';
+    section.append(heading, row, footer);
   }
 
   function trackBadges() {
@@ -192,6 +252,7 @@
     brandHomeLinks();
     officialCertificateSeals();
     trackBadges();
+    redesignKnowledgeBaseRow();
     document.querySelectorAll('a,button,span').forEach((element) => {
       const explicitHref = element.tagName === 'A' ? element.getAttribute('href') : null;
       const target = explicitHref?.startsWith('/pay?track=') ? explicitHref : destination(element);
