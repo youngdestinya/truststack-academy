@@ -116,6 +116,11 @@
       .ts-enrolment-choice:not(.ts-enrolment-bundle) a{color:#06162d!important;white-space:nowrap}
       .ts-trust-strip{background:#00c7e8!important;border-color:rgba(6,22,45,.14)!important;color:#06162d!important}
       .ts-trust-strip *{color:#06162d!important;opacity:1!important}
+      .ts-social-strip{display:flex!important;align-items:center;gap:.55rem!important}
+      .ts-social-strip a{display:grid;place-items:center;width:30px;height:30px;border-radius:999px;color:#fff!important;box-shadow:0 4px 12px rgba(6,22,45,.16);transition:transform .18s ease,box-shadow .18s ease}
+      .ts-social-strip a:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 7px 16px rgba(6,22,45,.24)}
+      .ts-social-strip svg{width:15px;height:15px;fill:currentColor}
+      .ts-social-linkedin{background:#0a66c2}.ts-social-x{background:#050505}.ts-social-facebook{background:#1877f2}.ts-social-youtube{background:#ff0000}
       .ts-builder-profile{align-items:center!important;text-align:center!important;justify-content:center!important}
       .ts-builder-profile-head{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
       .ts-builder-profile-name{display:flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important}
@@ -131,7 +136,7 @@
         .ts-footer-five{grid-template-columns:1.15fr .65fr .78fr 1fr 1.15fr!important;gap:2rem!important}
       }
       @media (max-width:900px){.ts-kb-row{grid-template-columns:1fr 1fr}.ts-kb-card:last-child{grid-column:1/-1;max-width:calc(50% - .75rem);width:100%;justify-self:center}}
-      @media (max-width:640px){.ts-kb-section{padding:4rem 1.1rem!important}.ts-kb-heading{margin-bottom:2rem}.ts-kb-row{grid-template-columns:1fr}.ts-kb-card:last-child{grid-column:auto;max-width:none}.ts-kb-image{height:210px}.ts-kb-footer{flex-wrap:wrap}}
+      @media (max-width:640px){.ts-kb-section{padding:4rem 1.1rem!important}.ts-kb-heading{margin-bottom:2rem}.ts-kb-row{grid-template-columns:1fr}.ts-kb-card:last-child{grid-column:auto;max-width:none}.ts-kb-image{height:210px}.ts-kb-footer{flex-wrap:wrap}.ts-trust-strip-copy{display:none!important}.ts-trust-strip>div{justify-content:center!important}}
     `;
     document.head.appendChild(style);
   }
@@ -554,7 +559,14 @@
       document.querySelectorAll('div').forEach((node) => {
         if (node.children.length || clean(node.textContent) !== 'built on real tools. designed for africa. ready for the world.') return;
         const strip = node.parentElement?.parentElement;
-        if (strip) strip.classList.add('ts-trust-strip');
+        if (!strip) return;
+        strip.classList.add('ts-trust-strip');
+        node.classList.add('ts-trust-strip-copy');
+        const socialArea = node.parentElement?.children[1];
+        if (!socialArea || socialArea.dataset.tsSocialLinks === 'true') return;
+        socialArea.dataset.tsSocialLinks = 'true';
+        socialArea.className = 'ts-social-strip';
+        socialArea.innerHTML = `<a class="ts-social-linkedin" href="https://www.linkedin.com/company/truststackng-" target="_blank" rel="noopener noreferrer" aria-label="TrustStack on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5ZM.43 8.1h4.12V24H.43V8.1ZM8.01 8.1h3.95v2.17h.06c.55-1.04 1.9-2.14 3.91-2.14 4.18 0 4.95 2.75 4.95 6.33V24h-4.11v-8.45c0-2.02-.04-4.62-2.82-4.62-2.82 0-3.25 2.2-3.25 4.47V24H8.01V8.1Z"/></svg></a><a class="ts-social-x" href="https://x.com/truststackng" target="_blank" rel="noopener noreferrer" aria-label="TrustStack on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2H21l-6.04 6.9L22.07 22H16.5l-4.36-5.7L7.15 22H4.38l6.47-7.4L4.03 2H9.74l3.94 5.2L18.24 2Zm-.97 17.7h1.53L8.9 4.18H7.26L17.27 19.7Z"/></svg></a><a class="ts-social-facebook" href="https://www.facebook.com/truststackng" target="_blank" rel="noopener noreferrer" aria-label="TrustStack on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.53-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07Z"/></svg></a><a class="ts-social-youtube" href="https://www.youtube.com/@TruststackNG" target="_blank" rel="noopener noreferrer" aria-label="TrustStack on YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.13C19.55 3.56 12 3.56 12 3.56s-7.55 0-9.4.51A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.13c1.85.51 9.4.51 9.4.51s7.55 0 9.4-.51a3 3 0 0 0 2.1-2.13A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.57V8.43L15.87 12 9.6 15.57Z"/></svg></a>`;
       });
       const homeFooter = document.querySelector('footer');
       if (homeFooter) {
