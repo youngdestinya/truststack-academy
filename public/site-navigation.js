@@ -96,6 +96,12 @@
       .ts-footer-resources a{display:flex;align-items:center;gap:.55rem;color:rgba(255,255,255,.62);font-size:13px;line-height:1.35;text-decoration:none;transition:color .18s ease,transform .18s ease}
       .ts-footer-resources a::before{content:'›';display:grid;place-items:center;width:16px;height:16px;border-radius:50%;background:rgba(212,175,55,.14);color:#d4af37;font-size:14px;font-weight:900}
       .ts-footer-resources a:hover{color:#fff;transform:translateX(3px)}
+      .ts-builder-profile{align-items:center!important;text-align:center!important;justify-content:center!important}
+      .ts-builder-profile-head{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+      .ts-builder-profile-name{display:flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important}
+      .ts-builder-verified{position:static!important;display:inline-grid!important;place-items:center!important;width:22px!important;height:22px!important;flex:0 0 22px!important;border:2px solid #fff!important;border-radius:999px!important;background:#16a34a!important;color:#fff!important;font-size:12px!important;box-shadow:0 3px 10px rgba(22,163,74,.28)!important}
+      .ts-builder-bio{max-width:650px!important;margin-left:auto!important;margin-right:auto!important;flex:0 1 auto!important}
+      .ts-builder-socials{justify-content:center!important}
       img[data-site-destination="/home.html"]{cursor:pointer}
       @media (min-width:1024px){
         .ts-home-header-inner{width:fit-content!important;max-width:calc(100% - 48px)!important;margin-left:auto!important;margin-right:auto!important}
@@ -226,6 +232,36 @@
     columns.insertBefore(resourceColumn, courseColumn);
   }
 
+  function refineBuilderProfile() {
+    if (!path.includes('home')) return;
+    const photo = document.querySelector('img[alt="Destiny Young"]');
+    if (!photo) return;
+    let card = photo.parentElement;
+    for (let depth = 0; card && depth < 5; depth += 1, card = card.parentElement) {
+      if (card.querySelectorAll('a').length >= 5 && clean(card.textContent).includes('founder & chief technology architect')) break;
+    }
+    if (!card || card.classList.contains('ts-builder-profile')) return;
+    const head = photo.parentElement?.parentElement;
+    const name = Array.from(card.querySelectorAll('div')).find((node) => !node.children.length && clean(node.textContent) === 'destiny young');
+    const tick = photo.parentElement?.querySelector('div:not(:has(*))');
+    const bio = Array.from(card.querySelectorAll('p')).find((node) => clean(node.textContent).startsWith('cybersecurity builder'));
+    const socials = Array.from(card.querySelectorAll('div')).find((node) => node.querySelectorAll(':scope > a').length >= 5);
+    card.classList.add('ts-builder-profile');
+    head?.classList.add('ts-builder-profile-head');
+    name?.classList.add('ts-builder-profile-name');
+    if (tick && name) {
+      tick.className = 'ts-builder-verified';
+      tick.setAttribute('aria-label', 'Verified TrustStack founder');
+      tick.title = 'Verified TrustStack founder';
+      name.appendChild(tick);
+    }
+    if (bio) {
+      bio.classList.add('ts-builder-bio');
+      bio.textContent = 'Technology leader, cybersecurity innovator and founder of TrustStack Technologies, building practical platforms that unite secure digital infrastructure, privacy compliance and career-focused learning. Destiny Young turns complex African technology challenges into trusted products, scalable systems and accessible opportunities for people and organisations.';
+    }
+    socials?.classList.add('ts-builder-socials');
+  }
+
   function trackBadges() {
     // Certificate surfaces use the official seal, not the career-card tint or badge.
     if (/(certificate|verify)/.test(path)) return;
@@ -295,6 +331,7 @@
     trackBadges();
     redesignKnowledgeBaseRow();
     addFooterResources();
+    refineBuilderProfile();
     document.querySelectorAll('a,button,span').forEach((element) => {
       const explicitHref = element.tagName === 'A' ? element.getAttribute('href') : null;
       const target = explicitHref?.startsWith('/pay?track=') ? explicitHref : destination(element);
