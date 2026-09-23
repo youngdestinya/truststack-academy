@@ -102,6 +102,7 @@
       .ts-builder-verified{position:static!important;display:inline-grid!important;place-items:center!important;width:22px!important;height:22px!important;flex:0 0 22px!important;border:2px solid #fff!important;border-radius:999px!important;background:#16a34a!important;color:#fff!important;font-size:12px!important;box-shadow:0 3px 10px rgba(22,163,74,.28)!important}
       .ts-builder-bio{max-width:650px!important;margin-left:auto!important;margin-right:auto!important;flex:0 1 auto!important}
       .ts-builder-socials{justify-content:center!important}
+      header nav a.ts-menu-plus::after{content:'+';display:inline-block;margin-left:.38em;color:#00a8d4;font-weight:900}
       img[data-site-destination="/home.html"]{cursor:pointer}
       @media (min-width:1024px){
         .ts-home-header-inner{width:fit-content!important;max-width:calc(100% - 48px)!important;margin-left:auto!important;margin-right:auto!important}
@@ -138,6 +139,48 @@
       document.head.appendChild(theme);
     }
     theme.content = '#0A1931';
+  }
+
+  function applyStaticSeo() {
+    if (!path.endsWith('.html')) return;
+    const seo = path.includes('home')
+      ? ['TrustStack Academy | Practical Cybersecurity Training in Africa','Build job-ready cybersecurity skills through hands-on labs, Naira-priced career tracks and verifiable TrustStack Academy certificates.','/home.html',false]
+      : path.includes('courses-tracks')
+        ? ['Cybersecurity Career Tracks | TrustStack Academy','Compare eight practical cybersecurity career tracks covering SOC analysis, digital forensics, cloud security, GRC and offensive security.','/courses-tracks.html',false]
+      : path.includes('lms') || path.includes('student-lms')
+        ? ['Cybersecurity Learning Platform | TrustStack Academy','Explore practical cybersecurity lessons, labs and career-focused learning pathways built for African learners and organisations.','/lms',false]
+      : path.includes('pay-checkout')
+        ? ['Secure Course Enrolment | TrustStack Academy','Complete your TrustStack Academy course enrolment securely in Naira.','/pay',true]
+      : path.includes('verify-certificate')
+        ? ['Verify a Certificate | TrustStack Academy','Verify a TrustStack Academy certificate against the official credential registry.','/verify',false]
+      : path.includes('knowledge-base')
+        ? ['Cybersecurity Knowledge Base | TrustStack Academy','Read practical SOC playbooks, Nigerian data protection guidance and Africa-focused cybersecurity analysis.','/knowledge-base',false]
+      : null;
+    if (!seo) return;
+    const [title, description, canonicalPath, noindex] = seo;
+    const origin = 'https://truststack-academy.vercel.app';
+    const upsertMeta = (selector, attribute, value, content) => {
+      let node = document.head.querySelector(selector);
+      if (!node) { node = document.createElement('meta'); node.setAttribute(attribute, value); document.head.appendChild(node); }
+      node.content = content;
+    };
+    document.title = title;
+    upsertMeta('meta[name="description"]','name','description',description);
+    upsertMeta('meta[name="robots"]','name','robots',noindex?'noindex,nofollow':'index,follow,max-image-preview:large');
+    upsertMeta('meta[property="og:title"]','property','og:title',title);
+    upsertMeta('meta[property="og:description"]','property','og:description',description);
+    upsertMeta('meta[property="og:type"]','property','og:type','website');
+    upsertMeta('meta[property="og:image"]','property','og:image',`${origin}/cdpo-og.png`);
+    upsertMeta('meta[name="twitter:card"]','name','twitter:card','summary_large_image');
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+    canonical.href = `${origin}${canonicalPath}`;
+  }
+
+  function decorateHeaderMenus() {
+    document.querySelectorAll('header nav a').forEach((link) => {
+      if (clean(link.textContent) !== 'home') link.classList.add('ts-menu-plus');
+    });
   }
 
   function brandHomeLinks() {
@@ -340,7 +383,7 @@
     if (label === 'lms' || label === 'enter lms' || label === 'my learning') return '/lms';
     if (label === 'pay') return '/pay';
     if (label === 'about' || label === 'our story') return '/home.html#about';
-    if (label === 'contact') return '/home.html#contact';
+    if (label === 'contact' || label === 'contact us') return '/contact';
     if (label === 'why truststack' || label === 'why truststack?') return '/home.html#whytruststack';
     if (label === 'our mission' || label === 'our core values' || label === 'our vision') return '/home.html#about';
     if (label === 'cap-adit' || label === 'securesme') return '/courses';
@@ -358,7 +401,9 @@
 
   function wire() {
     addHomeFavicon();
+    applyStaticSeo();
     addSharedStyles();
+    decorateHeaderMenus();
     brandHomeLinks();
     officialCertificateSeals();
     trackBadges();
