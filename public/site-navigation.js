@@ -70,6 +70,11 @@
       .ts-card-modules li{margin:.32rem 0}
       .ts-card-modules li::marker{color:var(--ts-track,#00b8d9)}
       img[data-site-destination="/home.html"]{cursor:pointer}
+      @media (min-width:1024px){
+        .ts-home-header-inner{width:fit-content!important;max-width:calc(100% - 48px)!important;margin-left:auto!important;margin-right:auto!important}
+        .ts-home-header-inner>nav{margin-left:2.5rem!important;margin-right:0!important}
+        .ts-home-header-inner>nav+div{width:0!important;margin-left:0!important;overflow:hidden!important}
+      }
     `;
     document.head.appendChild(style);
   }
@@ -226,6 +231,9 @@
       }
     });
     if (path.includes('home')) {
+      const siteHeader = document.querySelector('header');
+      const headerInner = siteHeader?.querySelector(':scope > div');
+      if (headerInner?.querySelector('nav')) headerInner.classList.add('ts-home-header-inner');
       const curriculum = document.getElementById('curriculum');
       curriculum?.querySelectorAll('div').forEach((title) => {
         if (title.children.length || !trackPages[clean(title.textContent)]) return;
