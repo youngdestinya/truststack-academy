@@ -402,8 +402,8 @@
     if (path.includes('student-lms') && label === 'labs') return '/lms';
     if (path.includes('student-lms') && label === 'pricing') return '/courses';
     if (path.includes('courses-tracks') && label === 'view labs') return '/lms';
-    if (path.includes('lms-full') && label === 'view all') return '/courses';
-    if ((path.includes('home') || path.includes('lms-full')) && trackTarget(label)) return trackTarget(label);
+    if (path.includes('lms.html') && label === 'view all') return '/courses';
+    if ((path.includes('home') || path.includes('lms.html')) && trackTarget(label)) return trackTarget(label);
     if (raw.includes('verify certificate') && (element.tagName === 'A' || element.tagName === 'BUTTON')) return '/verify';
     return null;
   }
@@ -445,7 +445,7 @@
         card.id = slug;
         card.style.scrollMarginTop = '92px';
       }
-      if (path.includes('home') || path.includes('lms-full')) {
+      if (path.includes('home') || path.includes('lms.html')) {
         card.dataset.siteDestination = target;
         card.setAttribute('role', 'link');
         card.setAttribute('tabindex', '0');

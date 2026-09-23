@@ -1,8 +1,8 @@
 export async function getServerSideProps() {
   return {
     redirect: {
-      destination: '/lms-full.html',
-      permanent: false,
+      destination: '/lms.html',
+      permanent: true,
     },
   };
 }
