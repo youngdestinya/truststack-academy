@@ -551,7 +551,19 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire);
   else wire();
-  new MutationObserver(wire).observe(document.documentElement, { childList: true, subtree: true });
+  let wiringScheduled = false;
+  const observerOptions = { childList: true, subtree: true };
+  const observer = new MutationObserver(() => {
+    if (wiringScheduled) return;
+    wiringScheduled = true;
+    observer.disconnect();
+    requestAnimationFrame(() => {
+      wire();
+      wiringScheduled = false;
+      observer.observe(document.documentElement, observerOptions);
+    });
+  });
+  observer.observe(document.documentElement, observerOptions);
   document.addEventListener('click', (event) => {
     const element = event.target && event.target.closest && event.target.closest('a,button,[data-site-destination]');
     if (!element) return;
