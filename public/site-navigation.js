@@ -113,6 +113,7 @@
       .ts-enrolment-choice{transition:transform .2s ease,border-color .2s ease,background .2s ease}
       .ts-enrolment-choice:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.55)!important;background:rgba(255,255,255,.09)!important}
       .ts-enrolment-bundle{background:linear-gradient(110deg,rgba(0,184,217,.18),rgba(10,25,49,.82))!important;border-color:rgba(212,175,55,.42)!important}
+      .ts-enrolment-choice:not(.ts-enrolment-bundle) a{color:#06162d!important;white-space:nowrap}
       .ts-builder-profile{align-items:center!important;text-align:center!important;justify-content:center!important}
       .ts-builder-profile-head{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
       .ts-builder-profile-name{display:flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important}
