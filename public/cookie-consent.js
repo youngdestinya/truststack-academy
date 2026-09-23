@@ -1,4 +1,5 @@
 (function () {
+  if (window.self !== window.top) return;
   if (window.__tsaCookieInit) return;
   window.__tsaCookieInit = true;
   var KEY = 'tsa-cookie-consent-v1';
