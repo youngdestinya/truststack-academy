@@ -1,4 +1,9 @@
 (function () {
+  if (!document.querySelector('script[src="/cookie-consent.js"]')) {
+    const consentScript = document.createElement('script');
+    consentScript.src = '/cookie-consent.js';
+    document.head.appendChild(consentScript);
+  }
   const path = location.pathname.toLowerCase();
   const clean = (value) => (value || '').replace(/\s+/g, ' ').trim().replace(/[→←]/g, '').trim().toLowerCase();
   const tracks = {

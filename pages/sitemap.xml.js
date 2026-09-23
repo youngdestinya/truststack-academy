@@ -1,7 +1,7 @@
 import index from '../data/cdpo/index.json';
 
 const base = 'https://truststack-academy.vercel.app';
-const staticPaths = ['/', '/home.html', '/courses-tracks.html', '/courses', '/lms', '/verify', '/knowledge-base', '/career-badges', '/cdpo', '/cdpo/exam'];
+const staticPaths = ['/', '/home.html', '/courses-tracks.html', '/courses', '/lms', '/verify', '/knowledge-base', '/career-badges', '/cdpo', '/cdpo/exam', '/scholarship', '/privacy', '/terms'];
 
 export async function getServerSideProps({ res }) {
   const paths = [...staticPaths, ...index.slice(1).map(({ day }) => `/cdpo/day/${day}`)];

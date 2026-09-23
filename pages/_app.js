@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Component {...pageProps} />
       <Script src="/site-navigation.js" strategy="afterInteractive" />
+      <Script src="/cookie-consent.js" strategy="afterInteractive" />
     </>
   );
 }

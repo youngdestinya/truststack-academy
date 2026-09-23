@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 500" role="img" aria-labelledby="title description">
+  <title id="title">TrustStack Academy CDPO study badge</title>
+  <desc id="description">A shield-shaped learning badge for the free data protection officer study programme. This is not a professional certification.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a3953"/><stop offset=".55" stop-color="#0a2038"/><stop offset="1" stop-color="#07182e"/></linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6de4ef"/><stop offset=".55" stop-color="#03b8d2"/><stop offset="1" stop-color="#d7b352"/></linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0caec8"/><stop offset="1" stop-color="#11778e"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#07182e" flood-opacity=".28"/></filter>
+    <clipPath id="shield"><path d="M30 72Q210-8 390 72V330L210 474 30 330Z"/></clipPath>
+  </defs>
+  <path d="M30 72Q210-8 390 72V330L210 474 30 330Z" fill="url(#panel)" stroke="url(#edge)" stroke-width="12" filter="url(#shadow)"/>
+  <path d="M50 88Q210 18 370 88V316L210 446 50 316Z" fill="none" stroke="#78daea" stroke-opacity=".25" stroke-width="2"/>
+  <g clip-path="url(#shield)" opacity=".16" fill="none" stroke="#55d6e9" stroke-width="1.5">
+    <circle cx="210" cy="115" r="86"/><circle cx="210" cy="115" r="118"/>
+    <path d="M55 210H365M60 228H360M67 246H353M75 264H345"/>
+  </g>
+  <circle cx="210" cy="106" r="54" fill="#082238" stroke="#d7b352" stroke-width="4"/>
+  <circle cx="210" cy="106" r="46" fill="#0e5265" stroke="#7be4ed" stroke-width="2"/>
+  <g fill="none" stroke="#e8fbfd" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M189 88h37v42h-37z" stroke-width="3"/><path d="M196 97h19M196 104h10" stroke-width="2" opacity=".8"/>
+    <path d="M211 107v-6a7 7 0 0 1 14 0v6" stroke-width="3"/>
+    <rect x="207" y="107" width="22" height="19" rx="3" fill="#d7b352" stroke="#d7b352" stroke-width="2"/>
+    <circle cx="218" cy="115" r="2" fill="#082238" stroke="none"/><path d="M218 116v4" stroke="#082238" stroke-width="2"/>
+  </g>
+  <g text-anchor="middle" font-family="Alegreya Sans,Arial,sans-serif" font-weight="900">
+    <text x="210" y="188" fill="#ffffff" font-size="15" letter-spacing="2.1">TRUSTSTACK ACADEMY</text>
+    <text x="210" y="215" fill="#83e4ef" font-size="12" letter-spacing="4">DATA PROTECTION</text>
+    <text x="210" y="288" fill="#ffffff" font-size="69" letter-spacing="3">CDPO</text>
+    <text x="210" y="312" fill="#d9c999" font-size="13" letter-spacing="2.4">30-DAY LEARNING PATH</text>
+  </g>
+  <path d="M45 332H375V352L210 466 45 352Z" fill="url(#band)"/>
+  <path d="M45 332H375" stroke="#d7b352" stroke-width="4"/>
+  <g text-anchor="middle" font-family="Alegreya Sans,Arial,sans-serif" font-weight="900">
+    <text x="210" y="376" fill="#ffffff" font-size="29" letter-spacing="1.1">STUDY BADGE</text>
+    <text x="210" y="410" fill="#e8fbfd" font-size="12" letter-spacing="2.8">FREE · SELF-PACED</text>
+  </g>
+</svg>
