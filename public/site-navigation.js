@@ -93,11 +93,15 @@
       .ts-kb-page,.ts-kb-all{display:inline-grid;place-items:center;min-width:46px;height:46px;border:1px solid #dce4ed;border-radius:10px;background:#fff;color:#081a35;font-weight:900;text-decoration:none!important}
       .ts-kb-page[aria-current="page"]{background:#081a35;color:#fff;border-color:#081a35}
       .ts-kb-all{padding:0 1.2rem;color:#fff;background:#00aee5;border-color:#00aee5;text-transform:uppercase;letter-spacing:.06em;font-size:.76rem}
+      .ts-footer-resources a{display:flex;align-items:center;gap:.55rem;color:rgba(255,255,255,.62);font-size:13px;line-height:1.35;text-decoration:none;transition:color .18s ease,transform .18s ease}
+      .ts-footer-resources a::before{content:'›';display:grid;place-items:center;width:16px;height:16px;border-radius:50%;background:rgba(212,175,55,.14);color:#d4af37;font-size:14px;font-weight:900}
+      .ts-footer-resources a:hover{color:#fff;transform:translateX(3px)}
       img[data-site-destination="/home.html"]{cursor:pointer}
       @media (min-width:1024px){
         .ts-home-header-inner{width:fit-content!important;max-width:calc(100% - 48px)!important;margin-left:auto!important;margin-right:auto!important}
         .ts-home-header-inner>nav{margin-left:2.5rem!important;margin-right:0!important}
         .ts-home-header-inner>nav+div{width:0!important;margin-left:0!important;overflow:hidden!important}
+        .ts-footer-five{grid-template-columns:1.15fr .65fr .78fr 1fr 1.15fr!important;gap:2rem!important}
       }
       @media (max-width:900px){.ts-kb-row{grid-template-columns:1fr 1fr}.ts-kb-card:last-child{grid-column:1/-1;max-width:calc(50% - .75rem);width:100%;justify-self:center}}
       @media (max-width:640px){.ts-kb-section{padding:4rem 1.1rem!important}.ts-kb-heading{margin-bottom:2rem}.ts-kb-row{grid-template-columns:1fr}.ts-kb-card:last-child{grid-column:auto;max-width:none}.ts-kb-image{height:210px}.ts-kb-footer{flex-wrap:wrap}}
@@ -185,6 +189,43 @@
     section.append(heading, row, footer);
   }
 
+  function addFooterResources() {
+    if (!path.includes('home')) return;
+    const footer = document.querySelector('footer');
+    if (!footer || footer.querySelector('.ts-footer-resources')) return;
+    const headings = Array.from(footer.querySelectorAll('div')).filter((node) => !node.children.length);
+    const quickHeading = headings.find((node) => clean(node.textContent) === 'quick links');
+    const courseHeading = headings.find((node) => clean(node.textContent) === 'courses');
+    const quickColumn = quickHeading?.parentElement?.parentElement;
+    const courseColumn = courseHeading?.parentElement?.parentElement;
+    const columns = quickColumn?.parentElement;
+    if (!quickColumn || !courseColumn || !columns || courseColumn.parentElement !== columns) return;
+    columns.classList.add('ts-footer-five');
+    const resourceColumn = document.createElement('div');
+    resourceColumn.className = 'ts-footer-resources';
+    const heading = document.createElement('div');
+    heading.className = 'inline-block relative pb-2';
+    heading.innerHTML = '<div class="font-bold text-[12px] tracking-wide">RESOURCES</div><span class="absolute left-0 bottom-0 h-[2px] w-full bg-[#D4AF37]"></span>';
+    const links = document.createElement('div');
+    links.className = 'space-y-2 mt-4';
+    [
+      ['Knowledge Base', '/knowledge-base'],
+      ['Free CDPO Course', '/cdpo'],
+      ['Career Badges', '/career-badges'],
+      ['Verify Certificate', '/verify'],
+      ['Scholarship', '/scholarship'],
+      ['Privacy Policy', '/privacy'],
+      ['Terms of Use', '/terms']
+    ].forEach(([label, href]) => {
+      const link = document.createElement('a');
+      link.href = href;
+      link.textContent = label;
+      links.appendChild(link);
+    });
+    resourceColumn.append(heading, links);
+    columns.insertBefore(resourceColumn, courseColumn);
+  }
+
   function trackBadges() {
     // Certificate surfaces use the official seal, not the career-card tint or badge.
     if (/(certificate|verify)/.test(path)) return;
@@ -253,6 +294,7 @@
     officialCertificateSeals();
     trackBadges();
     redesignKnowledgeBaseRow();
+    addFooterResources();
     document.querySelectorAll('a,button,span').forEach((element) => {
       const explicitHref = element.tagName === 'A' ? element.getAttribute('href') : null;
       const target = explicitHref?.startsWith('/pay?track=') ? explicitHref : destination(element);
