@@ -366,7 +366,7 @@
     }
     if (bio) {
       bio.classList.add('ts-builder-bio');
-      bio.textContent = 'Technology leader, cybersecurity innovator and founder of TrustStack Technologies, building practical platforms that unite secure digital infrastructure, privacy compliance and career-focused learning. Destiny Young turns complex African technology challenges into trusted products, scalable systems and accessible opportunities for people and organisations.';
+      bio.textContent = 'Technology leader, cybersecurity innovator and founder of Truststack Academy and Educational Services Ltd, building practical learning platforms that unite secure digital practice, privacy capability and career-focused education. Destiny Young turns complex African technology challenges into trusted products, scalable systems and accessible opportunities for people and organisations.';
     }
     socials?.classList.add('ts-builder-socials');
   }
@@ -423,7 +423,7 @@
     if (label === 'certificates' || label === 'verify' || label === 'verify certificate' || label === 'verify a certificate') return '/verify';
     if (label === 'lms' || label === 'enter lms' || label === 'my learning') return '/lms';
     if (label === 'pay') return '/pay';
-    if (label === 'about' || label === 'our story') return '/home.html#about';
+    if (label === 'about' || label === 'our story') return '/about';
     if (label === 'contact' || label === 'contact us') return '/contact';
     if (label === 'why truststack' || label === 'why truststack?') return '/home.html#whytruststack';
     if (label === 'our mission' || label === 'our core values' || label === 'our vision') return '/home.html#about';

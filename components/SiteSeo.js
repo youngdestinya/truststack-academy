@@ -8,6 +8,7 @@ const defaults = {
 };
 
 const pages = {
+  '/about': ['About TrustStack Academy | Practical Cybersecurity Education', 'Meet Truststack Academy and Educational Services Ltd, the Nigerian education company behind TrustStack Academy and its practical, Africa-focused cybersecurity learning platform.'],
   '/career-badges': ['Cybersecurity Career Badges | TrustStack Academy', 'Explore TrustStack Academy career badges for SOC analysis, digital forensics, threat intelligence, cloud security, GRC and other practical tracks.'],
   '/cdpo': ['Free CDPO Course | Nigeria Data Protection Training', 'Study Nigeria data protection with TrustStack Academy’s free 30-day CDPO learning path covering the NDPA, privacy operations and practical compliance.'],
   '/cdpo/exam': ['CDPO Practice Exam | TrustStack Academy', 'Test your understanding of Nigerian data protection, privacy governance and the NDPA with the TrustStack Academy CDPO practice exam.'],
@@ -48,6 +49,6 @@ export default function SiteSeo() {
     <meta key="twitter-description" name="twitter:description" content={description}/>
     <meta key="twitter-image" name="twitter:image" content={image}/>
     <link key="favicon" rel="icon" type="image/png" href="/Truststack_Logo_PNG.png"/>
-    <script key="organisation-schema" type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'EducationalOrganization',name:'TrustStack Academy',url:origin,logo:`${origin}/Truststack_Logo_PNG.png`,description:defaults.description,areaServed:'Africa',parentOrganization:{'@type':'Organization',name:'TrustStack Technologies'}})}}/>
+    <script key="organisation-schema" type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'EducationalOrganization',name:'Truststack Academy and Educational Services Ltd',alternateName:'TrustStack Academy',url:origin,logo:`${origin}/Truststack_Logo_PNG.png`,description:defaults.description,areaServed:'Africa',founder:{'@type':'Person',name:'Destiny Young',jobTitle:'Founder and Chief Technology Architect'}})}}/>
   </Head>;
 }
