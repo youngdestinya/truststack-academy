@@ -5,15 +5,15 @@ export default function Admin() {
   const [certs, setCerts] = useState([]);
   const [form, setForm] = useState({ student: '', track: 'Ethical Hacking & Penetration Testing', date: '2026-09-15' });
   const [newCert, setNewCert] = useState(null);
-  useEffect(() => { fetch('/certs.json').then(r => r.json()).then(j => setCerts(j.certificates || [])); }, []);
+  useEffect(() => { fetch('/certs.json').then(r => r.json()).then(j => setCerts(j.certificates || [])); fetch('/api/admin/session',{cache:'no-store'}).then(r=>setAuth(r.ok)).catch(()=>{}); }, []);
   const login=async()=>{
-   try{const r=await fetch('/api/admin/session',{method:'POST',headers:{'x-admin-key':key}});if(r.ok)setAuth(true);else alert('Invalid admin key');}catch{alert('Login unavailable');}
+   try{const r=await fetch('/api/admin/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key})});if(r.ok){setKey('');setAuth(true);}else alert('Invalid admin key');}catch{alert('Login unavailable');}
   };
   const addLocal=async()=>{
-   try{const r=await fetch('/api/certs/generate',{method:'POST',headers:{'Content-Type':'application/json','x-admin-key':key},body:JSON.stringify({student:form.student,track:form.track,date_issued:form.date})});const j=await r.json();if(!r.ok)throw new Error(j.error);setNewCert(j.cert);}catch(e){alert(e.message);}
+   try{const r=await fetch('/api/certs/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({student:form.student,track:form.track,date_issued:form.date})});const j=await r.json();if(!r.ok)throw new Error(j.error);setNewCert(j.cert);}catch(e){alert(e.message);}
   };
   const pushGithub=async()=>{
-   try{const r=await fetch('/api/admin/certs/github',{method:'POST',headers:{'Content-Type':'application/json','x-admin-key':key},body:JSON.stringify({student:form.student,track:form.track,date_issued:form.date})});const j=await r.json();if(!r.ok)throw new Error(j.error);setNewCert(j.cert);setCerts([...certs,j.cert]);alert(`Saved ${j.cert.id} to GitHub`);}catch(e){alert(e.message);}
+   try{const r=await fetch('/api/admin/certs/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({student:form.student,track:form.track,date_issued:form.date})});const j=await r.json();if(!r.ok)throw new Error(j.error);setNewCert(j.cert);setCerts([...certs,j.cert]);alert(`Saved ${j.cert.id} to GitHub`);}catch(e){alert(e.message);}
   };
   if (!auth) return (
     <div style={{ fontFamily: 'Alegreya Sans', maxWidth: 360, margin: '80px auto', padding: 24, border: '1px solid #e5e7eb', borderRadius: 12 }}>

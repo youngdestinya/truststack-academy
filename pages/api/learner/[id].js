@@ -1,8 +1,10 @@
 import {getAllLearners,publicLearner} from '../../../lib/learners';
+import {methodNotAllowed,rateLimit} from '../../../lib/security';
 
 export default async function handler(req,res){
- if(req.method!=='GET')return res.status(405).json({error:'Method not allowed'});
+ if(req.method!=='GET')return methodNotAllowed(res,['GET']);
  res.setHeader('Cache-Control','no-store');
+ if(!rateLimit(req,res,{bucket:'learner-lookup',limit:60,windowMs:60*1000}))return;
  const id=String(req.query.id||'').trim().toUpperCase();
  if(!/^TSA-\d{4}-[A-F0-9]{6}$/.test(id))return res.status(400).json({valid:false,error:'Enter a valid TSA learner ID'});
  try{

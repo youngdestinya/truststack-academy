@@ -1,8 +1,12 @@
 import crypto from 'crypto';
 import {checkoutProduct} from '../../../lib/checkout-pricing';
 import {makeLearner,saveLearner} from '../../../lib/learners';
+import {methodNotAllowed,rateLimit,requireJson,requireSameOrigin} from '../../../lib/security';
 export default async function handler(req,res){
- if(req.method!=='POST')return res.status(405).end();
+ res.setHeader('Cache-Control','no-store');
+ if(req.method!=='POST')return methodNotAllowed(res,['POST']);
+ if(!rateLimit(req,res,{bucket:'checkout-verify',limit:20,windowMs:10*60*1000}))return;
+ if(!requireSameOrigin(req,res)||!requireJson(req,res))return;
  if(!process.env.PAYSTACK_SECRET_KEY||!process.env.GITHUB_TOKEN)return res.status(503).json({valid:false,error:'Payments are not configured yet'});
  const reference=req.body?.reference;
  if(typeof reference!=='string'||!reference||reference.length>200)return res.status(400).json({valid:false,error:'Invalid reference'});
