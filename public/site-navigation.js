@@ -126,7 +126,11 @@
       .ts-builder-profile-name{display:flex!important;align-items:center!important;justify-content:center!important;gap:.5rem!important}
       .ts-builder-verified{position:static!important;display:inline-grid!important;place-items:center!important;width:22px!important;height:22px!important;flex:0 0 22px!important;border:2px solid #fff!important;border-radius:999px!important;background:#16a34a!important;color:#fff!important;font-size:12px!important;box-shadow:0 3px 10px rgba(22,163,74,.28)!important}
       .ts-builder-bio{max-width:650px!important;margin-left:auto!important;margin-right:auto!important;flex:0 1 auto!important}
-      .ts-builder-socials{justify-content:center!important}
+      .ts-builder-socials{display:flex!important;align-items:center!important;justify-content:center!important;gap:.85rem!important;margin-top:1.75rem!important;min-height:52px!important}
+      .ts-builder-socials a{display:grid!important;place-items:center!important;width:48px!important;height:48px!important;flex:0 0 48px!important;border-radius:999px!important;color:#fff!important;box-shadow:0 8px 20px rgba(7,24,46,.16)!important;transition:transform .18s ease,box-shadow .18s ease!important}
+      .ts-builder-socials a:hover{transform:translateY(-3px) scale(1.05)!important;box-shadow:0 12px 24px rgba(7,24,46,.24)!important}
+      .ts-builder-socials svg{display:block!important;width:24px!important;height:24px!important;fill:#fff!important;color:#fff!important}
+      .ts-builder-socials a:nth-child(1){background:#0a66c2!important}.ts-builder-socials a:nth-child(2){background:#050505!important}.ts-builder-socials a:nth-child(3){background:#1877f2!important}.ts-builder-socials a:nth-child(4){background:#ff0000!important}
       .ts-career-badge-strip{overflow:hidden!important;padding:3.25rem 0!important;border-top:1px solid rgba(7,24,46,.07)!important;border-bottom:1px solid rgba(7,24,46,.07)!important;background:linear-gradient(180deg,#fff,#f7fbfd)!important}
       .ts-career-badge-heading{width:min(1280px,calc(100% - 3rem));margin:0 auto 1.8rem;color:#07182e;text-align:center}
       .ts-career-badge-heading span{display:block;color:#00a6cf;font-size:.72rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase}
@@ -413,7 +417,10 @@
     const name = Array.from(card.querySelectorAll('div')).find((node) => !node.children.length && clean(node.textContent) === 'destiny young');
     const tick = photo.parentElement?.querySelector('div:not(:has(*))');
     const bio = Array.from(card.querySelectorAll('p')).find((node) => clean(node.textContent).startsWith('cybersecurity builder'));
-    const socials = Array.from(card.querySelectorAll('div')).find((node) => node.querySelectorAll(':scope > a').length >= 5);
+    const socials = Array.from(card.querySelectorAll('div')).find((node) => {
+      const links = Array.from(node.querySelectorAll(':scope > a'));
+      return links.length === 4 && links.every((link) => /linkedin|x\.com|facebook|youtube/i.test(link.href));
+    });
     card.classList.add('ts-builder-profile');
     head?.classList.add('ts-builder-profile-head');
     name?.classList.add('ts-builder-profile-name');
