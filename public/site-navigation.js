@@ -131,6 +131,8 @@
       .ts-builder-socials a:hover{transform:translateY(-3px) scale(1.05)!important;box-shadow:0 12px 24px rgba(7,24,46,.24)!important}
       .ts-builder-socials svg{display:block!important;width:24px!important;height:24px!important;fill:#fff!important;color:#fff!important}
       .ts-builder-socials a:nth-child(1){background:#0a66c2!important}.ts-builder-socials a:nth-child(2){background:#050505!important}.ts-builder-socials a:nth-child(3){background:#1877f2!important}.ts-builder-socials a:nth-child(4){background:#ff0000!important}.ts-builder-socials a:nth-child(5){background:linear-gradient(135deg,#833ab4,#fd1d1d 55%,#fcb045)!important}.ts-builder-socials a:nth-child(6){background:#050505!important}
+      #whytruststack{scroll-margin-top:96px!important}
+      #whytruststack:focus{outline:none!important}
       .ts-career-badge-strip{overflow:hidden!important;padding:3.25rem 0!important;border-top:1px solid rgba(7,24,46,.07)!important;border-bottom:1px solid rgba(7,24,46,.07)!important;background:linear-gradient(180deg,#fff,#f7fbfd)!important}
       .ts-career-badge-heading{width:min(1280px,calc(100% - 3rem));margin:0 auto 1.8rem;color:#07182e;text-align:center}
       .ts-career-badge-heading span{display:block;color:#00a6cf;font-size:.72rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase}
@@ -534,6 +536,16 @@
     return null;
   }
 
+  function focusWhyTrustStack(smooth = true) {
+    const section = document.getElementById('whytruststack');
+    if (!section) return false;
+    const heading = section.querySelector('h1,h2,h3') || section;
+    if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1');
+    section.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+    window.setTimeout(() => heading.focus({ preventScroll: true }), smooth ? 450 : 0);
+    return true;
+  }
+
   function wire() {
     addHomeFavicon();
     applyStaticSeo();
@@ -550,6 +562,10 @@
     refineBuilderProfile();
     removeSampleTestimonials();
     replacePartnerStrip();
+    if (path.includes('home') && location.hash === '#whytruststack' && !document.documentElement.dataset.whyTrustStackFocused) {
+      document.documentElement.dataset.whyTrustStackFocused = 'true';
+      requestAnimationFrame(() => focusWhyTrustStack(false));
+    }
     document.querySelectorAll('a,button,span').forEach((element) => {
       const explicitHref = element.tagName === 'A' ? element.getAttribute('href') : null;
       const target = explicitHref?.startsWith('/pay?track=') ? explicitHref : destination(element);
@@ -737,6 +753,10 @@
     if (!target) return;
     event.preventDefault();
     event.stopImmediatePropagation();
+    if (target === '/home.html#whytruststack' && path.includes('home') && focusWhyTrustStack(true)) {
+      history.pushState(null, '', '#whytruststack');
+      return;
+    }
     location.href = target;
   }, true);
   document.addEventListener('keydown', (event) => {
