@@ -130,7 +130,7 @@
       .ts-builder-socials a{display:grid!important;place-items:center!important;width:48px!important;height:48px!important;flex:0 0 48px!important;border-radius:999px!important;color:#fff!important;box-shadow:0 8px 20px rgba(7,24,46,.16)!important;transition:transform .18s ease,box-shadow .18s ease!important}
       .ts-builder-socials a:hover{transform:translateY(-3px) scale(1.05)!important;box-shadow:0 12px 24px rgba(7,24,46,.24)!important}
       .ts-builder-socials svg{display:block!important;width:24px!important;height:24px!important;fill:#fff!important;color:#fff!important}
-      .ts-builder-socials a:nth-child(1){background:#0a66c2!important}.ts-builder-socials a:nth-child(2){background:#050505!important}.ts-builder-socials a:nth-child(3){background:#1877f2!important}.ts-builder-socials a:nth-child(4){background:#ff0000!important}
+      .ts-builder-socials a:nth-child(1){background:#0a66c2!important}.ts-builder-socials a:nth-child(2){background:#050505!important}.ts-builder-socials a:nth-child(3){background:#1877f2!important}.ts-builder-socials a:nth-child(4){background:#ff0000!important}.ts-builder-socials a:nth-child(5){background:linear-gradient(135deg,#833ab4,#fd1d1d 55%,#fcb045)!important}.ts-builder-socials a:nth-child(6){background:#050505!important}
       .ts-career-badge-strip{overflow:hidden!important;padding:3.25rem 0!important;border-top:1px solid rgba(7,24,46,.07)!important;border-bottom:1px solid rgba(7,24,46,.07)!important;background:linear-gradient(180deg,#fff,#f7fbfd)!important}
       .ts-career-badge-heading{width:min(1280px,calc(100% - 3rem));margin:0 auto 1.8rem;color:#07182e;text-align:center}
       .ts-career-badge-heading span{display:block;color:#00a6cf;font-size:.72rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase}
@@ -434,7 +434,10 @@
       bio.classList.add('ts-builder-bio');
       bio.textContent = 'Technology leader, cybersecurity innovator and founder of Truststack Academy and Educational Services Ltd, building practical learning platforms that unite secure digital practice, privacy capability and career-focused education. Destiny Young turns complex African technology challenges into trusted products, scalable systems and accessible opportunities for people and organisations.';
     }
-    socials?.classList.add('ts-builder-socials');
+    if (socials) {
+      socials.classList.add('ts-builder-socials');
+      socials.insertAdjacentHTML('beforeend', `<a href="https://www.instagram.com/youngdestinya/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5Zm8.75 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></a><a href="https://www.tiktok.com/@youngdestinya" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 2h3.1c.25 2.1 1.43 3.53 3.4 4.15v3.16a8.16 8.16 0 0 1-3.5-1.08v7.02A6.75 6.75 0 1 1 11.64 8.6v3.2a3.58 3.58 0 1 0 2.86 3.5V2Z"/></svg></a>`);
+    }
   }
 
   function removeSampleTestimonials() {
