@@ -17,6 +17,7 @@ const pages = {
   '/dashboard': ['Learner Dashboard | TrustStack Academy', 'Access your TrustStack Academy learning dashboard, course progress and certificate records.'],
   '/knowledge-base': ['Cybersecurity Knowledge Base | TrustStack Academy', 'Read practical SOC playbooks, Nigerian data protection guidance, cloud security notes and Africa-focused cybersecurity analysis.'],
   '/learner': ['Verify a TrustStack Learner | Official Learner Registry', 'Confirm a TrustStack Academy learner ID, current career track and programme status through the official privacy-aware learner registry.'],
+  '/login': ['Learner Login | TrustStack Academy', 'Securely access your TrustStack Academy learner dashboard, practical labs, progress and verifiable learning record.'],
   '/privacy': ['Privacy Policy | TrustStack Academy', 'Learn how TrustStack Academy collects, uses, protects and retains learner information under the Nigeria Data Protection Act 2023.'],
   '/sample-certificate': ['Official Sample Certificate | TrustStack Academy', 'View and verify the official TrustStack Academy sample completion certificate and its registry record.'],
   '/scholarship': ['Cybersecurity Scholarship | TrustStack Academy', 'Join the TrustStack Academy scholarship waitlist for practical cybersecurity, data protection and digital compliance training in Africa.'],
@@ -27,7 +28,7 @@ const pages = {
 export default function SiteSeo() {
   const router = useRouter();
   const pathname = router.pathname;
-  const isPrivate = pathname.startsWith('/admin') || pathname === '/dashboard' || pathname === '/certificate-preview';
+  const isPrivate = pathname.startsWith('/admin') || pathname === '/login' || pathname === '/dashboard' || pathname === '/certificate-preview';
   let match = pages[pathname];
   if (!match && pathname.startsWith('/cdpo/day/')) match = ['CDPO Daily Lesson | TrustStack Academy', 'Study a practical daily lesson from TrustStack Academy’s free 30-day Nigeria data protection learning path.'];
   const [title, description] = match || [defaults.title, defaults.description];

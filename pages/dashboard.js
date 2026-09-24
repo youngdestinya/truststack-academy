@@ -1,41 +1,27 @@
-import { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
-import AdminGate from '../components/AdminGate';
-function DashboardContent() {
-  const labs = Array.from({ length: 12 }, (_, i) => ({ id: i+1, title: `Lab ${i+1}: ${['Recon','Scanning','Exploitation','Post-Exploitation','Pivoting','Privesc','Persistence','Cleanup','SIEM','Forensics','Cloud','Report'][i]}`, done: i < 3 }));
-  const [checked, setChecked] = useState(labs.map(l => l.done));
-  const progress = Math.round((checked.filter(Boolean).length / 12) * 100);
-  return (
-    <div style={{ fontFamily: 'Alegreya Sans', display: 'grid', gridTemplateColumns: '260px 1fr', minHeight: '100vh' }}>
-      <aside style={{ background: '#0a1931', color: '#fff', padding: 20 }}>
-        <div style={{ fontWeight: 900 }}>TRUSTSTACK LMS v2</div>
-        <div style={{ marginTop: 24, fontSize: 12, opacity: 0.6 }}>TRACK: Ethical Hacking</div>
-        <div style={{ marginTop: 16, fontSize: 13 }}>Progress {progress}%</div>
-        <div style={{ height: 6, background: '#1e3a5f', borderRadius: 999, marginTop: 6 }}><div style={{ width: `${progress}%`, height: '100%', background: '#10b981', borderRadius: 999 }} /></div>
-      </aside>
-      <main style={{ padding: 24, background: '#f9fafb' }}>
-        <h1 style={{ fontSize: 32, fontWeight: 900 }}>Dashboard — LMS v2 flags terminal</h1>
-        <section style={{marginTop:18,display:'grid',gridTemplateColumns:'1fr auto',gap:24,alignItems:'center',background:'#fff',border:'2px solid #d4af37',borderRadius:18,padding:22}}>
-          <div><div style={{fontSize:11,fontWeight:900,letterSpacing:2,color:'#008fb7'}}>TRUSTSTACK VERIFIED LEARNER</div><h2 style={{margin:'8px 0 4px',fontSize:25}}>Chinedu Okoro</h2><div style={{fontFamily:'monospace',fontWeight:900}}>TSA-2026-04F82A</div><div style={{marginTop:9,color:'#526176'}}>Digital Forensics · <strong style={{color:'#07865a'}}>● Active Learner</strong></div><a href="/learner?id=TSA-2026-04F82A" style={{display:'inline-block',marginTop:12,color:'#007fa7',fontWeight:900}}>Open verified learner profile →</a></div>
-          <QRCodeSVG value="https://truststack.academy/learner?id=TSA-2026-04F82A" size={100}/>
-        </section>
-        <div style={{ display: 'grid', gap: 8, marginTop: 20 }}>
-          {labs.map((lab, i) => (
-            <label key={lab.id} style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#fff', padding: 12, borderRadius: 8, border: '1px solid #e5e7eb' }}>
-              <input type="checkbox" checked={checked[i]} onChange={() => { const c=[...checked]; c[i]=!c[i]; setChecked(c); }} />
-              <span style={{ fontSize: 14, fontWeight: checked[i] ? 700 : 400 }}>{lab.title}</span>
-              <span style={{ marginLeft: 'auto', fontSize: 11, background: checked[i] ? '#10b981' : '#e5e7eb', color: checked[i] ? '#fff' : '#000', padding: '2px 8px', borderRadius: 999 }}>{checked[i] ? 'DONE' : 'TODO'}</span>
-            </label>
-          ))}
-        </div>
-        <div style={{ marginTop: 24, background: '#000', color: '#0f0', fontFamily: 'monospace', fontSize: 12, padding: 16, borderRadius: 8 }}>
-          <div>$ truststack labs --status</div>
-          <div>{checked.filter(Boolean).length}/12 complete • {progress}%</div>
-          <div>{progress === 100 ? '$ cert generate --id 2026-XXXX --track ethical-hacking' : '$ keep hacking...'}</div>
-        </div>
-        {progress === 100 && <div style={{ marginTop: 16, background: '#10b981', color: '#fff', padding: 12, borderRadius: 8, fontWeight: 900, textAlign: 'center' }}>Complete! Generate <span className="cert-italic">Certificate</span> ID 2026-HEX8</div>}
-      </main>
-    </div>
-  );
+import Head from 'next/head';
+import {useState} from 'react';
+import {QRCodeSVG} from 'qrcode.react';
+import {courseCatalog} from '../lib/course-catalog';
+import {getAllLearners} from '../lib/learners';
+import {learnerIdFromSession} from '../lib/learner-auth';
+
+export async function getServerSideProps({req}){
+ const learnerId=learnerIdFromSession(req);
+ if(!learnerId)return {redirect:{destination:'/login',permanent:false}};
+ try{const data=await getAllLearners();const learner=data.learners.find(item=>item.id===learnerId);if(!learner)return {redirect:{destination:'/login',permanent:false}};return {props:{learner:{id:learner.id,display_name:learner.display_name||'TrustStack Learner',track:learner.track,status:learner.status,enrolled_on:learner.enrolled_on,certificate_id:learner.certificate_id||null}}};}catch{return {props:{learner:null}};}
 }
-export default function Dashboard(){return <AdminGate title="Learner dashboard"><DashboardContent/></AdminGate>}
+
+function trackDetails(track){
+ if(track==='Bundle: All 8 Tracks')return {title:track,icon:'✦',color:'#00b8d9',tools:'Complete eight-track pathway',modules:courseCatalog.flatMap(course=>course.modules.slice(0,1))};
+ return courseCatalog.find(course=>course.title.toLowerCase()===String(track).toLowerCase())||{title:track,icon:'🛡',color:'#00b8d9',tools:'Practical cybersecurity learning',modules:['Learning orientation','Guided practical lab','Evidence and reflection','Final assessment']};
+}
+
+export default function Dashboard({learner}){
+ const course=learner?trackDetails(learner.track):null;
+ const labs=course?course.modules.flatMap((module,index)=>[{title:`Module ${index+1}: ${module}`,type:'Lesson'},{title:`Practical ${index+1}: Applied evidence lab`,type:'Lab'}]).slice(0,12):[];
+ const [checked,setChecked]=useState(labs.map((_,index)=>index<2));
+ const progress=labs.length?Math.round((checked.filter(Boolean).length/labs.length)*100):0;
+ const logout=async()=>{await fetch('/api/learner/session',{method:'DELETE'});location.assign('/login');};
+ if(!learner)return <main className="unavailable"><h1>Dashboard temporarily unavailable</h1><p>Please try again shortly or contact helpdesk@truststack.academy.</p><a href="/login">Return to login</a><style jsx>{`main{max-width:650px;margin:100px auto;font-family:'Alegreya Sans';padding:35px;border:1px solid #dce5eb;border-radius:24px}a{color:#008eae;font-weight:900}`}</style></main>;
+ return <><Head><title>{learner.display_name} | TrustStack Learner Dashboard</title><meta name="robots" content="noindex,nofollow"/></Head><div className="dashboard" style={{'--accent':course.color}}><aside><a className="brand" href="/home.html"><img src="/truststack-home-logo.png" alt="TrustStack Academy"/><span>TrustStack Academy</span></a><div className="profile"><div className="avatar">{learner.display_name.split(' ').map(name=>name[0]).join('').slice(0,2)}</div><strong>{learner.display_name}</strong><small>{learner.id}</small></div><nav><a className="active" href="#overview">Overview</a><a href="#learning">My learning</a><a href={`/learner?id=${learner.id}`}>Verified profile</a>{learner.certificate_id&&<a href={`/verify?id=${learner.certificate_id}`}>Certificate</a>}</nav><button onClick={logout}>Sign out</button></aside><main><header><div><small>LEARNER WORKSPACE</small><h1>Welcome back, {learner.display_name.split(' ')[0]}.</h1><p>Continue your programme and build evidence employers can verify.</p></div><div className="status"><i/> {learner.status}</div></header><section id="overview" className="hero"><div><span className="kicker">CURRENT CAREER TRACK</span><h2>{course.icon} {course.title}</h2><p>{course.tools}</p><div className="progress"><div><b>{progress}%</b><span>programme progress</span></div><div className="bar"><i style={{width:`${progress}%`}}/></div></div></div><div className="identity"><QRCodeSVG value={`https://truststack.academy/learner?id=${learner.id}`} size={118}/><small>VERIFIED LEARNER ID</small><strong>{learner.id}</strong><a href={`/learner?id=${learner.id}`}>Open public verification →</a></div></section><section className="metrics"><div><small>ENROLLED</small><strong>{learner.enrolled_on}</strong></div><div><small>ACTIVITIES</small><strong>{labs.length}</strong></div><div><small>COMPLETED</small><strong>{checked.filter(Boolean).length}</strong></div><div><small>CREDENTIAL</small><strong>{learner.certificate_id?'Issued':'In progress'}</strong></div></section><section id="learning" className="learning"><div className="sectionHead"><div><small>LEARNING PATH</small><h2>Lessons and practical evidence</h2></div><span>{checked.filter(Boolean).length} of {labs.length} complete</span></div><div className="activities">{labs.map((lab,index)=><label key={`${lab.title}-${index}`}><input type="checkbox" checked={checked[index]} onChange={()=>setChecked(current=>current.map((value,item)=>item===index?!value:value))}/><span className="number">{String(index+1).padStart(2,'0')}</span><div><small>{lab.type}</small><strong>{lab.title}</strong></div><em>{checked[index]?'Completed':'Continue →'}</em></label>)}</div></section></main></div><style jsx>{`*{box-sizing:border-box}.dashboard{min-height:100vh;background:#f3f7f9;color:#07182e;display:grid;grid-template-columns:270px 1fr}aside{position:sticky;top:0;height:100vh;background:#07182e;color:#fff;padding:30px 24px;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:900;font-size:18px}.brand img{width:44px;height:44px}.profile{margin-top:45px;padding:22px 0;border-top:1px solid #ffffff18;border-bottom:1px solid #ffffff18;display:grid;gap:5px}.avatar{width:58px;height:58px;display:grid;place-items:center;border-radius:18px;background:var(--accent);color:#fff;font-size:21px;font-weight:900;margin-bottom:8px}.profile strong{font-size:19px}.profile small{color:#91a5ba;font:700 11px monospace}nav{display:grid;gap:7px;margin-top:28px}nav a{color:#9db0c4;text-decoration:none;padding:11px 13px;border-radius:10px;font-weight:800}nav a:hover,nav .active{background:#ffffff10;color:#fff}aside button{margin-top:auto;border:1px solid #ffffff25;background:transparent;color:#fff;border-radius:11px;padding:12px;font-weight:900;cursor:pointer}.dashboard>main{padding:48px max(32px,5vw) 80px;min-width:0}header{display:flex;justify-content:space-between;gap:24px;align-items:start}header small,.sectionHead small,.kicker{color:#009fc8;font-weight:900;letter-spacing:.17em;font-size:11px}header h1{font-size:43px;margin:8px 0 4px}header p{margin:0;color:#6b798c}.status{padding:9px 13px;border:1px solid #bae8d5;border-radius:999px;background:#e9fbf3;color:#087a50;font-weight:900;font-size:12px}.status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981}.hero{margin-top:36px;display:grid;grid-template-columns:1fr 260px;gap:24px;background:linear-gradient(125deg,#fff,#eafaff);border:1px solid #d9e6ed;border-radius:26px;padding:34px;box-shadow:0 18px 50px #07182e0d}.hero h2{font-size:34px;margin:12px 0 8px}.hero p{color:#647388}.progress{margin-top:30px}.progress>div:first-child{display:flex;align-items:baseline;gap:9px}.progress b{font-size:28px}.progress span{color:#7a8797}.bar{height:8px;background:#dce7ed;border-radius:999px;margin-top:9px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#12d4c3);border-radius:inherit}.identity{border-left:1px solid #dbe5eb;padding-left:28px;display:flex;flex-direction:column;align-items:center;text-align:center}.identity small{margin-top:11px;color:#7b8998;font-weight:900;letter-spacing:.12em}.identity strong{font:900 15px monospace;margin-top:5px}.identity a{margin-top:12px;color:#008caf;font-weight:900;text-decoration:none;font-size:12px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}.metrics div{background:#fff;border:1px solid #dfe7ec;border-radius:17px;padding:20px}.metrics small{display:block;color:#8994a2;font-size:10px;font-weight:900;letter-spacing:.14em}.metrics strong{display:block;margin-top:8px;font-size:20px}.learning{margin-top:34px}.sectionHead{display:flex;justify-content:space-between;align-items:end}.sectionHead h2{font-size:30px;margin:7px 0 0}.sectionHead>span{color:#718094;font-weight:800}.activities{display:grid;gap:10px;margin-top:20px}.activities label{display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;gap:15px;padding:17px 19px;border:1px solid #dfe7ec;border-radius:15px;background:#fff;cursor:pointer}.activities input{width:18px;height:18px;accent-color:#10b981}.number{font:900 12px monospace;color:var(--accent)}.activities div{display:grid;gap:3px}.activities div small{color:#8b96a4;font-weight:900;letter-spacing:.12em}.activities div strong{font-size:15px}.activities em{font-style:normal;color:#008dab;font-weight:900;font-size:12px}@media(max-width:850px){.dashboard{grid-template-columns:1fr}aside{position:static;height:auto;padding:18px 22px;display:grid;grid-template-columns:1fr auto;align-items:center}.profile,aside nav{display:none}aside button{margin:0}.dashboard>main{padding:32px 18px 60px}.hero{grid-template-columns:1fr}.identity{border-left:0;border-top:1px solid #dbe5eb;padding:24px 0 0}.metrics{grid-template-columns:1fr 1fr}header{flex-direction:column}header h1{font-size:36px}.activities label{grid-template-columns:auto auto 1fr}.activities em{display:none}}`}</style></>;
+}

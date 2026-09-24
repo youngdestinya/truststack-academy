@@ -516,7 +516,8 @@
     if (label === 'home' || label === 'enter main website' || label === 'main website') return '/home.html';
     if (label === 'courses' || label === 'tracks' || label === 'explore courses' || label === 'view all courses' || label === 'browse tracks' || label === 'browse 8 tracks') return '/courses';
     if (label === 'certificates' || label === 'verify' || label === 'verify certificate' || label === 'verify a certificate') return '/verify';
-    if (label === 'lms' || label === 'enter lms' || label === 'my learning') return '/lms';
+    if (label === 'my learning' || label === 'learner login' || label === 'login') return '/login';
+    if (label === 'lms' || label === 'enter lms') return '/lms';
     if (label === 'pay') return '/pay';
     if (label === 'about' || label === 'our story') return '/about';
     if (label === 'contact' || label === 'contact us') return '/contact';

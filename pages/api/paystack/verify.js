@@ -16,7 +16,7 @@ export default async function handler(req,res){
  const product=checkoutProduct(d?.metadata?.track_slug || d?.metadata?.track);
  if(!r.ok||!j.status||d?.status!=='success'||d.currency!=='NGN'||!product||d.amount!==product.amount)return res.status(400).json({valid:false,error:'Payment has not been verified'});
  const payment_digest=crypto.createHash('sha256').update(reference).digest('hex');
- const learner=makeLearner({track:product.title,payment_digest});
+ const learner=makeLearner({track:product.title,payment_digest,email:d?.customer?.email,display_name:d?.metadata?.student});
  const saved=await saveLearner(learner);
  return res.json({valid:true,learner_id:saved.id,status:saved.status,verify_url:saved.verify_url});
  }catch{return res.status(502).json({valid:false,error:'Unable to verify or save payment. Retry with the same payment reference.'});}
