@@ -127,6 +127,21 @@
       .ts-builder-verified{position:static!important;display:inline-grid!important;place-items:center!important;width:22px!important;height:22px!important;flex:0 0 22px!important;border:2px solid #fff!important;border-radius:999px!important;background:#16a34a!important;color:#fff!important;font-size:12px!important;box-shadow:0 3px 10px rgba(22,163,74,.28)!important}
       .ts-builder-bio{max-width:650px!important;margin-left:auto!important;margin-right:auto!important;flex:0 1 auto!important}
       .ts-builder-socials{justify-content:center!important}
+      .ts-career-badge-strip{overflow:hidden!important;padding:3.25rem 0!important;border-top:1px solid rgba(7,24,46,.07)!important;border-bottom:1px solid rgba(7,24,46,.07)!important;background:linear-gradient(180deg,#fff,#f7fbfd)!important}
+      .ts-career-badge-heading{width:min(1280px,calc(100% - 3rem));margin:0 auto 1.8rem;color:#07182e;text-align:center}
+      .ts-career-badge-heading span{display:block;color:#00a6cf;font-size:.72rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase}
+      .ts-career-badge-heading h2{margin:.5rem 0 0;font-size:clamp(1.65rem,3vw,2.35rem);line-height:1;font-weight:900;letter-spacing:-.025em}
+      .ts-career-badge-viewport{position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+      .ts-career-badge-marquee{display:flex;width:max-content;will-change:transform;animation:ts-badge-scroll 30s linear infinite}
+      .ts-career-badge-viewport:hover .ts-career-badge-marquee{animation-play-state:paused}
+      .ts-career-badge-group{display:flex;align-items:stretch;gap:1rem;padding-right:1rem}
+      .ts-career-badge{--badge:#00b8d9;display:flex;flex:0 0 220px;align-items:center;gap:.9rem;min-height:96px;padding:1rem 1.15rem;border:1px solid color-mix(in srgb,var(--badge) 30%,#dce7ee);border-radius:18px;background:#fff;color:#07182e!important;text-decoration:none!important;box-shadow:0 12px 28px rgba(7,24,46,.07);transition:transform .2s ease,box-shadow .2s ease}
+      .ts-career-badge:hover{transform:translateY(-4px);box-shadow:0 18px 34px color-mix(in srgb,var(--badge) 15%,rgba(7,24,46,.08))}
+      .ts-career-badge-mark{display:grid;place-items:center;flex:0 0 64px;width:64px;height:72px;clip-path:polygon(50% 0,91% 15%,91% 66%,50% 100%,9% 66%,9% 15%);background:linear-gradient(150deg,var(--badge),#07182e 78%);color:#fff!important;font:900 1.4rem Arial,sans-serif;filter:drop-shadow(0 7px 8px color-mix(in srgb,var(--badge) 25%,transparent))}
+      .ts-career-badge-copy{display:flex;min-width:0;flex-direction:column;gap:.28rem}
+      .ts-career-badge-copy strong{color:#07182e!important;font-size:.98rem;line-height:1.05;font-weight:900}
+      .ts-career-badge-copy small{color:var(--badge)!important;font-size:.63rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+      @keyframes ts-badge-scroll{to{transform:translateX(-50%)}}
       header nav a.ts-menu-plus::after{content:'+';display:inline-block;margin-left:.38em;color:#00a8d4;font-weight:900}
       img[data-site-destination="/home.html"]{cursor:pointer}
       @media (min-width:1024px){
@@ -136,7 +151,8 @@
         .ts-footer-five{grid-template-columns:1.15fr .65fr .78fr 1fr 1.15fr!important;gap:2rem!important}
       }
       @media (max-width:900px){.ts-kb-row{grid-template-columns:1fr 1fr}.ts-kb-card:last-child{grid-column:1/-1;max-width:calc(50% - .75rem);width:100%;justify-self:center}}
-      @media (max-width:640px){.ts-kb-section{padding:4rem 1.1rem!important}.ts-kb-heading{margin-bottom:2rem}.ts-kb-row{grid-template-columns:1fr}.ts-kb-card:last-child{grid-column:auto;max-width:none}.ts-kb-image{height:210px}.ts-kb-footer{flex-wrap:wrap}.ts-trust-strip-copy{display:none!important}.ts-trust-strip>div{justify-content:center!important}}
+      @media (max-width:640px){.ts-kb-section{padding:4rem 1.1rem!important}.ts-kb-heading{margin-bottom:2rem}.ts-kb-row{grid-template-columns:1fr}.ts-kb-card:last-child{grid-column:auto;max-width:none}.ts-kb-image{height:210px}.ts-kb-footer{flex-wrap:wrap}.ts-trust-strip-copy{display:none!important}.ts-trust-strip>div{justify-content:center!important}.ts-career-badge-strip{padding:2.7rem 0!important}.ts-career-badge-heading{width:calc(100% - 2rem);margin-bottom:1.4rem}.ts-career-badge{flex-basis:190px;min-height:86px;padding:.8rem}.ts-career-badge-mark{flex-basis:54px;width:54px;height:62px}}
+      @media (prefers-reduced-motion:reduce){.ts-career-badge-marquee{width:auto;animation:none}.ts-career-badge-group{flex-wrap:wrap;justify-content:center;padding:0 1rem}.ts-career-badge-group[aria-hidden="true"]{display:none}}
     `;
     document.head.appendChild(style);
   }
@@ -421,6 +437,30 @@
     if (section) section.remove();
   }
 
+  function replacePartnerStrip() {
+    if (!path.includes('home')) return;
+    const label = Array.from(document.querySelectorAll('div')).find((node) => !node.children.length && clean(node.textContent) === 'trusted certifications & partners');
+    const section = label?.closest('section');
+    if (!section || section.dataset.tsCareerBadges === 'true') return;
+    section.dataset.tsCareerBadges = 'true';
+    section.className = 'ts-career-badge-strip';
+    const badgeTracks = [
+      ['SOC Analyst Track', 'soc-analyst'],
+      ['Digital Forensics', 'digital-forensics'],
+      ['Threat Intelligence', 'threat-intelligence'],
+      ['Penetration Testing', 'penetration-testing'],
+      ['Cloud Security', 'cloud-security'],
+      ['Governance & GRC', 'governance-grc'],
+      ['Malware Analysis', 'malware-analysis'],
+      ['Security Engineering', 'security-engineering']
+    ];
+    const badgeMarkup = (duplicate) => badgeTracks.map(([name, slug]) => {
+      const details = tracks[clean(name)];
+      return `<a class="ts-career-badge" style="--badge:${details.color}" href="/courses/${slug}"${duplicate ? ' aria-hidden="true" tabindex="-1"' : ''}><span class="ts-career-badge-mark">${details.icon}</span><span class="ts-career-badge-copy"><strong>${name}</strong><small>Career track</small></span></a>`;
+    }).join('');
+    section.innerHTML = `<div class="ts-career-badge-heading"><span>TRUSTSTACK CAREER BADGES</span><h2>Eight specialist paths. One mission.</h2></div><div class="ts-career-badge-viewport"><div class="ts-career-badge-marquee"><div class="ts-career-badge-group">${badgeMarkup(false)}</div><div class="ts-career-badge-group" aria-hidden="true">${badgeMarkup(true)}</div></div></div>`;
+  }
+
   function trackBadges() {
     // Certificate surfaces use the official seal, not the career-card tint or badge.
     if (/(certificate|verify)/.test(path)) return;
@@ -499,6 +539,7 @@
     addFooterResources();
     refineBuilderProfile();
     removeSampleTestimonials();
+    replacePartnerStrip();
     document.querySelectorAll('a,button,span').forEach((element) => {
       const explicitHref = element.tagName === 'A' ? element.getAttribute('href') : null;
       const target = explicitHref?.startsWith('/pay?track=') ? explicitHref : destination(element);
