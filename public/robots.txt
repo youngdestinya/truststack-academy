@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://truststack-academy.vercel.app/sitemap.xml
+Sitemap: https://truststack.academy/sitemap.xml

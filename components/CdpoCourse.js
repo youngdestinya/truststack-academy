@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styles from '../styles/Cdpo.module.css';
 
-const base = 'https://truststack-academy.vercel.app';
+const base = 'https://truststack.academy';
 const actUrl = 'https://ndpc.gov.ng/download/nigeria-data-protection-act-2023/';
 const gaidUrl = 'https://ndpc.gov.ng/wp-content/uploads/2025/07/NDP-ACT-GAID-2025-MARCH-20TH.pdf';
 const dayUrl = (day) => day === 1 ? '/cdpo' : `/cdpo/day/${day}`;

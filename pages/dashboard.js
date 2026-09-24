@@ -17,7 +17,7 @@ function DashboardContent() {
         <h1 style={{ fontSize: 32, fontWeight: 900 }}>Dashboard — LMS v2 flags terminal</h1>
         <section style={{marginTop:18,display:'grid',gridTemplateColumns:'1fr auto',gap:24,alignItems:'center',background:'#fff',border:'2px solid #d4af37',borderRadius:18,padding:22}}>
           <div><div style={{fontSize:11,fontWeight:900,letterSpacing:2,color:'#008fb7'}}>TRUSTSTACK VERIFIED LEARNER</div><h2 style={{margin:'8px 0 4px',fontSize:25}}>Chinedu Okoro</h2><div style={{fontFamily:'monospace',fontWeight:900}}>TSA-2026-04F82A</div><div style={{marginTop:9,color:'#526176'}}>Digital Forensics · <strong style={{color:'#07865a'}}>● Active Learner</strong></div><a href="/learner?id=TSA-2026-04F82A" style={{display:'inline-block',marginTop:12,color:'#007fa7',fontWeight:900}}>Open verified learner profile →</a></div>
-          <QRCodeSVG value="https://truststack-academy.vercel.app/learner?id=TSA-2026-04F82A" size={100}/>
+          <QRCodeSVG value="https://truststack.academy/learner?id=TSA-2026-04F82A" size={100}/>
         </section>
         <div style={{ display: 'grid', gap: 8, marginTop: 20 }}>
           {labs.map((lab, i) => (

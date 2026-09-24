@@ -8,7 +8,7 @@ function CertificateContent() {
     const hex = [...Array(8)].map(() => Math.floor(Math.random()*16).toString(16).toUpperCase()).join('');
     const id = `2026-${hex}`;
     const hash_full = [...Array(64)].map(() => Math.floor(Math.random()*16).toString(16)).join('');
-    setCert({ id, hash_prefix: hex, hash_full, student: form.name, track: form.track, date_issued: form.date, tx: '0x' + hash_full, block: 78492011 + Math.floor(Math.random()*1000), verify_url: `https://truststack-academy.vercel.app/verify?id=${id}` });
+    setCert({ id, hash_prefix: hex, hash_full, student: form.name, track: form.track, date_issued: form.date, tx: '0x' + hash_full, block: 78492011 + Math.floor(Math.random()*1000), verify_url: `https://truststack.academy/verify?id=${id}` });
   };
   return (
     <div style={{ fontFamily: 'Alegreya Sans', maxWidth: 900, margin: '0 auto', padding: 24 }}>

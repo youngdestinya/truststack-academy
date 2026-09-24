@@ -221,7 +221,7 @@
       : null;
     if (!seo) return;
     const [title, description, canonicalPath, noindex] = seo;
-    const origin = 'https://truststack-academy.vercel.app';
+    const origin = 'https://truststack.academy';
     const upsertMeta = (selector, attribute, value, content) => {
       let node = document.head.querySelector(selector);
       if (!node) { node = document.createElement('meta'); node.setAttribute(attribute, value); document.head.appendChild(node); }

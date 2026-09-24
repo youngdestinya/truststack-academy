@@ -19,7 +19,7 @@ export default function KnowledgeBase() {
   };
   const close = () => { setSelected(null); history.replaceState(null, '', '/knowledge-base'); };
   const related = selected ? articles.filter((article) => article.id !== selected.id).slice(0, 2) : [];
-  const origin = 'https://truststack-academy.vercel.app';
+  const origin = 'https://truststack.academy';
   return <>
     <Head>
       <title>{selected ? `${selected.seoTitle || selected.title} | TrustStack Field Notes` : 'Knowledge Base | TrustStack Academy'}</title>

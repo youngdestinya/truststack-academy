@@ -1,6 +1,6 @@
 import index from '../data/cdpo/index.json';
 
-const base = 'https://truststack-academy.vercel.app';
+const base = 'https://truststack.academy';
 const staticPaths = ['/', '/home.html', '/about', '/courses-tracks.html', '/courses', '/lms', '/learner', '/verify', '/knowledge-base', '/career-badges', '/cdpo', '/cdpo/exam', '/contact', '/scholarship', '/privacy', '/terms'];
 
 export async function getServerSideProps({ res }) {

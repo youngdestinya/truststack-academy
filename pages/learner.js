@@ -12,7 +12,7 @@ export default function LearnerVerification(){
   try{const response=await fetch(`/api/learner/${encodeURIComponent(learnerId)}`);const data=await response.json();setRecord(response.ok?data.learner:null);}catch{setRecord(null);}finally{setLoading(false);}
  };
  useEffect(()=>{const query=new URLSearchParams(location.search).get('id');if(query){setId(query.toUpperCase());lookup(query);}},[]);
- const share=record?`https://truststack-academy.vercel.app/learner?id=${record.id}`:'';
+ const share=record?`https://truststack.academy/learner?id=${record.id}`:'';
  return <>
   <header><a href="/home.html"><img src="/truststack-home-logo.png" alt="TrustStack Academy logo"/><strong>TrustStack Academy</strong></a><nav><a href="/home.html">Home</a><a href="/courses">Courses</a><a href="/verify">Certificates</a></nav></header>
   <main><section className="intro"><img className="registryLogo" src="/truststack-home-logo.png" alt="TrustStack Academy"/><p>OFFICIAL LEARNER REGISTRY</p><h1>Verify a TrustStack <em>Learner.</em></h1><span>Confirm current programme participation using the Learner ID shown on an official TrustStack learner badge or profile.</span><div className="search"><input value={id} onChange={event=>setId(event.target.value.toUpperCase())} onKeyDown={event=>event.key==='Enter'&&lookup()} placeholder="TSA-2026-04F82A" aria-label="Learner ID"/><button onClick={()=>lookup()} disabled={loading}>{loading?'Checking…':'Verify learner →'}</button></div><small>Format: TSA-YYYY-HEX6 · Lookup is case-insensitive</small></section>

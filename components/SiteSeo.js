@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-const origin = 'https://truststack-academy.vercel.app';
+const origin = 'https://truststack.academy';
 const defaults = {
   title: 'TrustStack Academy | Learn Cybersecurity by Doing',
   description: 'Build practical cybersecurity skills through eight role-based tracks, guided labs, Naira pricing and verifiable TrustStack learner credentials.',

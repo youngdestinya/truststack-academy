@@ -12,7 +12,7 @@ const principles = [
 const journey = ['Discover', 'Practise', 'Demonstrate', 'Assess', 'Improve', 'Verify'];
 
 export default function About(){
-  const schema = {'@context':'https://schema.org','@type':'AboutPage',name:'About TrustStack Academy',url:'https://truststack-academy.vercel.app/about',mainEntity:{'@type':'EducationalOrganization',name:'Truststack Academy and Educational Services Ltd',alternateName:'TrustStack Academy',slogan:'Learn security by doing.',areaServed:'Africa',founder:{'@type':'Person',name:'Destiny Young',jobTitle:'Founder and Chief Technology Architect'}}};
+  const schema = {'@context':'https://schema.org','@type':'AboutPage',name:'About TrustStack Academy',url:'https://truststack.academy/about',mainEntity:{'@type':'EducationalOrganization',name:'Truststack Academy and Educational Services Ltd',alternateName:'TrustStack Academy',slogan:'Learn security by doing.',areaServed:'Africa',founder:{'@type':'Person',name:'Destiny Young',jobTitle:'Founder and Chief Technology Architect'}}};
   return <>
     <Head><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}}/></Head>
     <div className="topline"/>

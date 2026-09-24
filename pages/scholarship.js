@@ -44,10 +44,10 @@ export default function Scholarship(){
     <Head>
       <title>Early Bird Cybersecurity Scholarship | TrustStack Academy</title>
       <meta name="description" content="Join the TrustStack Academy Early Bird Scholarship waitlist for practical cybersecurity, data protection and digital compliance training in Africa."/>
-      <link rel="canonical" href="https://truststack-academy.vercel.app/scholarship"/>
+      <link rel="canonical" href="https://truststack.academy/scholarship"/>
       <meta property="og:title" content="TrustStack Academy Early Bird Scholarship"/>
       <meta property="og:description" content="Apply for a fully funded place on one of eight practical cybersecurity career tracks."/>
-      <meta property="og:url" content="https://truststack-academy.vercel.app/scholarship"/>
+      <meta property="og:url" content="https://truststack.academy/scholarship"/>
       <meta property="og:type" content="website"/>
     </Head>
     <div className={styles.page}>

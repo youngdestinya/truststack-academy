@@ -7,7 +7,7 @@ export default function Contact(){
   const [form,setForm]=useState({name:'',email:'',topic:topics[0],message:''});
   const submit=(event)=>{event.preventDefault();const subject=encodeURIComponent(`${form.topic} — ${form.name}`);const body=encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\nTopic: ${form.topic}\n\n${form.message}`);window.location.href=`mailto:helpdesk@truststack.academy?subject=${subject}&body=${body}`};
   return <>
-    <Head><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'ContactPage',name:'Contact TrustStack Academy',url:'https://truststack-academy.vercel.app/contact',mainEntity:{'@type':'Organization',name:'TrustStack Academy',email:'helpdesk@truststack.academy',telephone:'+2348090243111',address:{'@type':'PostalAddress',addressLocality:'Uyo',addressRegion:'Akwa Ibom',addressCountry:'NG'}}})}}/></Head>
+    <Head><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({'@context':'https://schema.org','@type':'ContactPage',name:'Contact TrustStack Academy',url:'https://truststack.academy/contact',mainEntity:{'@type':'Organization',name:'TrustStack Academy',email:'helpdesk@truststack.academy',telephone:'+2348090243111',address:{'@type':'PostalAddress',addressLocality:'Uyo',addressRegion:'Akwa Ibom',addressCountry:'NG'}}})}}/></Head>
     <div className="accent"/>
     <header><a className="brand" href="/home.html"><img src="/truststack-home-logo.png" alt="TrustStack Academy logo"/><strong>TrustStack Academy</strong></a><nav><a href="/home.html">Home</a><a href="/courses">Courses</a><a href="/lms">LMS</a><a href="/knowledge-base">Knowledge Base</a></nav></header>
     <main>
