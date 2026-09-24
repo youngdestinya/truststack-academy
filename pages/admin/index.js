@@ -1,27 +1,21 @@
 import { useState, useEffect } from 'react';
+import { authorized } from '../../lib/admin-auth';
+
+export function getServerSideProps({ req }) {
+  return authorized(req) ? { props: {} } : { redirect: { destination: '/admin/login?next=/admin', permanent: false } };
+}
+
 export default function Admin() {
-  const [auth, setAuth] = useState(false);
-  const [key, setKey] = useState('');
   const [certs, setCerts] = useState([]);
   const [form, setForm] = useState({ student: '', track: 'Ethical Hacking & Penetration Testing', date: '2026-09-15' });
   const [newCert, setNewCert] = useState(null);
-  useEffect(() => { fetch('/certs.json').then(r => r.json()).then(j => setCerts(j.certificates || [])); fetch('/api/admin/session',{cache:'no-store'}).then(r=>setAuth(r.ok)).catch(()=>{}); }, []);
-  const login=async()=>{
-   try{const r=await fetch('/api/admin/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key})});if(r.ok){setKey('');setAuth(true);}else alert('Invalid admin key');}catch{alert('Login unavailable');}
-  };
+  useEffect(() => { fetch('/certs.json').then(r => r.json()).then(j => setCerts(j.certificates || [])); }, []);
   const addLocal=async()=>{
    try{const r=await fetch('/api/certs/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({student:form.student,track:form.track,date_issued:form.date})});const j=await r.json();if(!r.ok)throw new Error(j.error);setNewCert(j.cert);}catch(e){alert(e.message);}
   };
   const pushGithub=async()=>{
    try{const r=await fetch('/api/admin/certs/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({student:form.student,track:form.track,date_issued:form.date})});const j=await r.json();if(!r.ok)throw new Error(j.error);setNewCert(j.cert);setCerts([...certs,j.cert]);alert(`Saved ${j.cert.id} to GitHub`);}catch(e){alert(e.message);}
   };
-  if (!auth) return (
-    <div style={{ fontFamily: 'Alegreya Sans', maxWidth: 360, margin: '80px auto', padding: 24, border: '1px solid #e5e7eb', borderRadius: 12 }}>
-      <h2 style={{ fontWeight: 900 }}>Admin Login</h2>
-      <input value={key} onChange={e => setKey(e.target.value)} placeholder="Admin key" type="password" style={{ border: '1px solid #ccc', padding: 10, borderRadius: 8, width: '100%', marginTop: 12 }} />
-      <button onClick={login} style={{ background: '#0a1931', color: '#fff', padding: '10px 16px', borderRadius: 8, width: '100%', marginTop: 12, fontWeight: 900 }}>Login</button>
-    </div>
-  );
   return (
     <div style={{ fontFamily: 'Alegreya Sans', padding: 24, maxWidth: 1100, margin: '0 auto' }}>
       <h1 style={{ fontSize: 28, fontWeight: 900 }}>Admin</h1>

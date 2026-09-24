@@ -1,4 +1,4 @@
-import { adminKeyMatches, authorized, clearAdminSession, createAdminSession } from '../../../lib/admin-auth';
+import { adminCredentialsMatch, authorized, clearAdminSession, createAdminSession } from '../../../lib/admin-auth';
 import { methodNotAllowed, rateLimit, requireJson, requireSameOrigin } from '../../../lib/security';
 
 export default function handler(req, res) {
@@ -12,7 +12,7 @@ export default function handler(req, res) {
     return res.status(200).json({ success: true });
   }
   if (!requireJson(req, res)) return;
-  if (!adminKeyMatches(req.body?.key)) return res.status(401).json({ success: false });
+  if (!adminCredentialsMatch(req.body?.email, req.body?.password)) return res.status(401).json({ success: false });
   createAdminSession(res);
   return res.status(200).json({ success: true });
 }
