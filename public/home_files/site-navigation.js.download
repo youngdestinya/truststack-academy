@@ -688,16 +688,24 @@
       const href = (link.getAttribute('href') || link.dataset.siteDestination || '').toLowerCase();
       const text = clean(link.textContent);
       if (href === '/scholarship' || href === '#scholarship' || text === 'scholarship' || text.startsWith('scholarship')) {
-        if (!link.querySelector('.ts-nav-new-badge')) {
-          const sup = document.createElement('sup');
-          sup.className = 'ts-nav-new-badge';
-          sup.textContent = 'NEW';
-          const span = link.querySelector('span');
-          if (span && !span.querySelector('.ts-nav-new-badge')) {
-            span.appendChild(sup);
-          } else if (!link.querySelector('.ts-nav-new-badge')) {
-            link.appendChild(sup);
+        const existingBadges = link.querySelectorAll('.ts-nav-new-badge, .nav-badge-new, sup');
+        if (existingBadges.length > 1) {
+          for (let i = 1; i < existingBadges.length; i++) {
+            existingBadges[i].remove();
           }
+          return;
+        }
+        if (existingBadges.length === 1 || text.includes('new')) {
+          return;
+        }
+        const sup = document.createElement('sup');
+        sup.className = 'ts-nav-new-badge';
+        sup.textContent = 'NEW';
+        const span = link.querySelector('span');
+        if (span) {
+          span.appendChild(sup);
+        } else {
+          link.appendChild(sup);
         }
       }
     });

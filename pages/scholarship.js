@@ -150,7 +150,7 @@ export default function Scholarship() {
             <Link href="/#whytruststack" className="nav-item">Why TrustStack</Link>
             <Link href="/about" className="nav-item">About</Link>
             <Link href="/scholarship" className="nav-item active">
-              Scholarship<sup className="nav-badge-new">NEW</sup>
+              Scholarship<sup className="nav-badge-new ts-nav-new-badge">NEW</sup>
             </Link>
             <Link href="/contact" className="nav-item">Contact</Link>
             <a href="#apply" className="nav-cta-btn">Apply Now →</a>
