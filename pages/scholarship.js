@@ -79,7 +79,7 @@ export default function Scholarship() {
     {/* ── NAV ─────────────────────────────────────────────── */}
     <header className="nav">
       <Link href="/" className="brand">
-        <img src="/truststack-home-logo.png" alt="TrustStack Academy" />
+        <img src="/truststack-home-logo.png" alt="TrustStack Academy" style={{ width: "42px", height: "42px", objectFit: "contain", display: "block" }} />
         <strong>TrustStack Academy</strong>
       </Link>
       <nav>
@@ -218,7 +218,7 @@ export default function Scholarship() {
     <footer className="footer">
       <div className="footer-brand">
         <Link href="/" className="brand">
-          <img src="/truststack-home-logo.png" alt="" />
+          <img src="/truststack-home-logo.png" alt="TrustStack Academy" style={{ width: "42px", height: "42px", objectFit: "contain", display: "block" }} />
           <strong>TrustStack Academy</strong>
         </Link>
         <p>Practical cybersecurity education for Africa.</p>
