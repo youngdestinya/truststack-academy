@@ -5,6 +5,7 @@
     document.head.appendChild(consentScript);
   }
   const path = location.pathname.toLowerCase();
+  const isHome = path === '/' || path === '' || path === '/home' || path === '/home.html' || path.indexOf('home') !== -1;
   const clean = (value) => (value || '').replace(/\s+/g, ' ').trim().replace(/[→←]/g, '').trim().toLowerCase();
 
   const tracks = {
@@ -588,7 +589,7 @@
   }
 
   function addHomeFavicon() {
-    if (!path.includes('home')) return;
+    if (!isHome) return;
     [
       ['icon', '/Truststack_Logo_PNG.png', 'image/png'],
       ['shortcut icon', '/Truststack_Logo_PNG.png', 'image/png'],
@@ -613,7 +614,7 @@
   }
 
   function repurposeEnrollmentSection() {
-    if (!path.includes('home')) return;
+    if (!isHome) return;
     const heading = Array.from(document.querySelectorAll('h2')).find((node) => /pay in naira\.\s*build in public\./i.test(node.textContent || ''));
     const section = heading?.closest('section');
     const layout = heading?.parentElement?.parentElement;
@@ -630,7 +631,7 @@
 
   function applyStaticSeo() {
     if (!path.endsWith('.html')) return;
-    const seo = path.includes('home')
+    const seo = isHome
       ? ['TrustStack Academy | Learn Cybersecurity by Doing','Build practical cybersecurity skills through eight role-based tracks, guided labs, Naira pricing and verifiable TrustStack learner credentials.','/',false]
       : path.includes('courses-tracks')
         ? ['Cybersecurity Career Tracks | TrustStack Academy','Compare eight practical cybersecurity career tracks covering SOC analysis, digital forensics, cloud security, GRC and offensive security.','/courses',false]
@@ -659,7 +660,7 @@
     upsertMeta('meta[property="og:type"]','property','og:type','website');
     const socialImage = path.includes('cdpo') ? `${origin}/cdpo-og.png` : `${origin}/feature-image.jpg`;
     upsertMeta('meta[property="og:image"]','property','og:image',socialImage);
-    upsertMeta('meta[property="og:image:alt"]','property','og:image:alt',path.includes('home')?'TrustStack Academy practical cybersecurity learning lab':'TrustStack Academy course preview');
+    upsertMeta('meta[property="og:image:alt"]','property','og:image:alt',isHome?'TrustStack Academy practical cybersecurity learning lab':'TrustStack Academy course preview');
     upsertMeta('meta[name="twitter:card"]','name','twitter:card','summary_large_image');
     upsertMeta('meta[name="twitter:title"]','name','twitter:title',title);
     upsertMeta('meta[name="twitter:description"]','name','twitter:description',description);
@@ -975,7 +976,7 @@
   }
 
   function linkOurStory() {
-    if (!path.includes('home')) return;
+    if (!isHome) return;
     const control = Array.from(document.querySelectorAll('#about a, #about button'))
       .find((element) => clean(element.textContent) === 'our story');
     if (!control) return;
@@ -1103,7 +1104,7 @@
   }
 
   function redesignKnowledgeBaseRow() {
-    if (!path.includes('home')) return;
+    if (!isHome) return;
     const title = Array.from(document.querySelectorAll('h1,h2,h3')).find((heading) => clean(heading.textContent) === 'knowledge base');
     const section = title?.closest('section');
     if (!section || section.dataset.tsKnowledgeRedesign === 'true') return;
@@ -1137,7 +1138,7 @@
   }
 
   function addFooterResources() {
-    if (!path.includes('home')) return;
+    if (!isHome) return;
     const footer = document.querySelector('footer');
     if (!footer || footer.querySelector('.ts-footer-resources')) return;
     const headings = Array.from(footer.querySelectorAll('div')).filter((node) => !node.children.length);
@@ -1186,7 +1187,7 @@
   }
 
   function refineBuilderProfile() {
-    if (!path.includes('home')) return;
+    if (!isHome) return;
     const photo = document.querySelector('img[alt="Destiny Young"]');
     if (!photo) return;
     let card = photo.parentElement;
@@ -1222,14 +1223,14 @@
   }
 
   function removeSampleTestimonials() {
-    if (!path.includes('home')) return;
+    if (!isHome) return;
     const heading = Array.from(document.querySelectorAll('h1,h2,h3')).find((node) => clean(node.textContent) === 'what our learners say');
     const section = heading?.closest('section');
     if (section) section.remove();
   }
 
   function replacePartnerStrip() {
-    if (!path.includes('home')) return;
+    if (!isHome) return;
     const label = Array.from(document.querySelectorAll('div')).find((node) => !node.children.length && clean(node.textContent) === 'trusted certifications & partners');
     const section = label?.closest('section');
     if (!section || section.dataset.tsCareerBadges === 'true') return;
@@ -1301,7 +1302,7 @@
     if (path.includes('student-lms') && label === 'pricing') return '/courses';
     if (path.includes('courses-tracks') && label === 'view labs') return '/lms';
     if (path.includes('lms.html') && label === 'view all') return '/courses';
-    if ((path.includes('home') || path.includes('lms.html')) && trackTarget(label)) return trackTarget(label);
+    if ((isHome || path.includes('lms.html')) && trackTarget(label)) return trackTarget(label);
     if (raw.includes('verify certificate') && (element.tagName === 'A' || element.tagName === 'BUTTON')) return '/verify';
     return null;
   }
@@ -1332,7 +1333,7 @@
     refineBuilderProfile();
     removeSampleTestimonials();
     replacePartnerStrip();
-    if (path.includes('home') && location.hash === '#whytruststack' && !document.documentElement.dataset.whyTrustStackFocused) {
+    if (isHome && location.hash === '#whytruststack' && !document.documentElement.dataset.whyTrustStackFocused) {
       document.documentElement.dataset.whyTrustStackFocused = 'true';
       requestAnimationFrame(() => focusWhyTrustStack(false));
     }
@@ -1364,7 +1365,7 @@
         card.id = slug;
         card.style.scrollMarginTop = '92px';
       }
-      if (path.includes('home') || path.includes('lms.html')) {
+      if (isHome || path.includes('lms.html')) {
         card.dataset.siteDestination = target;
         card.setAttribute('role', 'link');
         card.setAttribute('tabindex', '0');
@@ -1377,7 +1378,7 @@
         });
       }
     });
-    if (path.includes('home')) {
+    if (isHome) {
       const siteHeader = document.querySelector('header');
       const headerInner = siteHeader?.querySelector(':scope > div');
       if (headerInner?.querySelector('nav')) headerInner.classList.add('ts-home-header-inner');
@@ -1441,7 +1442,7 @@
         node.textContent = 'Explore hands-on cybersecurity career tracks, compare practical labs, and enroll in Naira. Each completed track is designed to build demonstrable skills and lead to a verifiable TrustStack Academy certificate.';
       });
     }
-    if (path.includes('home')) {
+    if (isHome) {
       document.querySelectorAll('div').forEach((node) => {
         if (node.children.length || clean(node.textContent) !== 'built on real tools. designed for africa. ready for the world.') return;
         const strip = node.parentElement?.parentElement;
@@ -1536,7 +1537,7 @@
     if (!target) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    if (target === '/#whytruststack' && path.includes('home') && focusWhyTrustStack(true)) {
+    if (target === '/#whytruststack' && isHome && focusWhyTrustStack(true)) {
       history.pushState(null, '', '#whytruststack');
       return;
     }
