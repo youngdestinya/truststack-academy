@@ -674,21 +674,21 @@ export default function Scholarship() {
         }
 
         .scholarship-main {
-          background: #030c18;
-          color: #f1f5f9;
+          background: #F8FAFC;
+          color: #0A1931;
           overflow-x: hidden;
         }
 
         /* ── TOP BANNER ── */
         .top-banner {
-          background: linear-gradient(90deg, #0A1931 0%, #087fa8 50%, #0A1931 100%);
+          background: #0A1931;
           color: #ffffff;
           font-size: 11px;
           font-weight: 900;
           letter-spacing: .08em;
           text-align: center;
           padding: 8px 16px;
-          border-bottom: 1px solid rgba(0,212,255,0.2);
+          border-bottom: 1px solid rgba(0, 184, 217, 0.25);
         }
 
         /* ── GLOBAL HEADER ── */
@@ -697,9 +697,9 @@ export default function Scholarship() {
           top: 0;
           z-index: 999;
           height: 72px;
-          background: rgba(3, 12, 24, 0.94);
+          background: rgba(255, 255, 255, 0.95);
           backdrop-filter: blur(16px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          border-bottom: 1px solid rgba(10, 25, 49, 0.08);
           display: flex;
           align-items: center;
         }
@@ -727,7 +727,7 @@ export default function Scholarship() {
           font-size: 20px;
           font-weight: 900;
         }
-        .brand-name .navy { color: #ffffff; }
+        .brand-name .navy { color: #0A1931; }
         .brand-name .cyan { color: #00b8d9; }
 
         .header-nav {
@@ -736,7 +736,7 @@ export default function Scholarship() {
           gap: 22px;
         }
         .nav-item {
-          color: #94a3b8;
+          color: #475569;
           text-decoration: none;
           font-size: 14px;
           font-weight: 700;
@@ -746,7 +746,7 @@ export default function Scholarship() {
           gap: 2px;
         }
         .nav-item:hover, .nav-item.active {
-          color: #00D4FF;
+          color: #00b8d9;
         }
         .nav-badge-new {
           color: #ef4444;
@@ -755,28 +755,29 @@ export default function Scholarship() {
           margin-left: 2px;
         }
         .nav-cta-btn {
-          background: linear-gradient(135deg, #00b8d9 0%, #008da6 100%);
+          background: #0A1931;
           color: #ffffff;
           text-decoration: none;
           font-size: 13px;
           font-weight: 900;
           padding: 8px 18px;
           border-radius: 999px;
-          transition: transform .15s, box-shadow .15s;
+          transition: background .15s, transform .15s, box-shadow .15s;
         }
         .nav-cta-btn:hover {
+          background: #00b8d9;
           transform: translateY(-1px);
-          box-shadow: 0 4px 16px rgba(0,184,217,0.35);
+          box-shadow: 0 4px 16px rgba(0, 184, 217, 0.35);
         }
 
         /* ── HERO SECTION ── */
         .hero-section {
           position: relative;
-          background: radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.12) 0%, transparent 60%),
-                      radial-gradient(circle at 10% 70%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-                      #030c18;
+          background: radial-gradient(circle at 80% 20%, rgba(0, 184, 217, 0.12) 0%, transparent 60%),
+                      radial-gradient(circle at 10% 70%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                      linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
           padding: 80px 24px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          border-bottom: 1px solid rgba(10, 25, 49, 0.06);
         }
         .hero-container {
           max-width: 1280px;
@@ -790,38 +791,38 @@ export default function Scholarship() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          background: rgba(0, 212, 255, 0.08);
-          border: 1px solid rgba(0, 212, 255, 0.3);
+          background: #E0F2FE;
+          border: 1px solid rgba(0, 184, 217, 0.35);
           border-radius: 999px;
           padding: 6px 14px;
           font-size: 11px;
           font-weight: 900;
           letter-spacing: .08em;
-          color: #00D4FF;
+          color: #0369a1;
           margin-bottom: 20px;
         }
         .kicker-dot {
           width: 8px;
           height: 8px;
-          background: #00D4FF;
+          background: #00b8d9;
           border-radius: 50%;
-          box-shadow: 0 0 8px #00D4FF;
+          box-shadow: 0 0 8px #00b8d9;
         }
         .hero-title {
           font-size: clamp(38px, 4.4vw, 58px);
           font-weight: 900;
           line-height: 1.04;
-          color: #ffffff;
+          color: #0A1931;
           letter-spacing: -0.02em;
         }
         .text-cyan {
-          color: #00D4FF;
+          color: #008da6;
         }
         .hero-desc {
           margin-top: 20px;
           font-size: 17px;
           line-height: 1.65;
-          color: #94a3b8;
+          color: #475569;
           max-width: 540px;
         }
         .hero-actions {
@@ -831,34 +832,37 @@ export default function Scholarship() {
           margin-top: 36px;
         }
         .btn-primary-glow {
-          background: linear-gradient(135deg, #00D4FF 0%, #0099cc 100%);
-          color: #04111f;
+          background: linear-gradient(135deg, #0A1931 0%, #06162d 100%);
+          color: #ffffff;
           font-weight: 900;
           font-size: 15px;
           padding: 14px 28px;
           border-radius: 999px;
           text-decoration: none;
-          box-shadow: 0 8px 30px rgba(0, 212, 255, 0.35);
-          transition: transform .15s, box-shadow .15s;
+          box-shadow: 0 8px 24px rgba(10, 25, 49, 0.22);
+          transition: transform .15s, box-shadow .15s, background .15s;
         }
         .btn-primary-glow:hover {
+          background: #00b8d9;
           transform: translateY(-2px);
-          box-shadow: 0 12px 40px rgba(0, 212, 255, 0.5);
+          box-shadow: 0 12px 36px rgba(0, 184, 217, 0.4);
         }
         .btn-outline-cyan {
-          border: 1px solid rgba(0, 212, 255, 0.4);
-          color: #00D4FF;
-          background: rgba(0, 212, 255, 0.05);
+          border: 1.5px solid #00b8d9;
+          color: #0A1931;
+          background: #ffffff;
           font-weight: 800;
           font-size: 15px;
           padding: 14px 26px;
           border-radius: 999px;
           text-decoration: none;
-          transition: background .15s, border-color .15s;
+          box-shadow: 0 4px 12px rgba(10, 25, 49, 0.04);
+          transition: background .15s, border-color .15s, transform .15s;
         }
         .btn-outline-cyan:hover {
-          background: rgba(0, 212, 255, 0.12);
-          border-color: #00D4FF;
+          background: #E0F2FE;
+          border-color: #008da6;
+          transform: translateY(-2px);
         }
 
         .hero-badges-row {
@@ -867,13 +871,13 @@ export default function Scholarship() {
           align-items: center;
           gap: 20px;
           padding-top: 28px;
-          border-top: 1px solid rgba(255,255,255,0.08);
+          border-top: 1px solid rgba(10, 25, 49, 0.08);
         }
         .hero-stat-badge strong {
           display: block;
           font-size: 22px;
           font-weight: 900;
-          color: #ffffff;
+          color: #0A1931;
           line-height: 1.1;
         }
         .hero-stat-badge span {
@@ -884,7 +888,7 @@ export default function Scholarship() {
         .hero-stat-divider {
           width: 1px;
           height: 32px;
-          background: rgba(255,255,255,0.1);
+          background: rgba(10, 25, 49, 0.12);
         }
 
         /* ── HERO RIGHT: PROMINENT BIG LOGO SHOWCASE ── */
@@ -893,11 +897,11 @@ export default function Scholarship() {
         }
         .logo-showcase-card {
           position: relative;
-          background: linear-gradient(160deg, #07192e 0%, #030c18 100%);
-          border: 1px solid rgba(0, 212, 255, 0.25);
+          background: #ffffff;
+          border: 1.5px solid rgba(0, 184, 217, 0.25);
           border-radius: 28px;
           padding: 40px 32px;
-          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          box-shadow: 0 24px 60px -10px rgba(10, 25, 49, 0.10), 0 10px 25px -5px rgba(0, 184, 217, 0.06);
           text-align: center;
         }
         .logo-ambient-glow {
@@ -907,7 +911,7 @@ export default function Scholarship() {
           transform: translateX(-50%);
           width: 220px;
           height: 220px;
-          background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(0, 184, 217, 0.18) 0%, transparent 70%);
           filter: blur(40px);
           pointer-events: none;
         }
@@ -924,7 +928,7 @@ export default function Scholarship() {
           width: 160px;
           height: 160px;
           object-fit: contain;
-          filter: drop-shadow(0 14px 28px rgba(0, 212, 255, 0.35));
+          filter: drop-shadow(0 14px 28px rgba(10, 25, 49, 0.12));
           animation: float 4s ease-in-out infinite;
         }
         @keyframes float {
@@ -935,9 +939,9 @@ export default function Scholarship() {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: rgba(212, 175, 55, 0.12);
-          border: 1px solid rgba(212, 175, 55, 0.4);
-          color: #D4AF37;
+          background: #FFFDF0;
+          border: 1px solid rgba(212, 175, 55, 0.5);
+          color: #B8860B;
           border-radius: 999px;
           padding: 5px 14px;
           font-size: 11px;
@@ -949,22 +953,22 @@ export default function Scholarship() {
         .showcase-title {
           font-size: 24px;
           font-weight: 900;
-          color: #ffffff;
+          color: #0A1931;
         }
         .showcase-subtitle {
           margin-top: 8px;
           font-size: 14px;
-          color: #94a3b8;
+          color: #475569;
           line-height: 1.5;
         }
-        .showcase-subtitle strong { color: #00D4FF; }
+        .showcase-subtitle strong { color: #008da6; }
         .showcase-features {
           margin-top: 24px;
           display: grid;
           gap: 10px;
           text-align: left;
-          background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(255,255,255,0.06);
+          background: #F8FAFC;
+          border: 1px solid rgba(10, 25, 49, 0.06);
           border-radius: 16px;
           padding: 16px;
         }
@@ -973,7 +977,7 @@ export default function Scholarship() {
           align-items: center;
           gap: 10px;
           font-size: 13px;
-          color: #cbd5e1;
+          color: #334155;
         }
         .showcase-item .check {
           color: #10b981;
@@ -982,16 +986,20 @@ export default function Scholarship() {
         .showcase-cta {
           display: block;
           margin-top: 24px;
-          background: linear-gradient(135deg, #00b8d9 0%, #0ea5e9 100%);
-          color: #04111f;
+          background: linear-gradient(135deg, #0A1931 0%, #06162d 100%);
+          color: #ffffff;
           font-weight: 900;
           font-size: 14px;
           padding: 14px;
           border-radius: 999px;
           text-decoration: none;
-          transition: transform .15s;
+          box-shadow: 0 6px 20px rgba(10, 25, 49, 0.16);
+          transition: background .15s, transform .15s;
         }
-        .showcase-cta:hover { transform: translateY(-1px); }
+        .showcase-cta:hover {
+          background: #00b8d9;
+          transform: translateY(-1px);
+        }
 
         /* ── SECTION COMMON ── */
         .section-container {
@@ -1008,26 +1016,26 @@ export default function Scholarship() {
           font-size: 11px;
           font-weight: 900;
           letter-spacing: .2em;
-          color: #00D4FF;
+          color: #008da6;
           margin-bottom: 10px;
         }
         .section-title {
           font-size: clamp(30px, 3.4vw, 44px);
           font-weight: 900;
-          color: #ffffff;
+          color: #0A1931;
           line-height: 1.1;
         }
         .section-subtitle {
           margin-top: 14px;
           font-size: 16px;
           line-height: 1.6;
-          color: #94a3b8;
+          color: #475569;
         }
 
         /* ── PILLARS SECTION ── */
         .pillars-section {
-          background: #04111f;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: #F8FAFC;
+          border-bottom: 1px solid rgba(10, 25, 49, 0.06);
         }
         .pillars-grid {
           display: grid;
@@ -1035,15 +1043,17 @@ export default function Scholarship() {
           gap: 24px;
         }
         .pillar-card {
-          background: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-          border: 1px solid rgba(255,255,255,0.08);
+          background: #ffffff;
+          border: 1px solid rgba(10, 25, 49, 0.07);
           border-radius: 20px;
           padding: 28px;
-          transition: transform .2s, border-color .2s;
+          box-shadow: 0 10px 30px -5px rgba(10, 25, 49, 0.05);
+          transition: transform .2s, border-color .2s, box-shadow .2s;
         }
         .pillar-card:hover {
           transform: translateY(-4px);
-          border-color: rgba(0, 212, 255, 0.3);
+          border-color: #00b8d9;
+          box-shadow: 0 18px 40px -5px rgba(0, 184, 217, 0.14);
         }
         .pillar-icon-box {
           width: 52px;
@@ -1058,19 +1068,19 @@ export default function Scholarship() {
         .pillar-card h3 {
           font-size: 19px;
           font-weight: 800;
-          color: #ffffff;
+          color: #0A1931;
           margin-bottom: 10px;
         }
         .pillar-card p {
           font-size: 14px;
           line-height: 1.6;
-          color: #94a3b8;
+          color: #475569;
         }
 
         /* ── 8 TRACKS SECTION ── */
         .tracks-section {
-          background: #030c18;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: #ffffff;
+          border-bottom: 1px solid rgba(10, 25, 49, 0.06);
         }
         .tracks-grid {
           display: grid;
@@ -1078,24 +1088,27 @@ export default function Scholarship() {
           gap: 22px;
         }
         .track-card {
-          background: linear-gradient(160deg, #07192e 0%, #04111f 100%);
-          border: 1px solid rgba(255,255,255,0.09);
+          background: #F8FAFC;
+          border: 1px solid rgba(10, 25, 49, 0.08);
           border-radius: 20px;
           padding: 24px;
           cursor: pointer;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          transition: transform .2s, border-color .2s, box-shadow .2s;
+          box-shadow: 0 4px 16px rgba(10, 25, 49, 0.03);
+          transition: transform .2s, border-color .2s, box-shadow .2s, background .2s;
         }
         .track-card:hover {
           transform: translateY(-4px);
-          border-color: rgba(0, 212, 255, 0.4);
-          box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+          border-color: #00b8d9;
+          background: #ffffff;
+          box-shadow: 0 16px 36px rgba(0, 184, 217, 0.12);
         }
         .track-card.selected {
-          border-color: #00D4FF;
-          box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.4);
+          border-color: #00b8d9;
+          background: #F0F9FF;
+          box-shadow: 0 0 0 2px #00b8d9, 0 12px 30px rgba(0, 184, 217, 0.14);
         }
         .track-card-top {
           display: flex;
@@ -1117,8 +1130,8 @@ export default function Scholarship() {
         .track-level-tag {
           font-size: 10px;
           font-weight: 800;
-          background: rgba(255,255,255,0.08);
-          color: #94a3b8;
+          background: #E2E8F0;
+          color: #475569;
           padding: 3px 8px;
           border-radius: 999px;
           text-transform: uppercase;
@@ -1126,24 +1139,24 @@ export default function Scholarship() {
         .track-title {
           font-size: 18px;
           font-weight: 800;
-          color: #ffffff;
+          color: #0A1931;
           margin-bottom: 8px;
         }
         .track-summary {
           font-size: 13px;
-          color: #94a3b8;
+          color: #475569;
           line-height: 1.55;
           margin-bottom: 16px;
         }
         .track-tools {
           font-size: 11px;
           color: #64748b;
-          border-top: 1px solid rgba(255,255,255,0.06);
+          border-top: 1px solid rgba(10, 25, 49, 0.06);
           padding-top: 12px;
           margin-bottom: 18px;
         }
         .tools-label {
-          color: #00D4FF;
+          color: #008da6;
           font-weight: 800;
         }
         .track-card-bottom {
@@ -1154,28 +1167,29 @@ export default function Scholarship() {
         .track-fee-badge {
           font-size: 12px;
           font-weight: 900;
-          color: #10b981;
+          color: #059669;
         }
         .select-track-btn {
-          background: rgba(0, 212, 255, 0.1);
-          border: 1px solid rgba(0, 212, 255, 0.3);
-          color: #00D4FF;
+          background: #E0F2FE;
+          border: 1px solid rgba(0, 184, 217, 0.35);
+          color: #0369a1;
           padding: 6px 14px;
           border-radius: 999px;
           font-size: 11px;
           font-weight: 800;
           cursor: pointer;
-          transition: background .15s;
+          transition: background .15s, color .15s;
         }
         .track-card.selected .select-track-btn {
-          background: #00D4FF;
-          color: #04111f;
+          background: #00b8d9;
+          color: #ffffff;
+          border-color: #00b8d9;
         }
 
         /* ── STEPS SECTION ── */
         .steps-section {
-          background: #04111f;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: #F8FAFC;
+          border-bottom: 1px solid rgba(10, 25, 49, 0.06);
         }
         .steps-grid {
           display: grid;
@@ -1183,10 +1197,11 @@ export default function Scholarship() {
           gap: 28px;
         }
         .step-card {
-          background: linear-gradient(160deg, #07192e 0%, #030c18 100%);
-          border: 1px solid rgba(255,255,255,0.08);
+          background: #ffffff;
+          border: 1px solid rgba(10, 25, 49, 0.07);
           border-radius: 22px;
           padding: 32px;
+          box-shadow: 0 8px 24px rgba(10, 25, 49, 0.04);
           position: relative;
         }
         .step-badge {
@@ -1194,8 +1209,8 @@ export default function Scholarship() {
           font-size: 10px;
           font-weight: 900;
           letter-spacing: .18em;
-          color: #00D4FF;
-          background: rgba(0, 212, 255, 0.1);
+          color: #0369a1;
+          background: #E0F2FE;
           padding: 4px 10px;
           border-radius: 999px;
           margin-bottom: 16px;
@@ -1203,18 +1218,18 @@ export default function Scholarship() {
         .step-card h3 {
           font-size: 20px;
           font-weight: 800;
-          color: #ffffff;
+          color: #0A1931;
           margin-bottom: 10px;
         }
         .step-card p {
           font-size: 14px;
-          color: #94a3b8;
+          color: #475569;
           line-height: 1.6;
         }
 
         /* ── APPLY SECTION ── */
         .apply-section {
-          background: #030c18;
+          background: #ffffff;
           padding-bottom: 100px;
         }
         .apply-layout {
@@ -1224,18 +1239,18 @@ export default function Scholarship() {
           align-items: start;
         }
         .apply-form-card {
-          background: #07192e;
-          border: 1px solid rgba(0, 212, 255, 0.22);
+          background: #ffffff;
+          border: 1.5px solid rgba(0, 184, 217, 0.25);
           border-radius: 28px;
           padding: 44px;
-          box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+          box-shadow: 0 24px 70px -10px rgba(10, 25, 49, 0.08);
         }
         .secure-shield-tag {
           font-size: 11px;
           font-weight: 900;
           letter-spacing: .14em;
-          color: #10b981;
-          background: rgba(16, 185, 129, 0.1);
+          color: #059669;
+          background: #ECFDF5;
           border: 1px solid rgba(16, 185, 129, 0.3);
           border-radius: 999px;
           padding: 4px 12px;
@@ -1244,12 +1259,12 @@ export default function Scholarship() {
           margin-top: 16px;
           font-size: 32px;
           font-weight: 900;
-          color: #ffffff;
+          color: #0A1931;
         }
         .form-main-sub {
           margin-top: 8px;
           font-size: 15px;
-          color: #94a3b8;
+          color: #475569;
           line-height: 1.6;
         }
 
@@ -1262,14 +1277,14 @@ export default function Scholarship() {
           align-items: flex-start;
         }
         .alert-box.success {
-          background: rgba(16, 185, 129, 0.1);
+          background: #ECFDF5;
           border: 1px solid rgba(16, 185, 129, 0.35);
-          color: #34d399;
+          color: #065f46;
         }
         .alert-box.error {
-          background: rgba(239, 68, 68, 0.1);
+          background: #FEF2F2;
           border: 1px solid rgba(239, 68, 68, 0.35);
-          color: #f87171;
+          color: #991b1b;
         }
         .alert-icon { font-size: 20px; }
         .alert-content strong { display: block; font-size: 15px; margin-bottom: 4px; }
@@ -1292,32 +1307,34 @@ export default function Scholarship() {
           gap: 8px;
         }
         .form-group label {
-          font-size: 11px;
-          font-weight: 900;
-          letter-spacing: .08em;
-          color: #94a3b8;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: .04em;
+          color: #1e293b;
         }
-        .form-group label .req { color: #00D4FF; }
+        .form-group label .req { color: #0284c7; }
         .form-group label small { font-weight: 500; color: #64748b; }
         .form-group input, .form-group select, .form-group textarea {
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: #F8FAFC;
+          border: 1.5px solid #E2E8F0;
           border-radius: 12px;
-          color: #f1f5f9;
+          color: #0A1931;
           font-size: 15px;
+          font-weight: 600;
           padding: 13px 16px;
           outline: none;
-          transition: border-color .15s, box-shadow .15s;
+          transition: border-color .15s, box-shadow .15s, background .15s;
         }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-          border-color: #00D4FF;
-          box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.18);
+          border-color: #00b8d9;
+          background: #ffffff;
+          box-shadow: 0 0 0 3px rgba(0, 184, 217, 0.16);
         }
-        .form-group select option { background: #07192e; color: #f1f5f9; }
+        .form-group select option { background: #ffffff; color: #0A1931; }
 
         .selected-track-preview {
-          background: rgba(0, 212, 255, 0.05);
-          border: 1px solid rgba(0, 212, 255, 0.2);
+          background: #F0F9FF;
+          border: 1px solid rgba(0, 184, 217, 0.3);
           border-radius: 14px;
           padding: 18px;
           display: grid;
@@ -1338,12 +1355,12 @@ export default function Scholarship() {
           justify-content: center;
           clip-path: polygon(50% 0, 92% 16%, 92% 66%, 50% 100%, 8% 66%, 8% 16%);
         }
-        .preview-top strong { font-size: 15px; color: #ffffff; display: block; }
-        .preview-level { font-size: 11px; color: #00D4FF; font-weight: 800; }
-        .preview-desc { font-size: 13px; color: #94a3b8; line-height: 1.5; }
+        .preview-top strong { font-size: 15px; color: #0A1931; display: block; }
+        .preview-level { font-size: 11px; color: #0284c7; font-weight: 800; }
+        .preview-desc { font-size: 13px; color: #475569; line-height: 1.5; }
         .preview-modules-list { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 4px; }
-        .modules-heading { font-size: 11px; font-weight: 900; color: #cbd5e1; }
-        .module-pill { font-size: 11px; color: #94a3b8; background: rgba(255,255,255,0.04); padding: 2px 8px; border-radius: 4px; }
+        .modules-heading { font-size: 11px; font-weight: 900; color: #1e293b; }
+        .module-pill { font-size: 11px; color: #475569; background: #E2E8F0; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
 
         .consent-check-row {
           display: flex;
@@ -1355,31 +1372,32 @@ export default function Scholarship() {
           width: 18px;
           height: 18px;
           margin-top: 2px;
-          accent-color: #00D4FF;
+          accent-color: #00b8d9;
         }
         .consent-check-row label {
           font-size: 13px;
           line-height: 1.5;
-          color: #94a3b8;
+          color: #475569;
         }
-        .consent-check-row a { color: #00D4FF; }
+        .consent-check-row a { color: #0284c7; }
 
         .submit-dossier-btn {
           margin-top: 10px;
-          background: linear-gradient(135deg, #00D4FF 0%, #0ea5e9 100%);
+          background: linear-gradient(135deg, #0A1931 0%, #06162d 100%);
           border: 0;
-          color: #04111f;
+          color: #ffffff;
           font-weight: 900;
           font-size: 16px;
           padding: 16px;
           border-radius: 999px;
           cursor: pointer;
-          transition: transform .15s, box-shadow .15s;
-          box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
+          transition: transform .15s, box-shadow .15s, background .15s;
+          box-shadow: 0 8px 24px rgba(10, 25, 49, 0.2);
         }
         .submit-dossier-btn:hover:not(:disabled) {
+          background: #00b8d9;
           transform: translateY(-2px);
-          box-shadow: 0 12px 40px rgba(0, 212, 255, 0.45);
+          box-shadow: 0 12px 36px rgba(0, 184, 217, 0.35);
         }
         .submit-dossier-btn:disabled {
           opacity: 0.5;
@@ -1393,10 +1411,11 @@ export default function Scholarship() {
           gap: 24px;
         }
         .sidebar-card {
-          background: linear-gradient(160deg, #07192e 0%, #030c18 100%);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: #F8FAFC;
+          border: 1px solid rgba(10, 25, 49, 0.08);
           border-radius: 24px;
           padding: 32px;
+          box-shadow: 0 8px 24px rgba(10, 25, 49, 0.03);
         }
         .sidebar-logo-header {
           display: flex;
@@ -1411,23 +1430,23 @@ export default function Scholarship() {
         .sidebar-logo-header h4 {
           font-size: 18px;
           font-weight: 900;
-          color: #ffffff;
+          color: #0A1931;
         }
         .sidebar-logo-header span {
           font-size: 12px;
-          color: #00b8d9;
+          color: #008da6;
           font-weight: 700;
         }
         .sidebar-divider {
           height: 1px;
-          background: rgba(255,255,255,0.08);
+          background: rgba(10, 25, 49, 0.08);
           margin: 20px 0;
         }
         .sidebar-card h5 {
           font-size: 14px;
           font-weight: 900;
           letter-spacing: .08em;
-          color: #ffffff;
+          color: #0A1931;
           margin-bottom: 14px;
         }
         .sidebar-list {
@@ -1440,7 +1459,7 @@ export default function Scholarship() {
           align-items: center;
           gap: 10px;
           font-size: 14px;
-          color: #cbd5e1;
+          color: #334155;
         }
         .sidebar-list .check {
           color: #10b981;
@@ -1449,42 +1468,45 @@ export default function Scholarship() {
         .sidebar-security-note {
           margin-top: 24px;
           padding-top: 18px;
-          border-top: 1px solid rgba(255,255,255,0.06);
+          border-top: 1px solid rgba(10, 25, 49, 0.08);
           font-size: 12px;
           line-height: 1.6;
           color: #64748b;
         }
-        .sidebar-security-note strong { color: #94a3b8; }
+        .sidebar-security-note strong { color: #1e293b; }
 
         .sidebar-support-card {
-          background: rgba(0, 212, 255, 0.04);
-          border: 1px solid rgba(0, 212, 255, 0.15);
+          background: #F0F9FF;
+          border: 1px solid rgba(0, 184, 217, 0.25);
           border-radius: 20px;
           padding: 24px;
         }
         .sidebar-support-card h5 {
           font-size: 14px;
           font-weight: 900;
-          color: #00D4FF;
+          color: #0284c7;
           margin-bottom: 8px;
         }
         .sidebar-support-card p {
           font-size: 13px;
-          color: #94a3b8;
+          color: #475569;
           line-height: 1.5;
           margin-bottom: 12px;
         }
         .support-link {
-          color: #ffffff;
+          color: #0A1931;
           font-size: 13px;
           font-weight: 800;
           text-decoration: none;
         }
+        .support-link:hover {
+          color: #00b8d9;
+        }
 
         /* ── OFFICIAL 5-COLUMN FOOTER ── */
         .site-footer {
-          background: #020812;
-          border-top: 1px solid rgba(255,255,255,0.08);
+          background: #0A1931;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
           padding-top: 80px;
         }
         .footer-container {
@@ -1526,19 +1548,19 @@ export default function Scholarship() {
         .footer-brand-desc {
           font-size: 13px;
           line-height: 1.6;
-          color: #64748b;
+          color: #94a3b8;
           margin-bottom: 20px;
         }
         .founder-quote-box {
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.06);
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 14px;
           padding: 16px;
         }
         .founder-quote-box p {
           font-size: 12px;
           font-style: italic;
-          color: #94a3b8;
+          color: #cbd5e1;
           line-height: 1.6;
         }
         .quote-author {
@@ -1554,7 +1576,7 @@ export default function Scholarship() {
           gap: 10px;
         }
         .footer-links li a {
-          color: #64748b;
+          color: #94a3b8;
           text-decoration: none;
           font-size: 13px;
           transition: color .15s;
@@ -1565,7 +1587,7 @@ export default function Scholarship() {
         .corporate-hq-box {
           margin-top: 24px;
           padding-top: 16px;
-          border-top: 1px solid rgba(255,255,255,0.08);
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
         .hq-title {
           font-size: 10px;
@@ -1578,11 +1600,11 @@ export default function Scholarship() {
           font-style: normal;
           font-size: 12px;
           line-height: 1.5;
-          color: #64748b;
+          color: #94a3b8;
         }
         .contact-details p {
           font-size: 13px;
-          color: #64748b;
+          color: #94a3b8;
           margin-bottom: 8px;
         }
         .footer-social-row {
@@ -1594,7 +1616,7 @@ export default function Scholarship() {
           width: 32px;
           height: 32px;
           border-radius: 50%;
-          background: rgba(255,255,255,0.06);
+          background: rgba(255, 255, 255, 0.08);
           color: #ffffff;
           display: flex;
           align-items: center;
@@ -1611,7 +1633,7 @@ export default function Scholarship() {
         }
 
         .footer-bottom-bar {
-          border-top: 1px solid rgba(255,255,255,0.06);
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
           padding: 20px 24px;
         }
         .footer-bottom-inner {
@@ -1620,7 +1642,7 @@ export default function Scholarship() {
           display: flex;
           justify-content: space-between;
           font-size: 12px;
-          color: #475569;
+          color: #94a3b8;
         }
 
         /* ── RESPONSIVE ── */
@@ -1639,7 +1661,7 @@ export default function Scholarship() {
           .footer-container { grid-template-columns: 1fr; }
           .footer-bottom-inner { flex-direction: column; gap: 8px; }
         }
-      `}</style>
+`}</style>
     </>
   );
 }
