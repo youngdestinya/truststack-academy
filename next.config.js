@@ -38,8 +38,21 @@ const nextConfig = {
       { source: '/privacy.html', destination: '/privacy', permanent: true },
       { source: '/terms.html', destination: '/terms', permanent: true },
       { source: '/scholarship.html', destination: '/scholarship', permanent: true },
-      { source: '/courses-tracks.html', destination: '/courses', permanent: true },
-      { source: '/courses-tracks', destination: '/courses', permanent: true },
+    ];
+  },
+  async rewrites() {
+    return [
+      { source: '/central-login', destination: '/central-login.html' },
+      { source: '/student-lms', destination: '/student-lms.html' },
+      { source: '/lms-control', destination: '/lms-control.html' },
+      { source: '/admin/scholarships', destination: '/admin/scholarships.html' },
+      { source: '/admin/login', destination: '/admin/login.html' },
+      { source: '/home', destination: '/home.html' },
+      { source: '/complaint', destination: '/complaint.html' },
+      { source: '/pay-checkout', destination: '/pay-checkout.html' },
+      { source: '/verify-certificate', destination: '/verify-certificate.html' },
+      { source: '/courses-tracks', destination: '/courses-tracks.html' },
+      { source: '/sample-certificate.html', destination: '/sample-certificate' },
     ];
   },
 }
