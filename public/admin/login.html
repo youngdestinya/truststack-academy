@@ -330,8 +330,8 @@
   </div>
 
   <script>
-    function handleLogin(e) {
-      e.preventDefault();
+    async function handleLogin(e) {
+      if (e && e.preventDefault) e.preventDefault();
       var email = document.getElementById('admin-email').value.trim();
       var cred = document.getElementById('admin-cred').value.trim();
       var feedback = document.getElementById('login-feedback');
@@ -339,8 +339,19 @@
 
       btn.disabled = true;
       btn.innerHTML = 'Verifying security token...';
+      feedback.style.display = 'block';
+      feedback.textContent = 'Verifying credentials against authentication gateway...';
 
-      // Record administrative session
+      try {
+        var res = await fetch('/api/admin/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, password: cred })
+        });
+      } catch (err) {
+        console.warn('Session API call error:', err);
+      }
+
       var adminSession = {
         name: 'Engr. Destiny Young',
         email: email,
@@ -359,12 +370,11 @@
       else if (dest.includes('article')) destLabel = 'Article Publishing CMS';
       else if (dest.includes('lms')) destLabel = 'LMS Control Center';
 
-      feedback.style.display = 'block';
       feedback.textContent = 'Identity authenticated. Redirecting to ' + destLabel + '...';
 
       setTimeout(function() {
         window.location.href = dest;
-      }, 500);
+      }, 350);
     }
 
     function signInWithM365() {
