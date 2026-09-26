@@ -38,6 +38,8 @@ const nextConfig = {
       { source: '/privacy.html', destination: '/privacy', permanent: true },
       { source: '/terms.html', destination: '/terms', permanent: true },
       { source: '/scholarship.html', destination: '/scholarship', permanent: true },
+      { source: '/courses-tracks.html', destination: '/courses', permanent: true },
+      { source: '/courses-tracks', destination: '/courses', permanent: true },
     ];
   },
 }
