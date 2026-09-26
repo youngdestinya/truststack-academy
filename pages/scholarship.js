@@ -133,6 +133,19 @@ export default function Scholarship() {
           <nav className="header-nav">
             <Link href="/" className="nav-item">Home</Link>
             <Link href="/courses" className="nav-item">Courses</Link>
+            <div className="portal-dropdown-wrapper">
+              <span className="nav-item portal-trigger" role="button" tabIndex={0}>
+                Portal <span className="chevron-mini">▾</span>
+              </span>
+              <div className="portal-dropdown-menu">
+                <Link href="/central-login" className="portal-menu-link">Central Login Directory</Link>
+                <Link href="/student-lms" className="portal-menu-link">Learner LMS Portal</Link>
+                <Link href="/login?role=admin" className="portal-menu-link">LMS Administrator Login</Link>
+                <Link href="/lms-control" className="portal-menu-link">LMS Control Dashboard</Link>
+                <Link href="/admin/scholarships" className="portal-menu-link">Scholarship Admissions Portal</Link>
+                <Link href="/admin/articles" className="portal-menu-link">Article Publishing CMS</Link>
+              </div>
+            </div>
             <Link href="/lms" className="nav-item">LMS</Link>
             <Link href="/#whytruststack" className="nav-item">Why TrustStack</Link>
             <Link href="/about" className="nav-item">About</Link>
@@ -612,6 +625,8 @@ export default function Scholarship() {
               <li><Link href="/cdpo">Free CDPO Course</Link></li>
               <li><Link href="/career-badges">Career Badges</Link></li>
               <li><Link href="/verify">Verify Certificate</Link></li>
+              <li><Link href="/learner">Verify Learner Registry</Link></li>
+              <li><Link href="/sample-certificate">Sample Certificate</Link></li>
               <li><Link href="/scholarship">Scholarship</Link></li>
               <li><Link href="/privacy">Privacy Policy</Link></li>
               <li><Link href="/terms">Terms of Use</Link></li>
@@ -629,10 +644,15 @@ export default function Scholarship() {
           {/* Column 4: Courses */}
           <div className="footer-col">
             <div className="footer-col-head">COURSES</div>
-            <ul className="footer-links">
+            <ul className="footer-links footer-courses-list">
               {courseCatalog.map(c => (
                 <li key={c.slug}>
-                  <Link href={`/courses/${c.slug}`}>{c.title}</Link>
+                  <Link href={`/courses/${c.slug}`} className="footer-course-link">
+                    <span className="footer-track-badge" style={{ '--track-color': c.color }}>
+                      {c.icon}
+                    </span>
+                    <span className="footer-course-title">{c.title}</span>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -747,6 +767,73 @@ export default function Scholarship() {
         }
         .nav-item:hover, .nav-item.active {
           color: #00b8d9;
+        }
+        .portal-dropdown-wrapper {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+        }
+        .portal-trigger {
+          cursor: pointer;
+        }
+        .chevron-mini {
+          font-size: 10px;
+          margin-left: 2px;
+          transition: transform .15s;
+        }
+        .portal-dropdown-wrapper:hover .chevron-mini {
+          transform: rotate(180deg);
+        }
+        .portal-dropdown-menu {
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%) translateY(8px);
+          background: #ffffff;
+          border: 1px solid #dce5ec;
+          border-radius: 16px;
+          padding: 8px;
+          min-width: 250px;
+          box-shadow: 0 16px 40px rgba(10, 25, 49, 0.16);
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+          transition: opacity .18s ease, transform .18s ease, visibility .18s;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          z-index: 1000;
+        }
+        .portal-dropdown-menu::before {
+          content: '';
+          position: absolute;
+          top: -12px;
+          left: 0;
+          right: 0;
+          height: 12px;
+          background: transparent;
+        }
+        .portal-dropdown-wrapper:hover .portal-dropdown-menu,
+        .portal-dropdown-wrapper:focus-within .portal-dropdown-menu {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+          transform: translateX(-50%) translateY(4px);
+        }
+        .portal-menu-link {
+          display: block;
+          padding: 9px 14px;
+          border-radius: 10px;
+          color: #0A1931;
+          font-size: 13.5px;
+          font-weight: 700;
+          text-decoration: none;
+          transition: background .15s, color .15s, transform .15s;
+        }
+        .portal-menu-link:hover {
+          background: #F0F9FF;
+          color: #00b8d9;
+          transform: translateX(3px);
         }
         .nav-badge-new {
           color: #ef4444;
@@ -1583,6 +1670,44 @@ export default function Scholarship() {
         }
         .footer-links li a:hover {
           color: #00D4FF;
+        }
+        .footer-courses-list {
+          list-style: none;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 8px !important;
+        }
+        .footer-course-link {
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 9px !important;
+          color: #94a3b8 !important;
+          text-decoration: none !important;
+          font-size: 13px !important;
+          font-weight: 700 !important;
+          transition: color .15s, transform .15s !important;
+        }
+        .footer-course-link:hover {
+          color: #00D4FF !important;
+          transform: translateX(3px) !important;
+        }
+        .footer-track-badge {
+          display: inline-grid !important;
+          place-items: center !important;
+          width: 19px !important;
+          height: 22px !important;
+          clip-path: polygon(50% 0, 93% 15%, 93% 67%, 50% 100%, 7% 67%, 7% 15%) !important;
+          background: linear-gradient(145deg, var(--track-color, #00b8d9), #07182e) !important;
+          color: #ffffff !important;
+          font-size: 9.5px !important;
+          font-weight: 900 !important;
+          line-height: 1 !important;
+          flex-shrink: 0 !important;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
+        }
+        .footer-course-title {
+          color: inherit !important;
+          font-size: 13px !important;
         }
         .corporate-hq-box {
           margin-top: 24px;

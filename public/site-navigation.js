@@ -60,17 +60,16 @@
     { name: 'Security Engineering', slug: 'security-engineering', icon: '⌘', color: '#6366f1' }
   ];
 
-  // Resources Menu Items: Strictly NO icons (clean text links only)
-  const resourceMenuItems = [
+  // Portal Menu Items: All platform login pages & administrative control portals (Clean text links only)
+  const portalMenuItems = [
     { label: 'Central Login Directory', href: '/central-login' },
     { label: 'Learner LMS Portal', href: '/student-lms' },
     { label: 'LMS Administrator Login', href: '/login?role=admin' },
     { label: 'LMS Control Dashboard', href: '/lms-control' },
-    { label: 'Verify Certificate', href: '/verify' },
-    { label: 'Knowledge Base', href: '/knowledge-base' },
-    { label: 'Free CDPO Course', href: '/cdpo' },
-    { label: 'Career Badges', href: '/career-badges' }
+    { label: 'Scholarship Admissions Portal', href: '/admin/scholarships' },
+    { label: 'Article Publishing CMS', href: '/admin/articles' }
   ];
+  const resourceMenuItems = portalMenuItems;
 
   const courseModules = {
     'soc-analyst': ['Windows, Linux and network log analysis', 'SIEM queries, dashboards and detection rules', 'Incident triage, escalation and playbooks'],
@@ -129,6 +128,12 @@
       .ts-footer-resources a{display:flex;align-items:center;gap:.55rem;color:rgba(255,255,255,.7);font-size:13px;line-height:1.35;text-decoration:none;transition:color .18s ease,transform .18s ease}
       .ts-footer-resources a::before{content:'›';display:grid;place-items:center;width:16px;height:16px;border-radius:50%;background:rgba(212,175,55,.14);color:#d4af37;font-size:14px;font-weight:900}
       .ts-footer-resources a:hover{color:#fff;transform:translateX(3px)}
+      .ts-footer-courses-container{display:flex!important;flex-direction:column!important;gap:8px!important;margin-top:1rem!important}
+      .ts-footer-courses-container a.ts-footer-course-link{display:inline-flex!important;align-items:center!important;gap:9px!important;color:rgba(255,255,255,.72)!important;font-size:13px!important;font-weight:700!important;line-height:1.35!important;text-decoration:none!important;transition:color .18s ease,transform .18s ease!important}
+      .ts-footer-courses-container a.ts-footer-course-link::before,.ts-footer-courses-container a.ts-footer-course-link::after{content:none!important;display:none!important}
+      .ts-footer-courses-container a.ts-footer-course-link:hover{color:#fff!important;transform:translateX(3px)!important}
+      .ts-footer-badge-icon{display:inline-grid!important;place-items:center!important;width:19px!important;height:22px!important;clip-path:polygon(50% 0,93% 15%,93% 67%,50% 100%,7% 67%,7% 15%)!important;background:linear-gradient(145deg,var(--track-color,#00b8d9),#07182e)!important;color:#fff!important;font-size:9.5px!important;font-weight:900!important;line-height:1!important;flex-shrink:0!important;box-shadow:0 2px 6px rgba(0,0,0,.35)!important}
+      .ts-footer-course-name{color:inherit!important;font-size:13px!important;font-weight:700!important}
       .ts-home-footer{color:#fff!important}
       .ts-home-footer :where(p,span,a){color:#fff!important}
       .ts-home-footer :where(a,button){transition:color .18s ease!important}
@@ -276,12 +281,14 @@
         color: #00b8d9 !important;
       }
 
-      /* Resources Submenu Link Styling (Clean Text, No Icons) */
+      /* Portal & Resources Submenu Link Styling (Clean Text, No Icons) */
+      .ts-portal-link,
       .ts-resource-link {
         padding: 9px 14px !important;
         font-weight: 800 !important;
         color: #0a1931 !important;
       }
+      .ts-portal-link:hover,
       .ts-resource-link:hover {
         background: #f0f9fc !important;
         color: #00b8d9 !important;
@@ -730,54 +737,56 @@
       wrapper.appendChild(menu);
     }
 
-    // 2. Resources Dropdown (Strictly NOT hyperlinked, static Menu with linked submenu)
-    const existingResources = Array.from(nav.querySelectorAll('a, button, span, .ts-menu-trigger')).find(el => {
-      const txt = clean(el.textContent);
-      return txt === 'resources' || txt.startsWith('resources');
-    });
+    // 2. Portal Dropdown (Static Menu trigger with login & portal submenu)
+    let portalWrapper = nav.querySelector('.ts-portal-dropdown, .portal-dropdown-wrapper');
+    if (!portalWrapper) {
+      const existingPortalOrResources = Array.from(nav.querySelectorAll('a, button, span, .ts-menu-trigger')).find(el => {
+        if (el.closest('.ts-portal-dropdown, .portal-dropdown-wrapper, .ts-dropdown-wrapper')) return false;
+        const txt = clean(el.textContent);
+        return txt === 'portal' || txt.startsWith('portal') || txt === 'resources' || txt.startsWith('resources');
+      });
 
-    const resWrapper = document.createElement('div');
-    resWrapper.className = 'ts-dropdown-wrapper ts-resources-dropdown';
-    
-    // Static Menu trigger: NOT hyperlinked, NO href, purely static menu header
-    const resTrigger = document.createElement('span');
-    resTrigger.className = 'ts-menu-trigger ts-menu-plus';
-    resTrigger.textContent = 'Resources';
-    resTrigger.setAttribute('role', 'button');
-    resTrigger.setAttribute('tabindex', '0');
-    resTrigger.setAttribute('aria-haspopup', 'true');
-    resTrigger.setAttribute('aria-expanded', 'false');
-    resTrigger.dataset.noTrackBadge = 'true';
+      portalWrapper = document.createElement('div');
+      portalWrapper.className = 'ts-dropdown-wrapper ts-portal-dropdown';
+      
+      const portalTrigger = document.createElement('span');
+      portalTrigger.className = 'ts-menu-trigger ts-menu-plus';
+      portalTrigger.textContent = 'Portal';
+      portalTrigger.setAttribute('role', 'button');
+      portalTrigger.setAttribute('tabindex', '0');
+      portalTrigger.setAttribute('aria-haspopup', 'true');
+      portalTrigger.setAttribute('aria-expanded', 'false');
+      portalTrigger.dataset.noTrackBadge = 'true';
 
-    // Prevent any page jumps or navigation clicks
-    resTrigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      resMenu.classList.toggle('ts-open');
-    });
+      const portalMenu = document.createElement('div');
+      portalMenu.className = 'ts-dropdown-menu';
+      portalMenu.style.minWidth = '245px';
 
-    const resMenu = document.createElement('div');
-    resMenu.className = 'ts-dropdown-menu';
+      portalTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        portalMenu.classList.toggle('ts-open');
+      });
 
-    // Submenu links: fully linked, clean text only (NO icons)
-    resMenu.innerHTML = resourceMenuItems.map(item =>
-      '<a class="ts-dropdown-link ts-resource-link" href="' + item.href + '" data-site-destination="' + item.href + '" data-no-track-badge="true">' +
-        '<span class="ts-dropdown-item-title">' + item.label + '</span>' +
-      '</a>'
-    ).join('');
+      portalMenu.innerHTML = portalMenuItems.map(item =>
+        '<a class="ts-dropdown-link ts-portal-link" href="' + item.href + '" data-site-destination="' + item.href + '" data-no-track-badge="true">' +
+          '<span class="ts-dropdown-item-title">' + item.label + '</span>' +
+        '</a>'
+      ).join('');
 
-    resWrapper.appendChild(resTrigger);
-    resWrapper.appendChild(resMenu);
+      portalWrapper.appendChild(portalTrigger);
+      portalWrapper.appendChild(portalMenu);
 
-    if (existingResources) {
-      const container = existingResources.closest('.ts-dropdown-wrapper') || existingResources;
-      container.replaceWith(resWrapper);
-    } else {
-      const contactLink = Array.from(nav.querySelectorAll('a, button, span')).find(a => clean(a.textContent) === 'contact');
-      if (contactLink && contactLink.parentElement) {
-        contactLink.parentElement.insertBefore(resWrapper, contactLink);
+      if (existingPortalOrResources) {
+        const container = existingPortalOrResources.closest('.ts-dropdown-wrapper') || existingPortalOrResources;
+        container.replaceWith(portalWrapper);
       } else {
-        nav.appendChild(resWrapper);
+        const contactLink = Array.from(nav.querySelectorAll('a, button, span')).find(a => clean(a.textContent) === 'contact');
+        if (contactLink && contactLink.parentElement) {
+          contactLink.parentElement.insertBefore(portalWrapper, contactLink);
+        } else {
+          nav.appendChild(portalWrapper);
+        }
       }
     }
 
@@ -856,14 +865,14 @@
             </div>
           </div>
 
-          <!-- Resources Accordion: Strictly NO icons -->
+          <!-- Portal Accordion: All login & portal pages (Strictly NO icons) -->
           <div class="ts-mobile-accordion-wrapper">
-            <button type="button" class="ts-mobile-accordion-header" id="ts-m-resources-btn">
-              <span>Resources</span>
+            <button type="button" class="ts-mobile-accordion-header" id="ts-m-portal-btn">
+              <span>Portal</span>
               <span class="ts-mobile-accordion-chevron">▼</span>
             </button>
-            <div class="ts-mobile-sublist" id="ts-m-resources-list">
-              ${resourceMenuItems.map(item => `
+            <div class="ts-mobile-sublist" id="ts-m-portal-list">
+              ${portalMenuItems.map(item => `
                 <a class="ts-mobile-subitem" href="${item.href}" data-site-destination="${item.href}" data-no-track-badge="true" style="padding-left:14px;">
                   <span>${item.label}</span>
                 </a>
@@ -880,7 +889,7 @@
         
         <div class="ts-mobile-drawer-footer">
           <a class="ts-mobile-cta-btn ts-mobile-cta-primary" href="/pay?track=bundle">Enroll in 8-Track Bundle (₦150k)</a>
-          <a class="ts-mobile-cta-btn ts-mobile-cta-secondary" href="/login">Learner Login</a>
+          <a class="ts-mobile-cta-btn ts-mobile-cta-secondary" href="/central-login">Central Login Portal</a>
           <div style="margin-top:12px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:11px;color:#64748b;line-height:1.4;">
             <strong style="display:block;color:#0a1931;margin-bottom:2px;font-size:11px;">CORPORATE HEADQUARTERS</strong>
             25 Destiny Young Avenue, GRE<br>
@@ -912,7 +921,7 @@
         }
       };
       setupAccordion('ts-m-courses-btn', 'ts-m-courses-list');
-      setupAccordion('ts-m-resources-btn', 'ts-m-resources-list');
+      setupAccordion('ts-m-portal-btn', 'ts-m-portal-list');
 
       drawer.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => closeDrawer());
@@ -1094,14 +1103,14 @@
   }
 
   function addFooterResources() {
-    if (!isHome) return;
     const footer = document.querySelector('footer');
     if (!footer || footer.querySelector('.ts-footer-resources')) return;
-    const headings = Array.from(footer.querySelectorAll('div')).filter((node) => !node.children.length);
+    const headings = Array.from(footer.querySelectorAll('div, h2, h3, h4, .footer-col-head')).filter((node) => !node.children.length);
+    if (headings.some(node => clean(node.textContent) === 'resources')) return;
     const quickHeading = headings.find((node) => clean(node.textContent) === 'quick links');
     const courseHeading = headings.find((node) => clean(node.textContent) === 'courses');
-    const quickColumn = quickHeading?.parentElement?.parentElement;
-    const courseColumn = courseHeading?.parentElement?.parentElement;
+    const quickColumn = quickHeading?.closest('.footer-col, [class*="col"]') || quickHeading?.parentElement?.parentElement;
+    const courseColumn = courseHeading?.closest('.footer-col, [class*="col"]') || courseHeading?.parentElement?.parentElement;
     const columns = quickColumn?.parentElement;
     if (!quickColumn || !courseColumn || !columns || courseColumn.parentElement !== columns) return;
     columns.classList.add('ts-footer-five');
@@ -1116,8 +1125,9 @@
       ['Knowledge Base', '/knowledge-base'],
       ['Free CDPO Course', '/cdpo'],
       ['Career Badges', '/career-badges'],
-      ['Verify Learner', '/learner'],
       ['Verify Certificate', '/verify'],
+      ['Verify Learner Registry', '/learner'],
+      ['Sample Certificate', '/sample-certificate'],
       ['Scholarship', '/scholarship'],
       ['Privacy Policy', '/privacy'],
       ['Terms of Use', '/terms']
@@ -1125,6 +1135,7 @@
       const link = document.createElement('a');
       link.href = href;
       link.textContent = label;
+      link.dataset.siteDestination = href;
       links.appendChild(link);
     });
 
@@ -1140,6 +1151,32 @@
     `;
     resourceColumn.append(heading, links, hqBox);
     columns.insertBefore(resourceColumn, courseColumn);
+  }
+
+  function enhanceFooterCourses() {
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+    const headings = Array.from(footer.querySelectorAll('div, h2, h3, h4, .footer-col-head')).filter((node) => !node.children.length);
+    const courseHeading = headings.find((node) => clean(node.textContent) === 'courses');
+    if (!courseHeading) return;
+    const courseCol = courseHeading.closest('.footer-col, [class*="col"]') || courseHeading.parentElement?.parentElement;
+    if (!courseCol) return;
+    if (courseCol.querySelector('.ts-footer-badge-icon') || courseCol.querySelector('.footer-track-badge')) return;
+
+    let linksContainer = courseCol.querySelector('ul, .space-y-2, [class*="space-y"]');
+    if (!linksContainer) {
+      const candidates = Array.from(courseCol.children).filter(ch => ch !== courseHeading.parentElement && ch !== courseHeading);
+      linksContainer = candidates[0] || courseCol.querySelector('div:last-child');
+    }
+    if (!linksContainer) return;
+
+    linksContainer.className = (linksContainer.className || '') + ' ts-footer-courses-container';
+    linksContainer.innerHTML = courseCatalogItems.map(t =>
+      '<a href="/courses/' + t.slug + '" data-site-destination="/courses/' + t.slug + '" data-no-track-badge="true" class="ts-footer-course-link">' +
+        '<span class="ts-footer-badge-icon" style="--track-color:' + t.color + '">' + t.icon + '</span>' +
+        '<span class="ts-footer-course-name">' + t.name + '</span>' +
+      '</a>'
+    ).join('');
   }
 
   function refineBuilderProfile() {
@@ -1286,6 +1323,7 @@
     trackBadges();
     redesignKnowledgeBaseRow();
     addFooterResources();
+    enhanceFooterCourses();
     refineBuilderProfile();
     removeSampleTestimonials();
     replacePartnerStrip();
@@ -1484,7 +1522,7 @@
     
     const explicitHref = element.tagName === 'A' ? element.getAttribute('href') : null;
     if (explicitHref && explicitHref !== '#' && !explicitHref.startsWith('javascript:')) {
-      if (explicitHref.startsWith('/courses/') || explicitHref.startsWith('/pay') || explicitHref.startsWith('/scholarship') || explicitHref.startsWith('/about') || explicitHref.startsWith('/contact') || explicitHref.startsWith('/login') || explicitHref.startsWith('/central-login') || explicitHref.startsWith('/student-lms') || explicitHref.startsWith('/admin') || explicitHref.startsWith('/lms') || explicitHref.startsWith('/verify') || explicitHref.startsWith('/cdpo') || explicitHref.startsWith('/career-badges') || explicitHref.startsWith('/knowledge-base') || explicitHref.startsWith('http')) {
+      if (explicitHref.startsWith('/courses/') || explicitHref.startsWith('/pay') || explicitHref.startsWith('/scholarship') || explicitHref.startsWith('/about') || explicitHref.startsWith('/contact') || explicitHref.startsWith('/login') || explicitHref.startsWith('/central-login') || explicitHref.startsWith('/student-lms') || explicitHref.startsWith('/lms-control') || explicitHref.startsWith('/admin') || explicitHref.startsWith('/lms') || explicitHref.startsWith('/verify') || explicitHref.startsWith('/learner') || explicitHref.startsWith('/sample-certificate') || explicitHref.startsWith('/cdpo') || explicitHref.startsWith('/career-badges') || explicitHref.startsWith('/knowledge-base') || explicitHref.startsWith('http')) {
         return; // Allow native navigation directly to destination
       }
     }
