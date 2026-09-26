@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Official Sample Certificate | TrustStack Academy</title>
+  <meta name="description" content="Official sample verifiable certificate for TrustStack Academy learners, backed by the public certificate registry.">
+  <link rel="icon" type="image/png" href="/Truststack_Logo_PNG.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,700;1,900&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Alegreya Sans', sans-serif !important;
+    }
+    body {
+      background: #f1f5f9;
+      color: #07182e;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px 50px;
+    }
+    .toolbar {
+      width: 100%;
+      max-width: 860px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .toolbar a, .toolbar button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #07182e;
+      font-weight: 800;
+      font-size: 14px;
+      text-decoration: none;
+      background: #ffffff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: all 0.15s ease;
+    }
+    .toolbar a:hover, .toolbar button:hover {
+      background: #07182e;
+      color: #ffffff;
+      border-color: #07182e;
+    }
+    .toolbar .btn-primary {
+      background: #00b8d9;
+      color: #07182e;
+      border-color: #00b8d9;
+    }
+    .toolbar .btn-primary:hover {
+      background: #009db8;
+      color: #ffffff;
+    }
+
+    /* Certificate Container */
+    .cert-wrapper {
+      width: 100%;
+      max-width: 860px;
+      position: relative;
+    }
+    .official-cert-card {
+      position: relative;
+      background: #ffffff;
+      border: 3.5px solid #d5a719;
+      border-radius: 28px;
+      padding: 38px 46px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+      color: #07182e;
+      text-align: left;
+    }
+    .cert-watermark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(65%, 450px);
+      height: min(65%, 450px);
+      transform: translate(-50%, -50%);
+      background: url(/Cert_Seal.png) center center / contain no-repeat;
+      opacity: 0.055;
+      filter: blur(1.5px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .cert-header, .cert-body, .meta-box, .dashed-divider, .cert-footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Pinned Top-Right Badge */
+    .cert-pill {
+      position: absolute;
+      top: -15px;
+      right: 44px;
+      background: #d5a719;
+      color: #07182e;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      padding: 6px 18px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(213,167,25,0.4);
+    }
+
+    .cert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 26px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-wrap img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+    }
+    .brand-wrap .academy-name {
+      font-size: 24px;
+      font-weight: 800;
+      color: #07182e;
+      line-height: 1.15;
+    }
+    .brand-wrap .cert-subhead {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: #687386;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+    .seal-wrap img {
+      width: 88px;
+      height: 88px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(0,198,255,0.8)) drop-shadow(0 0 20px rgba(0,198,255,0.45));
+    }
+
+    .cert-body {
+      margin-bottom: 24px;
+    }
+    .cert-kicker {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      color: #687386;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .cert-body h1 {
+      font-size: 38px;
+      font-weight: 900;
+      color: #07182e;
+      margin: 0 0 8px;
+      line-height: 1.1;
+    }
+    .cert-lead {
+      font-size: 15px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .cert-body h2 {
+      font-size: 22px;
+      font-weight: 900;
+      color: #07182e;
+      margin: 0 0 16px;
+    }
+    .skills-block {
+      margin-top: 12px;
+    }
+    .skills-block .skills-label {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      color: #07182e;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .skills-block .skills-list {
+      font-size: 13px;
+      color: #4b5563;
+      line-height: 1.45;
+    }
+
+    .meta-box {
+      background: #f0f9ff;
+      border-radius: 18px;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+    .meta-label {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+    .meta-id {
+      font-family: monospace;
+      font-size: 22px;
+      font-weight: 900;
+      color: #07182e;
+      margin: 3px 0 5px;
+    }
+    .meta-date {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .dashed-divider {
+      border-top: 1px dashed #d1d5db;
+      margin: 20px 0;
+    }
+
+    .cert-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .sig-name, .cert-signature {
+      display: inline-block;
+      font-family: 'Great Vibes', cursive !important;
+      font-weight: 400 !important;
+      font-size: 38px !important;
+      line-height: 1.15;
+      letter-spacing: 0.02em;
+      color: #07182e;
+      margin-bottom: 2px;
+    }
+    .sig-cred {
+      font-size: 12px;
+      color: #4b5563;
+      line-height: 1.4;
+    }
+    .cert-link {
+      font-size: 14px;
+      font-weight: 900;
+      color: #0284c7;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .sample-notice {
+      max-width: 860px;
+      margin: 20px auto 0;
+      color: #64748b;
+      font-size: 13px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Top-level page rule: forces browsers (Chromium/Edge/Safari/Firefox) to initialize print dialog in Landscape orientation */
+    @page {
+      size: A4 landscape;
+      margin: 8mm 10mm;
+    }
+
+    /* Print Formatting */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 8mm 10mm;
+      }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      html, body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .toolbar, .sample-notice, .cert-pill, .cert-link {
+        display: none !important;
+      }
+      .cert-wrapper {
+        width: 100% !important;
+        max-width: 275mm !important;
+        margin: auto !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .official-cert-card {
+        width: 100% !important;
+        max-width: 275mm !important;
+        height: auto !important;
+        max-height: 188mm !important;
+        box-shadow: none !important;
+        border: 4px solid #d5a719 !important;
+        border-radius: 20px !important;
+        box-sizing: border-box !important;
+        display: block !important;
+        padding: 28px 42px !important;
+        margin: auto !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .cert-header {
+        margin-bottom: 20px !important;
+      }
+      .cert-body {
+        margin-bottom: 20px !important;
+      }
+      .cert-body h1 {
+        font-size: 40px !important;
+        margin: 0 0 6px !important;
+      }
+      .cert-body h2 {
+        font-size: 22px !important;
+        margin: 0 0 12px !important;
+      }
+      .meta-box {
+        margin-bottom: 18px !important;
+        padding: 14px 22px !important;
+      }
+      .dashed-divider {
+        margin: 16px 0 !important;
+      }
+      .cert-footer {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: flex-end !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .official-cert-card {
+        padding: 24px 20px;
+        border-radius: 20px;
+      }
+      .cert-pill {
+        right: 20px;
+        font-size: 9px;
+        padding: 4px 12px;
+      }
+      .brand-wrap .academy-name {
+        font-size: 19px;
+      }
+      .seal-wrap img {
+        width: 64px;
+        height: 64px;
+      }
+      .cert-body h1 {
+        font-size: 28px;
+      }
+      .cert-body h2 {
+        font-size: 18px;
+      }
+      .meta-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .cert-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Toolbar -->
+  <div class="toolbar">
+    <a href="/home.html">&larr; Back to Main Website</a>
+    <div style="display:flex; gap:10px;">
+      <button onclick="printCertificate()">🖨 Print Certificate</button>
+      <a href="/verify?id=2026-9E43903F" class="btn-primary">Verify Record &rarr;</a>
+    </div>
+  </div>
+
+  <!-- Official Certificate Card -->
+  <div class="cert-wrapper">
+    <div class="official-cert-card">
+      
+      <!-- Blurred Seal Watermark -->
+      <div class="cert-watermark" aria-hidden="true"></div>
+
+      <!-- Pinned Top-Right Badge -->
+      <div class="cert-pill">OFFICIAL SAMPLE</div>
+
+      <!-- Header -->
+      <div class="cert-header">
+        <div class="brand-wrap">
+          <img src="/Truststack_Logo_PNG.png" alt="TrustStack Logo">
+          <div>
+            <div class="academy-name">TrustStack Academy</div>
+            <div class="cert-subhead">CERTIFICATE OF COMPLETION</div>
+          </div>
+        </div>
+        <div class="seal-wrap">
+          <img src="/Cert_Seal.png" alt="TrustStack Academy official certificate seal">
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="cert-body">
+        <div class="cert-kicker">THIS CERTIFIES THAT</div>
+        <h1>Chinedu Okoro</h1>
+        <div class="cert-lead">has successfully completed</div>
+        <h2>Ethical Hacking &amp; Penetration Testing</h2>
+        <div class="skills-block">
+          <div class="skills-label">CORE SKILLS OBTAINED</div>
+          <div class="skills-list">Authorised reconnaissance &middot; Vulnerability validation &middot; Web and API security testing &middot; Remediation-focused reporting</div>
+        </div>
+      </div>
+
+      <!-- Meta Info Box (Light Cyan) -->
+      <div class="meta-box">
+        <div>
+          <div class="meta-label">CERTIFICATE ID</div>
+          <div class="meta-id">2026-9E43903F</div>
+          <div class="meta-date">Issued 15 September 2026</div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+          <!-- Crisp QR Code SVG encoded for https://truststack.academy/verify?id=2026-9E43903F -->
+          <svg height="76" width="76" viewBox="0 0 29 29" style="display:block; border-radius:4px;"><path fill="#FFFFFF" d="M0,0 h29v29H0z" shape-rendering="crispEdges"></path><path fill="#000000" d="M0 0h7v1H0zM12 0h3v1H12zM18 0h3v1H18zM22,0 h7v1H22zM0 1h1v1H0zM6 1h1v1H6zM8 1h1v1H8zM10 1h1v1H10zM12 1h1v1H12zM14 1h2v1H14zM20 1h1v1H20zM22 1h1v1H22zM28,1 h1v1H28zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM11 2h1v1H11zM14 2h3v1H14zM18 2h1v1H18zM22 2h1v1H22zM24 2h3v1H24zM28,2 h1v1H28zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM8 3h3v1H8zM12 3h2v1H12zM15 3h1v1H15zM17 3h1v1H17zM22 3h1v1H22zM24 3h3v1H24zM28,3 h1v1H28zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM9 4h1v1H9zM14 4h1v1H14zM16 4h1v1H16zM18 4h3v1H18zM22 4h1v1H22zM24 4h3v1H24zM28,4 h1v1H28zM0 5h1v1H0zM6 5h1v1H6zM8 5h2v1H8zM13 5h1v1H13zM15 5h2v1H15zM20 5h1v1H20zM22 5h1v1H22zM28,5 h1v1H28zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22,6 h7v1H22zM9 7h4v1H9zM15 7h1v1H15zM19 7h1v1H19zM0 8h5v1H0zM6 8h4v1H6zM13 8h1v1H13zM17 8h1v1H17zM21 8h1v1H21zM23 8h1v1H23zM25 8h1v1H25zM27 8h1v1H27zM0 9h1v1H0zM3 9h1v1H3zM7 9h1v1H7zM10 9h3v1H10zM14 9h1v1H14zM16 9h5v1H16zM22 9h3v1H22zM28,9 h1v1H28zM0 10h1v1H0zM6 10h1v1H6zM8 10h1v1H8zM10 10h1v1H10zM12 10h1v1H12zM15 10h2v1H15zM20 10h1v1H20zM23 10h1v1H23zM0 11h1v1H0zM3 11h2v1H3zM12 11h1v1H12zM16 11h1v1H16zM21 11h1v1H21zM24 11h2v1H24zM27 11h1v1H27zM0 12h2v1H0zM4 12h3v1H4zM8 12h3v1H8zM13 12h1v1H13zM16 12h2v1H16zM23 12h1v1H23zM25 12h2v1H25zM1 13h1v1H1zM3 13h1v1H3zM5 13h1v1H5zM8 13h1v1H8zM11 13h2v1H11zM14 13h1v1H14zM17 13h1v1H17zM19 13h2v1H19zM22 13h3v1H22zM28,13 h1v1H28zM0 14h2v1H0zM3 14h2v1H3zM6 14h1v1H6zM10 14h1v1H10zM13 14h1v1H13zM15 14h2v1H15zM18 14h1v1H18zM21 14h1v1H21zM23 14h4v1H23zM0 15h1v1H0zM5 15h1v1H5zM8 15h2v1H8zM12 15h1v1H12zM15 15h1v1H15zM19 15h2v1H19zM22 15h3v1H22zM27 15h1v1H27zM4 16h5v1H4zM10 16h2v1H10zM13 16h1v1H13zM16 16h4v1H16zM23 16h1v1H23zM25 16h2v1H25zM0 17h1v1H0zM2 17h1v1H2zM4 17h2v1H4zM9 17h4v1H9zM14 17h1v1H14zM16 17h4v1H16zM22 17h3v1H22zM26 17h1v1H26zM28,17 h1v1H28zM0 18h1v1H0zM2 18h3v1H2zM6 18h1v1H6zM8 18h1v1H8zM10 18h1v1H10zM13 18h3v1H13zM17 18h1v1H17zM20 18h1v1H20zM26 18h1v1H26zM0 19h1v1H0zM3 19h3v1H3zM8 19h1v1H8zM11 19h2v1H11zM16 19h1v1H16zM19 19h1v1H19zM21 19h1v1H21zM24 19h1v1H24zM27 19h1v1H27zM0 20h1v1H0zM4 20h1v1H4zM6 20h1v1H6zM8 20h1v1H8zM10 20h1v1H10zM13 20h1v1H13zM15 20h1v1H15zM17 20h1v1H17zM19 20h6v1H19zM26,20 h3v1H26zM8 21h2v1H8zM11 21h3v1H11zM16 21h1v1H16zM20 21h1v1H20zM24,21 h5v1H24zM0 22h7v1H0zM8 22h1v1H8zM10 22h1v1H10zM12 22h1v1H12zM14 22h4v1H14zM19 22h2v1H19zM22 22h1v1H22zM24 22h3v1H24zM0 23h1v1H0zM6 23h1v1H6zM9 23h2v1H9zM14 23h2v1H14zM18 23h3v1H18zM24 23h1v1H24zM27,23 h2v1H27zM0 24h1v1H0zM2 24h3v1H2zM6 24h1v1H6zM8 24h3v1H8zM13 24h1v1H13zM17 24h1v1H17zM20 24h5v1H20zM26 24h2v1H26zM0 25h1v1H0zM2 25h3v1H2zM6 25h1v1H6zM8 25h1v1H8zM11 25h4v1H11zM16 25h1v1H16zM18 25h3v1H18zM23 25h1v1H23zM25 25h2v1H25zM28,25 h1v1H28zM0 26h1v1H0zM2 26h3v1H2zM6 26h1v1H6zM8 26h2v1H8zM15 26h1v1H15zM21 26h7v1H21zM0 27h1v1H0zM6 27h1v1H6zM8 27h3v1H8zM14 27h1v1H14zM20 27h2v1H20zM24 27h2v1H24zM27 27h1v1H27zM0 28h7v1H0zM8 28h1v1H8zM12 28h1v1H12zM14 28h4v1H14zM19 28h1v1H19zM23 28h4v1H23z" shape-rendering="crispEdges"></path></svg>
+          <div style="margin-top:6px; text-align:center; line-height:1.25;">
+            <div style="font-size:11px; font-weight:800; color:#64748b; letter-spacing:0.08em; text-transform:uppercase;">STATUS</div>
+            <div style="font-size:13px; font-weight:900; color:#10b981; letter-spacing:0.02em; white-space:nowrap;">VERIFIED HASH &#10003;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashed Divider -->
+      <div class="dashed-divider"></div>
+
+      <!-- Footer -->
+      <div class="cert-footer">
+        <div>
+          <div class="sig-name cert-signature">Destiny Young</div>
+          <div class="sig-cred">Founder and Chief Technology Architect, Truststack Academy and Educational Services Ltd</div>
+          <div class="sig-cred">For: TrustStack Academy</div>
+        </div>
+        <div>
+          <a href="/verify?id=2026-9E43903F" target="_blank" class="cert-link">View full certificate &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function printCertificate() {
+      ensureLandscape();
+      window.print();
+    }
+    function ensureLandscape() {
+      let el = document.getElementById('ts-landscape-print-enforcer');
+      if (!el) {
+        el = document.createElement('style');
+        el.id = 'ts-landscape-print-enforcer';
+        document.head.appendChild(el);
+      }
+      el.textContent = '@page { size: A4 landscape !important; margin: 8mm 10mm !important; }';
+    }
+    window.addEventListener('beforeprint', ensureLandscape);
+  </script>
+</body>
+</html>

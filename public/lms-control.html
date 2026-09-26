@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LMS Control Dashboard | TrustStack Academy Admin</title>
+  <meta name="description" content="Central command dashboard for TrustStack Academy administrators, instructors, lab orchestrators, and certificate registry management.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="/Truststack_Logo_PNG.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071322;
+      --card-bg: #0b1e36;
+      --card-border: rgba(14, 165, 233, 0.22);
+      --navy-deep: #050e1a;
+      --navy-surface: #0e2440;
+      --cyan: #00b8d9;
+      --cyan-glow: rgba(0, 184, 217, 0.25);
+      --green: #10b981;
+      --amber: #f59e0b;
+      --gold: #d4af37;
+      --red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Alegreya Sans', system-ui, -apple-system, sans-serif !important;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Top Utility Bar */
+    .top-announcer {
+      background: linear-gradient(90deg, #05182e 0%, #0c3359 50%, #061c33 100%);
+      border-bottom: 1px solid rgba(0, 184, 217, 0.25);
+      padding: 6px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #93c5fd;
+    }
+    .top-announcer .cluster-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+    }
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: pulse-glow 2s infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* Navigation Header */
+    .admin-nav {
+      background: rgba(11, 30, 54, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-wrap img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+    .brand-text {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .brand-tag {
+      background: rgba(0, 184, 217, 0.15);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: 8px;
+    }
+    .admin-user {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--cyan);
+      color: #07182e;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 14px;
+    }
+    .btn-action {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      border: 0;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-cyan {
+      background: var(--cyan);
+      color: #041426;
+    }
+    .btn-cyan:hover {
+      background: #38d4f0;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #cbd5e1;
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    /* Layout Shell */
+    .dashboard-shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+    .kpi-card {
+      background: linear-gradient(145deg, #0e2542, #0b1c33);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+    .kpi-card::after {
+      content: '';
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--kpi-accent, rgba(0, 184, 217, 0.15)), transparent 70%);
+      pointer-events: none;
+    }
+    .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .kpi-title {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .kpi-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .kpi-value {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .kpi-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Tabbed Navigation Bar */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      background: #091a30;
+      border: 1px solid var(--card-border);
+      padding: 6px;
+      border-radius: 14px;
+      margin-bottom: 26px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: transparent;
+      border: 0;
+      color: #94a3b8;
+      padding: 10px 18px;
+      font-size: 15px;
+      font-weight: 800;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .tab-btn.active {
+      background: var(--cyan);
+      color: #05182e;
+      box-shadow: 0 4px 14px var(--cyan-glow);
+    }
+    .tab-count {
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Content Cards */
+    .panel-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .panel-title {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .panel-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Table Styles */
+    .data-table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+    .data-table th {
+      background: #081628;
+      color: #7dd3fc;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      font-size: 12px;
+      text-transform: uppercase;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .data-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: #e2e8f0;
+      vertical-align: middle;
+    }
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .badge-active {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .badge-progress {
+      background: rgba(0, 184, 217, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(0, 184, 217, 0.3);
+    }
+    .badge-graduated {
+      background: rgba(212, 175, 55, 0.18);
+      color: #fbbf24;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+    .badge-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* Track Filter Chips */
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chip:hover, .chip.active {
+      background: rgba(0, 184, 217, 0.2);
+      border-color: var(--cyan);
+      color: #fff;
+    }
+
+    /* Lab Pods Grid */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .lab-card {
+      background: #0d223c;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 22px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .lab-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .lab-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan), #0a2544);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+    .lab-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+    .lab-metrics small {
+      color: var(--text-muted);
+      font-weight: 700;
+      display: block;
+    }
+    .lab-metrics b {
+      color: #fff;
+      font-size: 16px;
+    }
+
+    /* Cert Preview Generator */
+    .cert-builder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media(max-width: 1024px) {
+      .cert-builder-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      color: #93c5fd;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .form-control {
+      width: 100%;
+      background: #071526;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+    .form-control:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0, 184, 217, 0.25);
+    }
+    .cert-preview-card {
+      background: #ffffff;
+      color: #07182e;
+      border: 4px solid #d4af37;
+      border-radius: 20px;
+      padding: 36px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+    .cert-preview-card::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(55%, 320px);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      background: url('/Cert_Seal.png') center/contain no-repeat;
+      opacity: 0.075;
+      filter: blur(1.8px);
+      pointer-events: none;
+    }
+    .cert-preview-title {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      color: #475569;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .cert-preview-name {
+      font-size: 28px;
+      font-weight: 900;
+      text-align: center;
+      margin: 16px 0 8px;
+      color: #0a1931;
+    }
+    .cert-preview-track {
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      color: #008bb2;
+    }
+    .cert-preview-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 10, 18, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      place-items: center;
+      padding: 24px;
+      z-index: 1000;
+    }
+    .modal-overlay.open {
+      display: grid;
+    }
+    .modal-box {
+      background: #0d223c;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      width: min(720px, 100%);
+      padding: 32px;
+      position: relative;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+    }
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: transparent;
+      border: 0;
+      color: #94a3b8;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Toast Notification */
+    #toastContainer {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast-msg {
+      background: #0f2d4e;
+      border: 1px solid var(--cyan);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes toast-in {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Search Input */
+    .search-bar-wrap {
+      position: relative;
+      min-width: 280px;
+    }
+    .search-bar-wrap input {
+      width: 100%;
+      background: #071728;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      padding: 10px 16px 10px 36px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+    .search-bar-wrap input:focus {
+      border-color: var(--cyan);
+    }
+    .search-bar-wrap span {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-announcer">
+    <div class="cluster-status">
+      <span class="pulse-dot"></span>
+      <span>LAB CLUSTER ONLINE: AWS af-south-1 (Cape Town) &amp; Lagos Edge Pods</span>
+    </div>
+    <div style="display:flex;gap:20px;font-size:12px;color:#94a3b8;align-items:center;">
+      <span style="display:inline-flex;align-items:center;gap:6px;color:#38bdf8;">
+        <svg width="14" height="14" viewBox="0 0 21 21"><path fill="#f25022" d="M1 1h9v9H1z"/><path fill="#00a4ef" d="M1 11h9v9H1z"/><path fill="#7fba00" d="M11 1h9v9H11z"/><path fill="#ffb900" d="M11 11h9v9H11z"/></svg>
+        Microsoft 365 Tenant: <b>truststack.academy</b>
+      </span>
+      <span>NDPA Compliance: <b>Audited &amp; Active</b></span>
+      <span>System Uptime: <b>99.98%</b></span>
+      <span>Server Time: <b>2026-09-26 UTC+1</b></span>
+    </div>
+  </div>
+
+  <!-- Navigation Header -->
+  <header class="admin-nav">
+    <div class="brand-wrap">
+      <a href="/home.html" style="display:flex;align-items:center;gap:12px;">
+        <img src="/truststack-home-logo.png" alt="TrustStack Academy">
+        <span class="brand-text">
+          <span style="color:#ffffff;">TrustStack </span><span style="color:#00b8d9;">Academy</span>
+        </span>
+      </a>
+      <span class="brand-tag">LMS Control Center</span>
+    </div>
+
+    <div class="admin-user">
+      <a href="/admin/scholarships" class="btn-action btn-cyan" title="Review Scholarship Applicants">
+        <span>🎓 Scholarship Waitlist</span>
+      </a>
+      <a href="/admin/articles" class="btn-action btn-outline" title="Articles CMS">
+        <span>📰 Articles CMS</span>
+      </a>
+      <a href="/student-lms" class="btn-action btn-outline" title="Open student perspective">
+        <span>👨‍💻 Student LMS</span>
+      </a>
+      <a href="/complaint" class="btn-action btn-outline" title="View grievance log">
+        <span>⚖ Grievances</span>
+      </a>
+      <div class="user-pill">
+        <div class="user-avatar" id="topAvatar">DY</div>
+        <div style="line-height:1.2;">
+          <div style="font-size:13px;font-weight:900;color:#fff;" id="topAdminName">Engr. Destiny Young</div>
+          <div style="font-size:11px;color:#38bdf8;" id="topAdminRole">👑 Global Super Admin &bull; TSA-GLOBAL-001</div>
+        </div>
+      </div>
+      <a href="/login?role=admin" class="btn-action btn-outline" style="border-color:#ef4444;color:#fca5a5;">
+        <span>Sign Out</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+
+    <!-- Executive KPI Grid -->
+    <div class="metrics-grid">
+      <div class="kpi-card" style="--kpi-accent: rgba(0, 184, 217, 0.2);">
+        <div class="kpi-header">
+          <span class="kpi-title">Active Enrolled Defenders</span>
+          <span class="kpi-badge">+18% Q3</span>
+        </div>
+        <div class="kpi-value" id="kpiLearners">1,284</div>
+        <div class="kpi-sub">
+          <span>Across 8 role-based tracks</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-accent: rgba(16, 185, 129, 0.2);">
+        <div class="kpi-header">
+          <span class="kpi-title">Live Cloud Lab Pods</span>
+          <span class="kpi-badge">Healthy</span>
+        </div>
+        <div class="kpi-value" id="kpiPods">84</div>
+        <div class="kpi-sub">
+          <span>Kali, Splunk, Suricata nodes active</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-accent: rgba(245, 158, 11, 0.2);">
+        <div class="kpi-header">
+          <span class="kpi-title">Practical Lab Hours</span>
+          <span class="kpi-badge">Aggregated</span>
+        </div>
+        <div class="kpi-value">14,820</div>
+        <div class="kpi-sub">
+          <span>Real-world hands-on triage</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-accent: rgba(212, 175, 55, 0.2);">
+        <div class="kpi-header">
+          <span class="kpi-title">Verifiable Credentials</span>
+          <span class="kpi-badge">Signed</span>
+        </div>
+        <div class="kpi-value" id="kpiCerts">418</div>
+        <div class="kpi-sub">
+          <span>Cryptographically validated</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-accent: rgba(56, 189, 248, 0.2);">
+        <div class="kpi-header">
+          <span class="kpi-title">M365 Admin Directory</span>
+          <span class="kpi-badge">Federated</span>
+        </div>
+        <div class="kpi-value" id="kpiAdminsCount">1</div>
+        <div class="kpi-sub">
+          <span>Root: youngdestinya@...</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-accent: rgba(0, 184, 217, 0.25); cursor:pointer;" onclick="switchTab('scholarships')">
+        <div class="kpi-header">
+          <span class="kpi-title">Scholarship Waitlist</span>
+          <span class="kpi-badge" style="background:rgba(0,184,217,0.18); color:#00b8d9;">Active Intake</span>
+        </div>
+        <div class="kpi-value" id="kpiScholarshipsCount">12</div>
+        <div class="kpi-sub">
+          <span>Early Bird Waitlist &bull; 8 Tracks</span>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--kpi-accent: rgba(239, 68, 68, 0.2);">
+        <div class="kpi-header">
+          <span class="kpi-title">Grievance SLA Compliance</span>
+          <span class="kpi-badge">100% Target</span>
+        </div>
+        <div class="kpi-value" id="kpiComplaints">24h</div>
+        <div class="kpi-sub">
+          <span>Zero breaches · Active escalation</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabbed Navigation -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('cohorts')">
+        <span>🛡 Cohorts &amp; Learners</span>
+        <span class="tab-count" id="tabCountLearners">8</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('scholarships')" id="tabBtnScholarships">
+        <span>🎓 Scholarship Waitlist</span>
+        <span class="tab-count" id="tabCountScholarships" style="background:rgba(0,184,217,0.25); color:#00b8d9;">12</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('labs')">
+        <span>☁ Cloud Lab Orchestration</span>
+        <span class="tab-count">5 Pods</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('gradebook')">
+        <span>📑 Evidence &amp; Gradebook</span>
+        <span class="tab-count" id="tabCountSubmissions">6</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('certs')">
+        <span>📜 Certificate Registry &amp; Issuer</span>
+        <span class="tab-count" id="tabCountCerts">2</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('admins')">
+        <span>👑 Admin Team &amp; Roles</span>
+        <span class="tab-count" id="tabCountAdmins">1</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('complaints')">
+        <span>⚖ Ombudsman &amp; Support SLA</span>
+        <span class="tab-count" id="tabCountComplaints">Live</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('audit')">
+        <span>🔒 Audit Log &amp; Security</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: COHORT & LEARNER MANAGEMENT -->
+    <div id="tab-cohorts" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Cohort &amp; Defender Roster</h2>
+            <p class="panel-subtitle">Manage student tracks, provision lab hours, monitor capstone progress, and verify access.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <div class="search-bar-wrap">
+              <span>🔍</span>
+              <input type="text" id="learnerSearch" placeholder="Search learner name, ID, or track..." oninput="filterLearners()">
+            </div>
+            <button class="btn-action btn-cyan" onclick="openEnrollModal()">
+              <span>+ Enroll Defender</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Track Filters -->
+        <div class="filter-chips">
+          <button class="chip active" onclick="filterTrack('all', this)">All Tracks (8)</button>
+          <button class="chip" onclick="filterTrack('SOC Analyst', this)">SOC Analyst</button>
+          <button class="chip" onclick="filterTrack('Digital Forensics', this)">Digital Forensics</button>
+          <button class="chip" onclick="filterTrack('Threat Intelligence', this)">Threat Intelligence</button>
+          <button class="chip" onclick="filterTrack('Penetration Testing', this)">Penetration Testing</button>
+          <button class="chip" onclick="filterTrack('Cloud Security', this)">Cloud Security</button>
+          <button class="chip" onclick="filterTrack('Governance & GRC', this)">Governance &amp; GRC</button>
+          <button class="chip" onclick="filterTrack('Malware Analysis', this)">Malware Analysis</button>
+          <button class="chip" onclick="filterTrack('Security Engineering', this)">Security Engineering</button>
+        </div>
+
+        <!-- Table -->
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Learner ID</th>
+                <th>Defender Name &amp; Email</th>
+                <th>Track &amp; Cohort</th>
+                <th>Lab Hours</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="learnerTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: SCHOLARSHIP APPLICANT REGISTRY & WAITLIST -->
+    <div id="tab-scholarships" class="tab-panel" style="display:none;">
+      <div class="panel-card" style="padding:0; overflow:hidden; border:1px solid rgba(0, 184, 217, 0.3);">
+        <div style="background:#071b30; padding:18px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:24px;">🎓</span>
+            <div>
+              <h2 style="font-size:18px; font-weight:900; color:#fff; margin:0;">Early Bird Scholarship Applicant Registry</h2>
+              <p style="font-size:12.5px; color:#94a3b8; margin:2px 0 0;">Review submissions, candidate statements, update admissions statuses & export records</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <a href="/admin/scholarships" target="_blank" class="btn-action btn-cyan" style="font-size:12px;">
+              <span>Open Dedicated Fullpage View ↗</span>
+            </a>
+          </div>
+        </div>
+        <iframe id="scholarshipIframe" src="/admin/scholarships" style="width:100%; height:960px; border:0; display:block; background:#07182e;"></iframe>
+      </div>
+    </div>
+
+    <!-- TAB 2: CLUSTER LAB ORCHESTRATION -->
+    <div id="tab-labs" class="tab-panel" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Cloud Lab Pod Orchestration</h2>
+            <p class="panel-subtitle">Real-time resource allocation, container health, and interactive lab node telemetry.</p>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn-action btn-outline" onclick="triggerLabAction('Restart Cluster Pods')">
+              <span>🔄 Restart Pods</span>
+            </button>
+            <button class="btn-action btn-cyan" onclick="triggerLabAction('Provision 10 New Nodes')">
+              <span>⚡ Provision Nodes</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cluster Telemetry Bar -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:14px;margin-bottom:24px;">
+          <div style="background:#09192c;padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:11px;color:#94a3b8;font-weight:800;letter-spacing:0.08em;">CPU UTILIZATION</div>
+            <div style="font-size:24px;font-weight:900;color:#38bdf8;margin:4px 0;">34.8%</div>
+            <div style="font-size:12px;color:#64748b;">48 vCPUs (Cape Town)</div>
+          </div>
+          <div style="background:#09192c;padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:11px;color:#94a3b8;font-weight:800;letter-spacing:0.08em;">RAM ALLOCATION</div>
+            <div style="font-size:24px;font-weight:900;color:#34d399;margin:4px 0;">61.2 GB / 128 GB</div>
+            <div style="font-size:12px;color:#64748b;">DDR5 ECC Memory</div>
+          </div>
+          <div style="background:#09192c;padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:11px;color:#94a3b8;font-weight:800;letter-spacing:0.08em;">ISOLATED SUBNETS</div>
+            <div style="font-size:24px;font-weight:900;color:#fbbf24;margin:4px 0;">10.14.0.0/16</div>
+            <div style="font-size:12px;color:#64748b;">VPC Encrypted Overlay</div>
+          </div>
+          <div style="background:#09192c;padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:11px;color:#94a3b8;font-weight:800;letter-spacing:0.08em;">STORAGE IOPS</div>
+            <div style="font-size:24px;font-weight:900;color:#e879f9;margin:4px 0;">1,420 IOPS</div>
+            <div style="font-size:12px;color:#64748b;">NVMe SSD SAN Array</div>
+          </div>
+        </div>
+
+        <!-- Pod Cards -->
+        <div class="lab-grid">
+          <div class="lab-card">
+            <div class="lab-card-head">
+              <div style="display:flex;gap:12px;align-items:center;">
+                <div class="lab-icon">🛡</div>
+                <div>
+                  <h3 style="font-size:18px;font-weight:900;">Splunk &amp; Suricata SOC Sandbox</h3>
+                  <div style="font-size:12px;color:#94a3b8;">Track: SOC Analyst · Ubuntu 22.04 LTS</div>
+                </div>
+              </div>
+              <span class="badge-status badge-active">● RUNNING</span>
+            </div>
+            <div class="lab-metrics">
+              <div><small>Active Nodes</small><b>28 Pods</b></div>
+              <div><small>Memory Draw</small><b>18.4 GB</b></div>
+              <div><small>Network In/Out</small><b>4.2 GB/s</b></div>
+              <div><small>Target SIEM</small><b>v9.2 Enterprise</b></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:auto;">
+              <button class="btn-action btn-outline" style="flex:1;" onclick="triggerLabAction('Splunk Sandbox Node Restarted')">Restart Pod</button>
+              <button class="btn-action btn-cyan" style="flex:1;" onclick="triggerLabAction('Splunk Terminal Console Opened')">SSH Console</button>
+            </div>
+          </div>
+
+          <div class="lab-card">
+            <div class="lab-card-head">
+              <div style="display:flex;gap:12px;align-items:center;">
+                <div class="lab-icon" style="background:linear-gradient(135deg, #ef4444, #0a2544);">⚔</div>
+                <div>
+                  <h3 style="font-size:18px;font-weight:900;">Kali Linux &amp; Metasploit Pod</h3>
+                  <div style="font-size:12px;color:#94a3b8;">Track: Penetration Testing · Guacamole VNC</div>
+                </div>
+              </div>
+              <span class="badge-status badge-active">● RUNNING</span>
+            </div>
+            <div class="lab-metrics">
+              <div><small>Active Nodes</small><b>22 Pods</b></div>
+              <div><small>Memory Draw</small><b>14.1 GB</b></div>
+              <div><small>Subnet Range</small><b>10.14.20.0/24</b></div>
+              <div><small>Target VMs</small><b>Metasploitable 3</b></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:auto;">
+              <button class="btn-action btn-outline" style="flex:1;" onclick="triggerLabAction('Offensive Pod Reset')">Restart Pod</button>
+              <button class="btn-action btn-cyan" style="flex:1;" onclick="triggerLabAction('Kali Web VNC Console Connected')">Web GUI</button>
+            </div>
+          </div>
+
+          <div class="lab-card">
+            <div class="lab-card-head">
+              <div style="display:flex;gap:12px;align-items:center;">
+                <div class="lab-icon" style="background:linear-gradient(135deg, #0ea5e9, #0a2544);">☁</div>
+                <div>
+                  <h3 style="font-size:18px;font-weight:900;">AWS &amp; Azure Cloud IAM Lab</h3>
+                  <div style="font-size:12px;color:#94a3b8;">Track: Cloud Security · LocalStack &amp; Terraform</div>
+                </div>
+              </div>
+              <span class="badge-status badge-active">● RUNNING</span>
+            </div>
+            <div class="lab-metrics">
+              <div><small>Active Nodes</small><b>16 Pods</b></div>
+              <div><small>Memory Draw</small><b>9.6 GB</b></div>
+              <div><small>IAM Policies</small><b>124 Audited</b></div>
+              <div><small>S3 Buckets</small><b>Simulated Breached</b></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:auto;">
+              <button class="btn-action btn-outline" style="flex:1;" onclick="triggerLabAction('Cloud IAM Pod Re-synchronized')">Re-sync</button>
+              <button class="btn-action btn-cyan" style="flex:1;" onclick="triggerLabAction('AWS CLI Sandbox Initialized')">AWS CLI</button>
+            </div>
+          </div>
+
+          <div class="lab-card">
+            <div class="lab-card-head">
+              <div style="display:flex;gap:12px;align-items:center;">
+                <div class="lab-icon" style="background:linear-gradient(135deg, #f59e0b, #0a2544);">🔬</div>
+                <div>
+                  <h3 style="font-size:18px;font-weight:900;">YARA &amp; Ghidra Malware Detonation</h3>
+                  <div style="font-size:12px;color:#94a3b8;">Track: Malware Analysis · Air-Gapped Sandbox</div>
+                </div>
+              </div>
+              <span class="badge-status badge-active" style="background:rgba(245,158,11,0.15);color:#fbbf24;border-color:rgba(245,158,11,0.3);">● ISOLATED</span>
+            </div>
+            <div class="lab-metrics">
+              <div><small>Active Nodes</small><b>7 Sandboxes</b></div>
+              <div><small>Memory Draw</small><b>6.8 GB</b></div>
+              <div><small>Network Gate</small><b>Strict Air-Gap</b></div>
+              <div><small>Detonations</small><b>39 Samples / 24h</b></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:auto;">
+              <button class="btn-action btn-outline" style="flex:1;" onclick="triggerLabAction('Detonation Sandbox Re-imaged')">Re-image</button>
+              <button class="btn-action btn-cyan" style="flex:1;" onclick="triggerLabAction('Ghidra Analysis Session Attached')">Ghidra</button>
+            </div>
+          </div>
+
+          <div class="lab-card">
+            <div class="lab-card-head">
+              <div style="display:flex;gap:12px;align-items:center;">
+                <div class="lab-icon" style="background:linear-gradient(135deg, #8b5cf6, #0a2544);">🔍</div>
+                <div>
+                  <h3 style="font-size:18px;font-weight:900;">Volatility Memory Forensics Lab</h3>
+                  <div style="font-size:12px;color:#94a3b8;">Track: Digital Forensics · Windows 11 Dumps</div>
+                </div>
+              </div>
+              <span class="badge-status badge-active">● RUNNING</span>
+            </div>
+            <div class="lab-metrics">
+              <div><small>Active Nodes</small><b>11 Pods</b></div>
+              <div><small>Memory Draw</small><b>12.3 GB</b></div>
+              <div><small>RAW Dumps</small><b>8 GB Memory Images</b></div>
+              <div><small>Chain of Custody</small><b>SHA-256 Validated</b></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:auto;">
+              <button class="btn-action btn-outline" style="flex:1;" onclick="triggerLabAction('Forensic Evidence Drive Reloaded')">Reload Image</button>
+              <button class="btn-action btn-cyan" style="flex:1;" onclick="triggerLabAction('Volatility 3 Terminal Shell Started')">Terminal</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: EVIDENCE & GRADEBOOK -->
+    <div id="tab-gradebook" class="tab-panel" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Practical Evidence &amp; Capstone Gradebook</h2>
+            <p class="panel-subtitle">Review defense reports, verify captured forensic flags, and award track completions.</p>
+          </div>
+          <button class="btn-action btn-cyan" onclick="triggerLabAction('All pending submissions exported to CSV')">
+            <span>📥 Export Gradebook</span>
+          </button>
+        </div>
+
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Submission ID</th>
+                <th>Learner &amp; Track</th>
+                <th>Capstone Evidence</th>
+                <th>Flag Verification</th>
+                <th>AI &amp; Plagiarism</th>
+                <th>Grade</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="gradebookTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: CERTIFICATE REGISTRY & ISSUER -->
+    <div id="tab-certs" class="tab-panel" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Cryptographic Certificate Registry &amp; Issuer</h2>
+            <p class="panel-subtitle">Generate SHA-256 signed verifiable credentials compliant with TrustStack Academy standards.</p>
+          </div>
+          <a href="/verify" target="_blank" class="btn-action btn-outline">
+            <span>🔍 Public Verify Portal ↗</span>
+          </a>
+        </div>
+
+        <div class="cert-builder-grid">
+          <!-- Form -->
+          <div style="background:#091a30;padding:26px;border-radius:16px;border:1px solid rgba(255,255,255,0.08);">
+            <h3 style="font-size:20px;font-weight:900;margin-bottom:16px;color:#fff;">Issue New Verifiable Credential</h3>
+            
+            <div class="form-group">
+              <label>Defender / Student Full Name</label>
+              <input type="text" id="certStudentName" class="form-control" placeholder="e.g. Adebayo Ogunlesi" oninput="updateCertPreview()">
+            </div>
+
+            <div class="form-group">
+              <label>Role-Based Track</label>
+              <select id="certTrackSelect" class="form-control" onchange="updateCertPreview()">
+                <option value="Ethical Hacking & Penetration Testing">Ethical Hacking &amp; Penetration Testing</option>
+                <option value="SOC Analyst">SOC Analyst</option>
+                <option value="Digital Forensics">Digital Forensics</option>
+                <option value="Cloud Security">Cloud Security</option>
+                <option value="Threat Intelligence">Threat Intelligence</option>
+                <option value="Governance & GRC">Governance &amp; GRC</option>
+                <option value="Malware Analysis">Malware Analysis</option>
+                <option value="Security Engineering">Security Engineering</option>
+                <option value="Bundle: All 8 Tracks">Complete 8-Track Cybersecurity Specialist</option>
+              </select>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div class="form-group">
+                <label>Issue Date</label>
+                <input type="date" id="certIssueDate" class="form-control" value="2026-09-26" onchange="updateCertPreview()">
+              </div>
+              <div class="form-group">
+                <label>Honors / Standing</label>
+                <select id="certStanding" class="form-control">
+                  <option value="Distinction">Distinction (Top 5%)</option>
+                  <option value="Merit" selected>Merit (Pass with Honours)</option>
+                  <option value="Certified Defender">Certified Defender</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Unique Cryptographic ID (Auto 2026-HEX8)</label>
+              <div style="display:flex;gap:10px;">
+                <input type="text" id="certHashId" class="form-control" readonly style="font-family:monospace;background:#050e18;color:#38bdf8;font-weight:900;">
+                <button type="button" class="btn-action btn-outline" onclick="generateNewCertHash()">Regen</button>
+              </div>
+            </div>
+
+            <div style="margin-top:24px;display:flex;gap:12px;">
+              <button class="btn-action btn-cyan" style="flex:1;padding:14px;" onclick="publishCertificate()">
+                <span>📜 Publish &amp; Sign Certificate</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview Card -->
+          <div>
+            <div style="font-size:12px;font-weight:800;letter-spacing:0.12em;color:#94a3b8;margin-bottom:12px;text-transform:uppercase;">
+              Live Certificate Layout Preview
+            </div>
+            <div class="cert-preview-card">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <img src="/Truststack_Logo_PNG.png" alt="Logo" style="width:50px;height:50px;object-fit:contain;">
+                <div class="cert-preview-title">TrustStack Academy &bull; Certificate of Mastery</div>
+                <img src="/Cert_Seal.png" alt="Seal" style="width:50px;height:50px;object-fit:contain;">
+              </div>
+
+              <div style="margin:24px 0 10px;text-align:center;">
+                <small style="font-size:12px;color:#64748b;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;">This is to certify that</small>
+                <div class="cert-preview-name" id="previewName">Adebayo Ogunlesi</div>
+                <small style="font-size:13px;color:#64748b;">has satisfied all guided practical assessments and defensible lab requirements in</small>
+                <div class="cert-preview-track" id="previewTrack">Ethical Hacking &amp; Penetration Testing</div>
+              </div>
+
+              <div class="cert-preview-meta">
+                <div>
+                  <div style="font-size:11px;font-weight:800;color:#94a3b8;">CERTIFICATE ID</div>
+                  <div id="previewId" style="font-family:monospace;font-weight:900;color:#0a1931;">2026-9E43903F</div>
+                  <div style="font-size:11px;color:#64748b;margin-top:4px;">Issued <span id="previewDate">2026-09-26</span></div>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+                  <svg height="54" width="54" viewBox="0 0 29 29" style="display:block; border-radius:3px;"><path fill="#FFFFFF" d="M0,0 h29v29H0z" shape-rendering="crispEdges"></path><path fill="#000000" d="M0 0h7v1H0zM12 0h3v1H12zM18 0h3v1H18zM22,0 h7v1H22zM0 1h1v1H0zM6 1h1v1H6zM8 1h1v1H8zM10 1h1v1H10zM12 1h1v1H12zM14 1h2v1H14zM20 1h1v1H20zM22 1h1v1H22zM28,1 h1v1H28zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM11 2h1v1H11zM14 2h3v1H14zM18 2h1v1H18zM22 2h1v1H22zM24 2h3v1H24zM28,2 h1v1H28zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM8 3h3v1H8zM12 3h2v1H12zM15 3h1v1H15zM17 3h1v1H17zM22 3h1v1H22zM24 3h3v1H24zM28,3 h1v1H28zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM9 4h1v1H9zM14 4h1v1H14zM16 4h1v1H16zM18 4h3v1H18zM22 4h1v1H22zM24 4h3v1H24zM28,4 h1v1H28zM0 5h1v1H0zM6 5h1v1H6zM8 5h2v1H8zM13 5h1v1H13zM15 5h2v1H15zM20 5h1v1H20zM22 5h1v1H22zM28,5 h1v1H28zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22,6 h7v1H22zM9 7h4v1H9zM15 7h1v1H15zM19 7h1v1H19zM0 8h5v1H0zM6 8h4v1H6zM13 8h1v1H13zM17 8h1v1H17zM21 8h1v1H21zM23 8h1v1H23zM25 8h1v1H25zM27 8h1v1H27zM0 9h1v1H0zM3 9h1v1H3zM7 9h1v1H7zM10 9h3v1H10zM14 9h1v1H14zM16 9h5v1H16zM22 9h3v1H22zM28,9 h1v1H28zM0 10h1v1H0zM6 10h1v1H6zM8 10h1v1H8zM10 10h1v1H10zM12 10h1v1H12zM15 10h2v1H15zM20 10h1v1H20zM23 10h1v1H23zM0 11h1v1H0zM3 11h2v1H3zM12 11h1v1H12zM16 11h1v1H16zM21 11h1v1H21zM24 11h2v1H24zM27 11h1v1H27zM0 12h2v1H0zM4 12h3v1H4zM8 12h3v1H8zM13 12h1v1H13zM16 12h2v1H16zM23 12h1v1H23zM25 12h2v1H25zM1 13h1v1H1zM3 13h1v1H3zM5 13h1v1H5zM8 13h1v1H8zM11 13h2v1H11zM14 13h1v1H14zM17 13h1v1H17zM19 13h2v1H19zM22 13h3v1H22zM28,13 h1v1H28zM0 14h2v1H0zM3 14h2v1H3zM6 14h1v1H6zM10 14h1v1H10zM13 14h1v1H13zM15 14h2v1H15zM18 14h1v1H18zM21 14h1v1H21zM23 14h4v1H23zM0 15h1v1H0zM5 15h1v1H5zM8 15h2v1H8zM12 15h1v1H12zM15 15h1v1H15zM19 15h2v1H19zM22 15h3v1H22zM27 15h1v1H27zM4 16h5v1H4zM10 16h2v1H10zM13 16h1v1H13zM16 16h4v1H16zM23 16h1v1H23zM25 16h2v1H25zM0 17h1v1H0zM2 17h1v1H2zM4 17h2v1H4zM9 17h4v1H9zM14 17h1v1H14zM16 17h4v1H16zM22 17h3v1H22zM26 17h1v1H26zM28,17 h1v1H28zM0 18h1v1H0zM2 18h3v1H2zM6 18h1v1H6zM8 18h1v1H8zM10 18h1v1H10zM13 18h3v1H13zM17 18h1v1H17zM20 18h1v1H20zM26 18h1v1H26zM0 19h1v1H0zM3 19h3v1H3zM8 19h1v1H8zM11 19h2v1H11zM16 19h1v1H16zM19 19h1v1H19zM21 19h1v1H21zM24 19h1v1H24zM27 19h1v1H27zM0 20h1v1H0zM4 20h1v1H4zM6 20h1v1H6zM8 20h1v1H8zM10 20h1v1H10zM13 20h1v1H13zM15 20h1v1H15zM17 20h1v1H17zM19 20h6v1H19zM26,20 h3v1H26zM8 21h2v1H8zM11 21h3v1H11zM16 21h1v1H16zM20 21h1v1H20zM24,21 h5v1H24zM0 22h7v1H0zM8 22h1v1H8zM10 22h1v1H10zM12 22h1v1H12zM14 22h4v1H14zM19 22h2v1H19zM22 22h1v1H22zM24 22h3v1H24zM0 23h1v1H0zM6 23h1v1H6zM9 23h2v1H9zM14 23h2v1H14zM18 23h3v1H18zM24 23h1v1H24zM27,23 h2v1H27zM0 24h1v1H0zM2 24h3v1H2zM6 24h1v1H6zM8 24h3v1H8zM13 24h1v1H13zM17 24h1v1H17zM20 24h5v1H20zM26 24h2v1H26zM0 25h1v1H0zM2 25h3v1H2zM6 25h1v1H6zM8 25h1v1H8zM11 25h4v1H11zM16 25h1v1H16zM18 25h3v1H18zM23 25h1v1H23zM25 25h2v1H25zM28,25 h1v1H28zM0 26h1v1H0zM2 26h3v1H2zM6 26h1v1H6zM8 26h2v1H8zM15 26h1v1H15zM21 26h7v1H21zM0 27h1v1H0zM6 27h1v1H6zM8 27h3v1H8zM14 27h1v1H14zM20 27h2v1H20zM24 27h2v1H24zM27 27h1v1H27zM0 28h7v1H0zM8 28h1v1H8zM12 28h1v1H12zM14 28h4v1H14zM19 28h1v1H19zM23 28h4v1H23z" shape-rendering="crispEdges"></path></svg>
+                  <div style="margin-top:4px; line-height:1.2;">
+                    <div style="font-size:10px; font-weight:800; color:#64748b; letter-spacing:0.08em; text-transform:uppercase;">STATUS</div>
+                    <div style="font-size:11px; font-weight:900; color:#10b981; letter-spacing:0.02em; white-space:nowrap;">VERIFIED HASH &#10003;</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Uniform Signature & Footer -->
+              <div style="margin-top:16px; padding-top:12px; border-top:1px dashed #cbd5e1; display:flex; justify-content:space-between; align-items:flex-end;">
+                <div>
+                  <div class="cert-signature" style="font-family:'Great Vibes',cursive!important; font-size:26px; color:#0a1931;">Destiny Young</div>
+                  <div style="font-size:10.5px; color:#64748b;">Founder &amp; Chief Technology Architect</div>
+                  <div style="font-size:10px; color:#94a3b8;">TrustStack Academy and Educational Services Ltd</div>
+                </div>
+                <div style="font-size:11px; font-weight:800; color:#00b8d9;">
+                  <span>Official Verifiable Record</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Issued Certs List -->
+            <div style="margin-top:24px;">
+              <h4 style="font-size:16px;font-weight:900;margin-bottom:12px;color:#fff;">Recent Verifiable Registry</h4>
+              <div class="data-table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Student</th>
+                      <th>Track</th>
+                      <th>Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="certRegistryBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: ADMIN MANAGEMENT & ROLES (GLOBAL ADMIN EXCLUSIVE) -->
+    <div id="tab-admins" class="tab-panel" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Microsoft 365 Tenant Admin Directory &amp; Role Provisioning</h2>
+            <p class="panel-subtitle">Root administrative controls for Engr. Destiny Young: Provision new administrators, assign track access, and manage Microsoft 365 work credentials.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <button class="btn-action btn-cyan" onclick="openCreateAdminModal()">
+              <span>+ Provision New Administrator</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- M365 Tenant Info Banner -->
+        <div style="background:linear-gradient(135deg, rgba(0, 164, 239, 0.12), rgba(11, 30, 54, 0.9));border:1px solid rgba(0, 164, 239, 0.3);border-radius:14px;padding:18px 22px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:42px;height:42px;background:#06182c;border:1px solid #00a4ef;border-radius:10px;display:grid;place-items:center;">
+              <svg width="22" height="22" viewBox="0 0 21 21"><path fill="#f25022" d="M1 1h9v9H1z"/><path fill="#00a4ef" d="M1 11h9v9H1z"/><path fill="#7fba00" d="M11 1h9v9H11z"/><path fill="#ffb900" d="M11 11h9v9H11z"/></svg>
+            </div>
+            <div>
+              <div style="font-size:16px;font-weight:900;color:#fff;">Connected Microsoft 365 Tenant: <span style="color:#38bdf8;">truststack.academy</span></div>
+              <div style="font-size:13px;color:#94a3b8;">Federated Entra ID SSO &bull; Global Administrator: <b style="color:#fff;">youngdestinya@truststack.academy</b> (TSA-GLOBAL-001)</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <span style="padding:6px 12px;border-radius:999px;background:rgba(16,185,129,0.18);color:#34d399;font-weight:800;font-size:12px;border:1px solid rgba(16,185,129,0.3);">
+              ● M365 TENANT VERIFIED
+            </span>
+          </div>
+        </div>
+
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Credential ID</th>
+                <th>Administrator Details</th>
+                <th>Assigned Role</th>
+                <th>M365 Work Email</th>
+                <th>Authority Scope</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: OMBUDSMAN & COMPLAINT RESOLUTION SLA -->
+    <div id="tab-complaints" class="tab-panel" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Ombudsman Grievance &amp; Complaint Escalations</h2>
+            <p class="panel-subtitle">Live resolution queue directly synced with the <a href="/complaint" style="color:var(--cyan);text-decoration:underline;">Lodge Complaint portal</a> (24h SLA target).</p>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn-action btn-outline" onclick="loadComplaints()">
+              <span>🔄 Refresh Queue</span>
+            </button>
+            <a href="/complaint" target="_blank" class="btn-action btn-cyan">
+              <span>+ Test Lodge Form ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Category</th>
+                <th>Severity</th>
+                <th>Complainant &amp; Contact</th>
+                <th>SLA Clock</th>
+                <th>Status</th>
+                <th style="text-align:right;">Resolution Action</th>
+              </tr>
+            </thead>
+            <tbody id="complaintTableBody">
+              <!-- Dynamically populated from localStorage -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 7: AUDIT LOG & COMPLIANCE -->
+    <div id="tab-audit" class="tab-panel" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">System Audit Log &amp; NDPA Compliance Trail</h2>
+            <p class="panel-subtitle">Cryptographic immutable log of administrative events, credential releases, and access authorizations.</p>
+          </div>
+          <button class="btn-action btn-outline" onclick="triggerLabAction('Audit export downloaded as JSON')">
+            <span>📥 Export Signed Log</span>
+          </button>
+        </div>
+
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp (UTC+1)</th>
+                <th>Admin Operator</th>
+                <th>Action Event</th>
+                <th>Target Object</th>
+                <th>Client IP &amp; Origin</th>
+                <th>Signature Hash</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Detail / Edit Modal -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h3 style="font-size:22px;font-weight:900;margin-bottom:6px;" id="modalTitle">Defender Terminal Inspection</h3>
+      <p style="font-size:14px;color:#94a3b8;margin-bottom:20px;" id="modalSubtitle">Live virtual pod status and lab session diagnostics.</p>
+      
+      <div id="modalBody">
+        <!-- Injected -->
+      </div>
+
+      <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px;">
+        <button class="btn-action btn-outline" onclick="closeModal()">Close</button>
+        <button class="btn-action btn-cyan" id="modalConfirmBtn" onclick="closeModal()">Confirm Action</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+
+  <script>
+    // Initial State & Data
+    const INITIAL_ADMINS = [
+      {
+        id: "TSA-GLOBAL-001",
+        name: "Engr. Destiny Young",
+        email: "youngdestinya@truststack.academy",
+        role: "Global Super Administrator",
+        title: "Founder & Chief Technology Architect",
+        scope: "Root Access (All Tracks & Tenancy)",
+        status: "Active (M365 Verified)",
+        is_global_admin: true,
+        permissions: ["all", "create_admins", "manage_cohorts", "lab_orchestration", "capstone_grading", "certificate_signing", "ombudsman_resolution", "system_audit"]
+      }
+    ];
+
+    const INITIAL_LEARNERS = [
+      { id: "TSA-2026-04F82A", name: "Chinedu Okoro", email: "chinedu.okoro@example.com", track: "Digital Forensics", cohort: "Cohort Alpha-2026", hours: 46, progress: 85, status: "Active Learner", score: "88%" },
+      { id: "TSA-2026-9E4390", name: "Aisha Bello", email: "aisha.bello@example.com", track: "SOC Analyst", cohort: "Cohort Alpha-2026", hours: 62, progress: 98, status: "Graduated", score: "94%" },
+      { id: "TSA-2026-B812FA", name: "Babajide Adeleke", email: "babajide.a@example.com", track: "Penetration Testing", cohort: "Cohort Beta-2026", hours: 38, progress: 65, status: "Lab In Progress", score: "79%" },
+      { id: "TSA-2026-78AC11", name: "Ngozi Eze", email: "ngozi.eze@example.com", track: "Cloud Security", cohort: "Cohort Alpha-2026", hours: 54, progress: 92, status: "Active Learner", score: "91%" },
+      { id: "TSA-2026-11FF44", name: "Oluwaseun Bakare", email: "seun.bakare@example.com", track: "Threat Intelligence", cohort: "Cohort Beta-2026", hours: 29, progress: 50, status: "Lab In Progress", score: "72%" },
+      { id: "TSA-2026-66D3A0", name: "Fatima Yusuf", email: "fatima.yusuf@example.com", track: "Governance & GRC", cohort: "Cohort Alpha-2026", hours: 44, progress: 88, status: "Active Learner", score: "86%" },
+      { id: "TSA-2026-88EA22", name: "Tunde Williams", email: "tunde.w@example.com", track: "Malware Analysis", cohort: "Cohort Beta-2026", hours: 52, progress: 80, status: "Lab In Progress", score: "84%" },
+      { id: "TSA-2026-55BB99", name: "Emeka Anyanwu", email: "emeka.a@example.com", track: "Security Engineering", cohort: "Cohort Alpha-2026", hours: 60, progress: 95, status: "Graduated", score: "96%" }
+    ];
+
+    const INITIAL_SUBMISSIONS = [
+      { id: "SUB-8901", student: "Babajide Adeleke", track: "Penetration Testing", capstone: "DC01 Kerberoasting & Domain Escalation Report", flag: "FLAG{krbtgt_triage_pwned_2026}", aiScore: "1.2%", grade: "Pending Review" },
+      { id: "SUB-8902", student: "Ngozi Eze", track: "Cloud Security", capstone: "AWS IAM PrivEsc & Public S3 Remediated Terraform", flag: "FLAG{aws_s3_least_priv_ok}", aiScore: "0.8%", grade: "Distinction (94%)" },
+      { id: "SUB-8903", student: "Oluwaseun Bakare", track: "Threat Intelligence", capstone: "APT29 CozyBear ATT&CK Matrix & STIX Bundle", flag: "FLAG{stix_taxii_mapped_2026}", aiScore: "2.4%", grade: "Pending Review" },
+      { id: "SUB-8904", student: "Tunde Williams", track: "Malware Analysis", capstone: "Cobalt Strike Beacon Static & Dynamic YARA Rules", flag: "FLAG{yara_c2_beacon_detected}", aiScore: "1.0%", grade: "Merit (86%)" },
+      { id: "SUB-8905", student: "Fatima Yusuf", track: "Governance & GRC", capstone: "NDPA Statutory Privacy Audit & DPIA Documentation", flag: "FLAG{ndpa_dpia_passed_audit}", aiScore: "0.4%", grade: "Distinction (92%)" },
+      { id: "SUB-8906", student: "Chinedu Okoro", track: "Digital Forensics", capstone: "EnCase Raw Memory Dump & Chain-of-Custody Log", flag: "FLAG{volatility_pslist_rogue_pid}", aiScore: "1.5%", grade: "Distinction (88%)" }
+    ];
+
+    const INITIAL_AUDITS = [
+      { time: "2026-09-26 00:06:14", admin: "TSA-GLOBAL-001 (D. Young)", action: "Microsoft 365 Tenant Linked: truststack.academy", target: "Entra ID Directory", ip: "102.89.44.12 (Lagos)", hash: "e9a01f..." },
+      { time: "2026-09-26 00:04:12", admin: "TSA-GLOBAL-001 (D. Young)", action: "LMS Admin Session Initialized", target: "Control Console", ip: "102.89.44.12 (Lagos)", hash: "a8f4c9..." },
+      { time: "2026-09-25 23:45:20", admin: "TSA-GLOBAL-001 (D. Young)", action: "Certificate Signed (2026-F5E8A071)", target: "Aisha Bello", ip: "102.89.44.12 (Lagos)", hash: "3b91d2..." },
+      { time: "2026-09-25 22:18:05", admin: "SYSTEM_ORCHESTRATOR", action: "Kali Linux Cluster Node Scale Up (+12 pods)", target: "af-south-1 Pods", ip: "10.14.0.5 (Internal)", hash: "7c12f0..." },
+      { time: "2026-09-25 21:04:33", admin: "TSA-GLOBAL-001 (D. Young)", action: "Grievance Ticket Resolved (TS-GRV-2026-8841)", target: "Lab Access SLA", ip: "102.89.44.12 (Lagos)", hash: "99e1a8..." }
+    ];
+
+    let currentTrackFilter = 'all';
+
+    function initDashboard() {
+      // Sync Admin Storage
+      if (!localStorage.getItem('ts_lms_admins')) {
+        localStorage.setItem('ts_lms_admins', JSON.stringify(INITIAL_ADMINS));
+      }
+      if (!localStorage.getItem('ts_lms_learners')) {
+        localStorage.setItem('ts_lms_learners', JSON.stringify(INITIAL_LEARNERS));
+      }
+      if (!localStorage.getItem('ts_lms_submissions')) {
+        localStorage.setItem('ts_lms_submissions', JSON.stringify(INITIAL_SUBMISSIONS));
+      }
+      if (!localStorage.getItem('ts_lms_audits')) {
+        localStorage.setItem('ts_lms_audits', JSON.stringify(INITIAL_AUDITS));
+      }
+
+      // Sync Current Logged-in Admin Info in Topbar
+      const currentAdmin = JSON.parse(localStorage.getItem('ts_current_admin') || JSON.stringify(INITIAL_ADMINS[0]));
+      document.getElementById('topAdminName').textContent = currentAdmin.name || 'Engr. Destiny Young';
+      document.getElementById('topAdminRole').innerHTML = `${currentAdmin.is_global_admin ? '👑 Global Super Admin' : 'Staff Admin'} &bull; ${currentAdmin.id || 'TSA-GLOBAL-001'}`;
+      if (currentAdmin.name) {
+        const initials = currentAdmin.name.split(' ').map(n=>n[0]).join('').slice(0, 2);
+        document.getElementById('topAvatar').textContent = initials;
+      }
+
+      renderAdmins();
+      renderLearners();
+      renderSubmissions();
+      renderAuditLogs();
+      loadCerts();
+      loadComplaints();
+      generateNewCertHash();
+      updateCertPreview();
+
+      // Sync Scholarship Waitlist Telemetry
+      fetch('/api/admin/scholarship-applications')
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.total !== undefined) {
+            const kpi = document.getElementById('kpiScholarshipsCount');
+            const tab = document.getElementById('tabCountScholarships');
+            if (kpi) kpi.textContent = data.total;
+            if (tab) tab.textContent = data.total;
+          }
+        }).catch(() => {});
+    }
+
+    // Tab Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.style.display = 'block';
+
+      const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (clickedBtn) clickedBtn.classList.add('active');
+    }
+
+    // Render Admins
+    function renderAdmins() {
+      const admins = JSON.parse(localStorage.getItem('ts_lms_admins') || '[]');
+      const tbody = document.getElementById('adminTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      admins.forEach(a => {
+        const tr = document.createElement('tr');
+        const isGlobal = a.is_global_admin;
+
+        tr.innerHTML = `
+          <td style="font-family:monospace;font-weight:900;color:#38bdf8;">${a.id}</td>
+          <td>
+            <div style="font-weight:900;color:#fff;font-size:15px;display:flex;align-items:center;gap:6px;">
+              <span>${a.name}</span>
+              ${isGlobal ? '<span style="background:rgba(212,175,55,0.2);color:#fbbf24;border:1px solid #d4af37;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:900;">GLOBAL ROOT</span>' : ''}
+            </div>
+            <div style="font-size:12px;color:#94a3b8;">${a.title || 'Academy Staff'}</div>
+          </td>
+          <td><span style="font-weight:800;color:#cbd5e1;">${a.role}</span></td>
+          <td>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <svg width="14" height="14" viewBox="0 0 21 21"><path fill="#f25022" d="M1 1h9v9H1z"/><path fill="#00a4ef" d="M1 11h9v9H1z"/><path fill="#7fba00" d="M11 1h9v9H11z"/><path fill="#ffb900" d="M11 11h9v9H11z"/></svg>
+              <span style="font-family:monospace;color:#38bdf8;font-weight:700;">${a.email}</span>
+            </div>
+          </td>
+          <td><span style="font-size:12px;color:#94a3b8;font-weight:700;">${a.scope || 'All Tracks'}</span></td>
+          <td><span class="badge-status ${a.status.includes('Active') ? 'badge-active' : 'badge-danger'}">● ${a.status}</span></td>
+          <td style="text-align:right;">
+            ${isGlobal 
+              ? '<span style="font-size:12px;color:#fbbf24;font-weight:800;">Primary Tenant Owner</span>'
+              : `<button class="btn-action btn-outline" style="padding:4px 10px;font-size:12px;border-color:#ef4444;color:#f87171;" onclick="revokeAdmin('${a.id}')">Revoke Access</button>`
+            }
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('tabCountAdmins').textContent = admins.length;
+      document.getElementById('kpiAdminsCount').textContent = admins.length;
+    }
+
+    function openCreateAdminModal() {
+      const hex = Math.floor(Math.random() * 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+      const suggestedId = `TSA-ADM-2026-${hex}`;
+
+      document.getElementById('modalTitle').textContent = 'Provision New LMS Administrator';
+      document.getElementById('modalSubtitle').textContent = 'Register staff on the truststack.academy Microsoft 365 tenant with assigned administrative roles.';
+      document.getElementById('modalBody').innerHTML = `
+        <div class="form-group">
+          <label>Administrator Full Name</label>
+          <input type="text" id="newAdminName" class="form-control" placeholder="e.g. Dr. Amina Bello">
+        </div>
+
+        <div class="form-group">
+          <label>Microsoft 365 Work Email (@truststack.academy)</label>
+          <div style="display:flex;align-items:center;background:#071526;border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding-right:12px;">
+            <input type="text" id="newAdminEmailUser" style="background:transparent;border:0;color:#fff;padding:12px 16px;flex:1;outline:none;" placeholder="amina.bello">
+            <span style="color:#38bdf8;font-weight:800;font-size:14px;">@truststack.academy</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="form-group">
+            <label>Administrative Role</label>
+            <select id="newAdminRole" class="form-control">
+              <option value="Curriculum Director & Track Lead">Curriculum Director &amp; Track Lead</option>
+              <option value="Lead Cloud Lab Orchestrator">Lead Cloud Lab Orchestrator</option>
+              <option value="Academic Registrar & Certifier">Academic Registrar &amp; Certifier</option>
+              <option value="Ombudsman & Compliance Officer">Ombudsman &amp; Compliance Officer</option>
+              <option value="Senior Lab Instructor">Senior Lab Instructor</option>
+              <option value="Associate Global Administrator">Associate Global Administrator</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Assigned Credential ID</label>
+            <input type="text" id="newAdminId" class="form-control" value="${suggestedId}" readonly style="font-family:monospace;background:#050e18;color:#38bdf8;font-weight:900;">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:10px;">
+          <label>Authority Scope</label>
+          <select id="newAdminScope" class="form-control">
+            <option value="All 8 Career Tracks">All 8 Career Tracks (Broad Scope)</option>
+            <option value="Defensive Tracks (SOC / Forensics / Threat Intel)">Defensive Tracks (SOC / Forensics / Threat Intel)</option>
+            <option value="Offensive Tracks (Pentesting / Malware)">Offensive Tracks (Pentesting / Malware)</option>
+            <option value="Cloud Security & Engineering">Cloud Security &amp; Engineering</option>
+            <option value="Governance & NDPA Audit">Governance &amp; NDPA Audit</option>
+          </select>
+        </div>
+      `;
+
+      document.getElementById('modalConfirmBtn').textContent = 'Provision Administrator';
+      document.getElementById('modalConfirmBtn').onclick = function() {
+        const name = document.getElementById('newAdminName').value.trim();
+        const emailUser = document.getElementById('newAdminEmailUser').value.trim();
+        const role = document.getElementById('newAdminRole').value;
+        const id = document.getElementById('newAdminId').value;
+        const scope = document.getElementById('newAdminScope').value;
+
+        if (!name || !emailUser) {
+          showToast('Please enter both name and email prefix.');
+          return;
+        }
+
+        const fullEmail = `${emailUser.toLowerCase()}@truststack.academy`;
+        const admins = JSON.parse(localStorage.getItem('ts_lms_admins') || '[]');
+
+        if (admins.some(a => a.email.toLowerCase() === fullEmail || a.id === id)) {
+          showToast('An administrator with this email or ID already exists.');
+          return;
+        }
+
+        const newAdminObj = {
+          id: id,
+          name: name,
+          email: fullEmail,
+          role: role,
+          title: role,
+          scope: scope,
+          status: "Active (M365 Verified)",
+          is_global_admin: false,
+          created_at: new Date().toISOString()
+        };
+
+        admins.push(newAdminObj);
+        localStorage.setItem('ts_lms_admins', JSON.stringify(admins));
+        addAuditLog(`Provisioned Administrator: ${name} (${id}) - ${fullEmail} with role ${role}`);
+        renderAdmins();
+        closeModal();
+        showToast(`Administrator ${name} provisioned! Staff can log in with ${id} or ${fullEmail}`);
+      };
+
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    function revokeAdmin(adminId) {
+      if (adminId === 'TSA-GLOBAL-001') {
+        showToast('Engr. Destiny Young is the permanent Global Root and cannot be revoked.');
+        return;
+      }
+      const admins = JSON.parse(localStorage.getItem('ts_lms_admins') || '[]');
+      const target = admins.find(a => a.id === adminId);
+      if (target) {
+        target.status = target.status.includes('Active') ? 'Suspended' : 'Active (M365 Verified)';
+        localStorage.setItem('ts_lms_admins', JSON.stringify(admins));
+        addAuditLog(`Admin Status Updated: ${target.name} (${adminId}) -> ${target.status}`);
+        renderAdmins();
+        showToast(`Status updated for ${target.name}: ${target.status}`);
+      }
+    }
+
+    // Render Learners
+    function renderLearners() {
+      const learners = JSON.parse(localStorage.getItem('ts_lms_learners') || '[]');
+      const query = (document.getElementById('learnerSearch')?.value || '').toLowerCase();
+      const tbody = document.getElementById('learnerTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      let matchCount = 0;
+
+      learners.forEach(l => {
+        const matchesTrack = currentTrackFilter === 'all' || l.track.toLowerCase().includes(currentTrackFilter.toLowerCase());
+        const matchesQuery = !query || l.name.toLowerCase().includes(query) || l.id.toLowerCase().includes(query) || l.track.toLowerCase().includes(query);
+
+        if (matchesTrack && matchesQuery) {
+          matchCount++;
+          const tr = document.createElement('tr');
+          let badgeClass = 'badge-active';
+          if (l.status.includes('Progress')) badgeClass = 'badge-progress';
+          if (l.status.includes('Graduated')) badgeClass = 'badge-graduated';
+
+          tr.innerHTML = `
+            <td style="font-family:monospace;font-weight:900;color:#38bdf8;">${l.id}</td>
+            <td>
+              <div style="font-weight:900;color:#fff;font-size:15px;">${l.name}</div>
+              <div style="font-size:12px;color:#94a3b8;">${l.email}</div>
+            </td>
+            <td>
+              <div style="font-weight:800;color:#e2e8f0;">${l.track}</div>
+              <div style="font-size:11px;color:#64748b;">${l.cohort}</div>
+            </td>
+            <td style="font-weight:900;">${l.hours} hrs</td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="flex:1;height:6px;background:#091d33;border-radius:99px;overflow:hidden;min-width:70px;">
+                  <div style="width:${l.progress}%;height:100%;background:linear-gradient(90deg, #00b8d9, #10b981);"></div>
+                </div>
+                <span style="font-size:12px;font-weight:900;color:#cbd5e1;">${l.progress}%</span>
+              </div>
+            </td>
+            <td><span class="badge-status ${badgeClass}">● ${l.status}</span></td>
+            <td style="text-align:right;">
+              <div style="display:inline-flex;gap:6px;">
+                <button class="btn-action btn-outline" style="padding:4px 10px;font-size:12px;" onclick="inspectLearner('${l.id}')">Inspect</button>
+                <button class="btn-action btn-cyan" style="padding:4px 10px;font-size:12px;" onclick="quickCertify('${l.name}', '${l.track}')">Certify</button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+
+      document.getElementById('tabCountLearners').textContent = matchCount;
+      document.getElementById('kpiLearners').textContent = '1,284';
+    }
+
+    function filterTrack(track, el) {
+      currentTrackFilter = track;
+      document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderLearners();
+    }
+
+    function filterLearners() {
+      renderLearners();
+    }
+
+    function inspectLearner(learnerId) {
+      const learners = JSON.parse(localStorage.getItem('ts_lms_learners') || '[]');
+      const l = learners.find(x => x.id === learnerId);
+      if (!l) return;
+
+      document.getElementById('modalTitle').textContent = `Defender Inspection: ${l.name}`;
+      document.getElementById('modalSubtitle').textContent = `ID: ${l.id} · Track: ${l.track} · ${l.cohort}`;
+      document.getElementById('modalBody').innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;background:#09192c;padding:16px;border-radius:12px;margin-bottom:16px;">
+          <div><small style="color:#94a3b8;">Assigned Cloud Pod IP:</small><br><b style="font-family:monospace;color:#38bdf8;">10.14.48.${Math.floor(Math.random()*200)+10}</b></div>
+          <div><small style="color:#94a3b8;">Cumulative Lab Time:</small><br><b>${l.hours} hours logged</b></div>
+          <div><small style="color:#94a3b8;">Verified Capstone Score:</small><br><b style="color:#10b981;">${l.score} (Defensible)</b></div>
+          <div><small style="color:#94a3b8;">Public Directory Profile:</small><br><a href="/learner?id=${l.id}" target="_blank" style="color:#00b8d9;text-decoration:underline;">View Public Record ↗</a></div>
+        </div>
+        <div style="font-size:12px;font-weight:800;color:#94a3b8;margin-bottom:6px;text-transform:uppercase;">Recent Terminal Audit Trail</div>
+        <div style="background:#050d18;padding:12px;border-radius:8px;font-family:monospace;font-size:12px;color:#a5f3fc;line-height:1.6;border:1px solid rgba(255,255,255,0.08);">
+          [2026-09-25 21:14:02] SSH session started from 197.210.84.11<br>
+          [2026-09-25 21:18:44] Executed: sudo suricata -c /etc/suricata/suricata.yaml -i eth0<br>
+          [2026-09-25 21:30:19] Splunk Query: index="cyber_lab" sourcetype="access_combined" status=401 | stats count by src_ip<br>
+          [2026-09-25 22:04:11] Captured Flag Verification Passed: ${l.track.slice(0, 3).toUpperCase()}_OK
+        </div>
+      `;
+      document.getElementById('modalConfirmBtn').textContent = 'Reset Student Lab Environment';
+      document.getElementById('modalConfirmBtn').onclick = function() {
+        triggerLabAction(`Lab environment for ${l.name} reset to fresh baseline.`);
+        closeModal();
+      };
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    function openEnrollModal() {
+      document.getElementById('modalTitle').textContent = 'Enroll New Defender';
+      document.getElementById('modalSubtitle').textContent = 'Register defender in TrustStack Academy official cohorts.';
+      document.getElementById('modalBody').innerHTML = `
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="newStudentName" class="form-control" placeholder="e.g. Ibrahim Abubakar">
+        </div>
+        <div class="form-group">
+          <label>Registered Email</label>
+          <input type="email" id="newStudentEmail" class="form-control" placeholder="defender@example.com">
+        </div>
+        <div class="form-group">
+          <label>Selected Career Track</label>
+          <select id="newStudentTrack" class="form-control">
+            <option>SOC Analyst</option>
+            <option>Digital Forensics</option>
+            <option>Threat Intelligence</option>
+            <option>Penetration Testing</option>
+            <option>Cloud Security</option>
+            <option>Governance & GRC</option>
+            <option>Malware Analysis</option>
+            <option>Security Engineering</option>
+          </select>
+        </div>
+      `;
+      document.getElementById('modalConfirmBtn').textContent = 'Enroll Defender';
+      document.getElementById('modalConfirmBtn').onclick = function() {
+        const name = document.getElementById('newStudentName').value;
+        const email = document.getElementById('newStudentEmail').value;
+        const track = document.getElementById('newStudentTrack').value;
+        if (!name || !email) {
+          showToast('Please provide both name and email.');
+          return;
+        }
+        const hex = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase().padStart(6, '0');
+        const newLearner = {
+          id: `TSA-2026-${hex}`,
+          name: name,
+          email: email,
+          track: track,
+          cohort: 'Cohort Beta-2026',
+          hours: 0,
+          progress: 5,
+          status: 'Active Learner',
+          score: 'Pending'
+        };
+        const learners = JSON.parse(localStorage.getItem('ts_lms_learners') || '[]');
+        learners.unshift(newLearner);
+        localStorage.setItem('ts_lms_learners', JSON.stringify(learners));
+        addAuditLog(`Enrolled Defender: ${name} (${newLearner.id}) into ${track}`);
+        renderLearners();
+        closeModal();
+        showToast(`Defender ${name} successfully enrolled with ID ${newLearner.id}!`);
+      };
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.remove('open');
+    }
+
+    // Evidence & Gradebook
+    function renderSubmissions() {
+      const subs = JSON.parse(localStorage.getItem('ts_lms_submissions') || '[]');
+      const tbody = document.getElementById('gradebookTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      subs.forEach(s => {
+        const tr = document.createElement('tr');
+        const isDist = s.grade.includes('Distinction');
+        const isPend = s.grade.includes('Pending');
+
+        tr.innerHTML = `
+          <td style="font-family:monospace;font-weight:900;color:#38bdf8;">${s.id}</td>
+          <td>
+            <div style="font-weight:900;color:#fff;">${s.student}</div>
+            <div style="font-size:12px;color:#94a3b8;">${s.track}</div>
+          </td>
+          <td style="font-weight:800;color:#cbd5e1;">📄 ${s.capstone}</td>
+          <td><span style="font-family:monospace;font-size:12px;background:#051426;padding:3px 8px;border-radius:6px;border:1px solid #0284c7;color:#38bdf8;">${s.flag}</span></td>
+          <td style="font-weight:900;color:#34d399;">${s.aiScore}</td>
+          <td>
+            <span class="badge-status ${isDist ? 'badge-graduated' : isPend ? 'badge-progress' : 'badge-active'}">
+              ${s.grade}
+            </span>
+          </td>
+          <td style="text-align:right;">
+            <button class="btn-action btn-outline" style="padding:4px 10px;font-size:12px;" onclick="gradeSubmission('${s.id}')">
+              ${isPend ? 'Grade Now' : 'Edit Grade'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('tabCountSubmissions').textContent = subs.length;
+    }
+
+    function gradeSubmission(subId) {
+      const subs = JSON.parse(localStorage.getItem('ts_lms_submissions') || '[]');
+      const s = subs.find(x => x.id === subId);
+      if (!s) return;
+
+      document.getElementById('modalTitle').textContent = `Grade Capstone: ${s.student}`;
+      document.getElementById('modalSubtitle').textContent = `${s.capstone} · ${s.track}`;
+      document.getElementById('modalBody').innerHTML = `
+        <div style="margin-bottom:14px;background:#09192c;padding:14px;border-radius:10px;">
+          <small style="color:#94a3b8;">Submitted Flag:</small> <code style="color:#38bdf8;">${s.flag}</code><br>
+          <small style="color:#94a3b8;">Originality Index:</small> <b style="color:#34d399;">${s.aiScore} (Human authentic)</b>
+        </div>
+        <div class="form-group">
+          <label>Award Final Assessment Score</label>
+          <select id="gradeSelect" class="form-control">
+            <option value="Distinction (95%)">Distinction (95%) - Top 5%</option>
+            <option value="Distinction (90%)">Distinction (90%)</option>
+            <option value="Merit (85%)">Merit (85%)</option>
+            <option value="Pass (78%)">Pass (78%)</option>
+            <option value="Needs Revision (60%)">Needs Revision (60%)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Instructor Audit Feedback</label>
+          <textarea id="gradeFeedback" class="form-control" rows="3" placeholder="Excellent execution of memory analysis and clear chain-of-custody documentation."></textarea>
+        </div>
+      `;
+      document.getElementById('modalConfirmBtn').textContent = 'Submit Official Score';
+      document.getElementById('modalConfirmBtn').onclick = function() {
+        const grade = document.getElementById('gradeSelect').value;
+        s.grade = grade;
+        localStorage.setItem('ts_lms_submissions', JSON.stringify(subs));
+        addAuditLog(`Graded Capstone: ${s.student} (${subId}) -> ${grade}`);
+        renderSubmissions();
+        closeModal();
+        showToast(`Official grade awarded to ${s.student}: ${grade}`);
+      };
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    // Certificate Generator
+    function generateNewCertHash() {
+      const hex = Math.floor(Math.random() * 0xFFFFFFFF).toString(16).toUpperCase().padStart(8, '0');
+      const fullId = `2026-${hex}`;
+      document.getElementById('certHashId').value = fullId;
+      document.getElementById('previewId').textContent = fullId;
+    }
+
+    function updateCertPreview() {
+      const name = document.getElementById('certStudentName')?.value || 'Adebayo Ogunlesi';
+      const track = document.getElementById('certTrackSelect')?.value || 'Ethical Hacking & Penetration Testing';
+      const date = document.getElementById('certIssueDate')?.value || '2026-09-26';
+
+      document.getElementById('previewName').textContent = name;
+      document.getElementById('previewTrack').textContent = track;
+      document.getElementById('previewDate').textContent = date;
+    }
+
+    function quickCertify(name, track) {
+      switchTab('certs');
+      document.getElementById('certStudentName').value = name;
+      document.getElementById('certTrackSelect').value = track;
+      generateNewCertHash();
+      updateCertPreview();
+      showToast(`Ready to issue credential for ${name}. Review layout and click Publish.`);
+    }
+
+    function publishCertificate() {
+      const name = document.getElementById('certStudentName').value;
+      const track = document.getElementById('certTrackSelect').value;
+      const date = document.getElementById('certIssueDate').value;
+      const id = document.getElementById('certHashId').value;
+
+      if (!name) {
+        showToast('Please enter student full name.');
+        return;
+      }
+
+      const certs = JSON.parse(localStorage.getItem('ts_lms_certs') || '[]');
+      const newCert = {
+        id: id,
+        student: name,
+        track: track,
+        date_issued: date,
+        hash_prefix: id.replace('2026-', ''),
+        hash_full: (id + date + name).split('').map(c=>c.charCodeAt(0).toString(16)).join('').slice(0, 64),
+        verify_url: `/verify?id=${id}`,
+        status: "verified"
+      };
+
+      certs.unshift(newCert);
+      localStorage.setItem('ts_lms_certs', JSON.stringify(certs));
+      addAuditLog(`Signed & Published Verifiable Certificate: ${id} for ${name}`);
+      loadCerts();
+      showToast(`Certificate ${id} published to registry! Verification live at /verify?id=${id}`);
+    }
+
+    function loadCerts() {
+      fetch('/certs.json')
+        .then(r => r.json())
+        .then(data => {
+          let list = data.certificates || [];
+          const localCerts = JSON.parse(localStorage.getItem('ts_lms_certs') || '[]');
+          
+          // Merge local certs with remote certs
+          const combined = [...localCerts];
+          list.forEach(c => {
+            if (!combined.some(x => x.id === c.id)) combined.push(c);
+          });
+
+          const tbody = document.getElementById('certRegistryBody');
+          if (!tbody) return;
+          tbody.innerHTML = '';
+
+          combined.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td style="font-family:monospace;font-weight:900;color:#38bdf8;">${c.id}</td>
+              <td style="font-weight:900;color:#fff;">${c.student}</td>
+              <td style="font-size:13px;color:#cbd5e1;">${c.track}</td>
+              <td style="font-size:12px;color:#94a3b8;">${c.date_issued}</td>
+              <td>
+                <a href="${c.verify_url || '/verify?id=' + c.id}" target="_blank" class="btn-action btn-outline" style="padding:3px 8px;font-size:11px;">
+                  Verify ↗
+                </a>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+
+          document.getElementById('tabCountCerts').textContent = combined.length;
+          document.getElementById('kpiCerts').textContent = combined.length + 416;
+        })
+        .catch(() => {
+          const localCerts = JSON.parse(localStorage.getItem('ts_lms_certs') || '[]');
+          document.getElementById('tabCountCerts').textContent = localCerts.length;
+        });
+    }
+
+    // Complaints SLA
+    function loadComplaints() {
+      const complaints = JSON.parse(localStorage.getItem('truststack_complaints') || '[]');
+      const tbody = document.getElementById('complaintTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      if (complaints.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align:center;padding:32px;color:#94a3b8;">
+              ✓ All complaints and escalations resolved. Zero pending items in 24h SLA queue.
+            </td>
+          </tr>
+        `;
+        document.getElementById('tabCountComplaints').textContent = '0 Pending';
+        return;
+      }
+
+      complaints.forEach((c, idx) => {
+        const tr = document.createElement('tr');
+        const isCritical = c.severity === 'critical';
+        const isResolved = c.status === 'Resolved';
+
+        tr.innerHTML = `
+          <td style="font-family:monospace;font-weight:900;color:#38bdf8;">${c.ticketId}</td>
+          <td style="font-weight:800;color:#fff;">${c.category}</td>
+          <td>
+            <span class="badge-status ${isCritical ? 'badge-danger' : 'badge-progress'}">
+              ${c.severity ? c.severity.toUpperCase() : 'STANDARD'}
+            </span>
+          </td>
+          <td>
+            <div style="font-weight:800;color:#e2e8f0;">${c.fullName}</div>
+            <div style="font-size:12px;color:#94a3b8;">${c.email}</div>
+          </td>
+          <td style="font-weight:900;color:#f59e0b;">${c.slaDeadline || 'Within 24h SLA'}</td>
+          <td>
+            <span class="badge-status ${isResolved ? 'badge-active' : 'badge-danger'}">
+              ● ${c.status || 'Active Review'}
+            </span>
+          </td>
+          <td style="text-align:right;">
+            ${isResolved 
+              ? '<span style="font-size:12px;color:#34d399;font-weight:800;">Resolved ✓</span>'
+              : `<button class="btn-action btn-cyan" style="padding:4px 10px;font-size:12px;" onclick="resolveComplaint('${c.ticketId}')">Mark Resolved</button>`
+            }
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const openCount = complaints.filter(c => c.status !== 'Resolved').length;
+      document.getElementById('tabCountComplaints').textContent = openCount + ' Open';
+    }
+
+    function resolveComplaint(ticketId) {
+      const complaints = JSON.parse(localStorage.getItem('truststack_complaints') || '[]');
+      const item = complaints.find(c => c.ticketId === ticketId);
+      if (item) {
+        item.status = 'Resolved';
+        item.resolvedAt = new Date().toISOString();
+        localStorage.setItem('truststack_complaints', JSON.stringify(complaints));
+        addAuditLog(`Resolved Grievance: ${ticketId} (${item.category}) for ${item.fullName}`);
+        loadComplaints();
+        showToast(`Complaint ${ticketId} resolved and logged in audit archive.`);
+      }
+    }
+
+    // Audit Logging
+    function renderAuditLogs() {
+      const audits = JSON.parse(localStorage.getItem('ts_lms_audits') || '[]');
+      const tbody = document.getElementById('auditTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      audits.forEach(a => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-family:monospace;font-size:12px;color:#94a3b8;">${a.time}</td>
+          <td style="font-weight:800;color:#fff;">${a.admin}</td>
+          <td style="font-weight:800;color:#38bdf8;">${a.action}</td>
+          <td style="color:#cbd5e1;">${a.target}</td>
+          <td style="font-size:12px;color:#94a3b8;">${a.ip}</td>
+          <td style="font-family:monospace;font-size:11px;color:#64748b;">${a.hash}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addAuditLog(actionText, targetObj = "System Console") {
+      const audits = JSON.parse(localStorage.getItem('ts_lms_audits') || '[]');
+      const now = new Date();
+      const timeStr = now.toISOString().replace('T', ' ').slice(0, 19);
+      const hex = Math.floor(Math.random() * 0xFFFFFF).toString(16);
+
+      audits.unshift({
+        time: timeStr,
+        admin: "TSA-GLOBAL-001 (D. Young)",
+        action: actionText,
+        target: targetObj,
+        ip: "102.89.44.12 (Lagos, Nigeria)",
+        hash: hex + "..."
+      });
+
+      localStorage.setItem('ts_lms_audits', JSON.stringify(audits));
+      renderAuditLogs();
+    }
+
+    // Toast & Actions
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<span>✓</span> <span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.transition = 'opacity 0.3s';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function triggerLabAction(actionName) {
+      showToast(actionName);
+      addAuditLog(`Orchestration Action: ${actionName}`);
+    }
+
+    // Launch
+    window.addEventListener('DOMContentLoaded', initDashboard);
+  </script>
+</body>
+</html>

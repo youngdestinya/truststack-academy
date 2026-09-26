@@ -34,7 +34,7 @@ export default function SiteSeo() {
   const [title, description] = match || [defaults.title, defaults.description];
   const cleanPath = (router.asPath || pathname).split('?')[0];
   const canonical = `${origin}${cleanPath === '/' ? '/' : cleanPath}`;
-  const image = `${origin}${pathname.startsWith('/cdpo') ? '/cdpo-og.png' : '/hero-cyber-lab-v2.jpg'}`;
+  const image = `${origin}${pathname.startsWith('/cdpo') ? '/cdpo-og.png' : '/feature-image.jpg'}`;
   return <Head>
     <title key="site-title">{title}</title>
     <meta key="site-description" name="description" content={description}/>

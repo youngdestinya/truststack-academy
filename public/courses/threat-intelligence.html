@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threat Intelligence | TrustStack Academy</title>
+  <meta name="description" content="Turn threat data into actionable intelligence using structured analysis, adversary tracking and operational intelligence workflows.">
+  <link rel="canonical" href="https://truststack.academy/courses/threat-intelligence">
+  <link rel="icon" href="/Truststack_Logo_PNG.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <meta property="og:title" content="Threat Intelligence | TrustStack Academy">
+  <meta property="og:description" content="Turn threat data into actionable intelligence using structured analysis, adversary tracking and operational intelligence workflows.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://truststack.academy/courses/threat-intelligence">
+  <meta property="og:image" content="https://truststack.academy/feature-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Threat Intelligence | TrustStack Academy">
+  <meta name="twitter:description" content="Turn threat data into actionable intelligence using structured analysis, adversary tracking and operational intelligence workflows.">
+  <meta name="twitter:image" content="https://truststack.academy/feature-image.jpg">
+  <style>
+    *, *::before, *::after, html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, strong, small, div, nav, header, footer {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Alegreya Sans', sans-serif !important;
+    }
+    body { background: #ffffff; color: #0a1931; line-height: 1.5; }
+    .stripe { height: 5px; background: linear-gradient(90deg, #00b8d9 0%, #00d4ff 50%, #d4af37 100%); }
+    header { height: 76px; padding: 0 max(24px, calc((100% - 1280px)/2)); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e5eaf0; background: #ffffff; position: sticky; top: 0; z-index: 1000; }
+    header > a.brand { display: flex; align-items: center; gap: 10px; color: #0a1931; text-decoration: none; font-size: 19px; font-weight: 800; }
+    header img { width: 44px; height: 44px; object-fit: contain; }
+    nav { display: flex; gap: 24px; align-items: center; }
+    nav a { color: #000000; text-decoration: none; font-weight: 800; font-size: 15px; transition: color 0.18s ease; }
+    nav a:hover { color: #00b8d9; }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .header-actions a.btn-cta { padding: 9px 18px; border-radius: 999px; background: #00b8d9; color: #06162d; font-weight: 800; font-size: 13px; text-decoration: none; transition: transform 0.15s ease; }
+    .header-actions a.btn-cta:hover { transform: translateY(-1px); }
+    main { max-width: 1280px; margin: auto; padding: 42px 24px 90px; }
+    .back { display: inline-flex; align-items: center; gap: 6px; color: #617086; text-decoration: none; font-weight: 800; font-size: 14px; margin-bottom: 24px; transition: color 0.15s ease; }
+    .back:hover { color: #00b8d9; }
+    .hero {
+      position: relative;
+      border: 1px solid color-mix(in srgb, var(--accent) 24%, #dbe4ec);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, rgba(255,255,255,0.95)) 0%, rgba(255,255,255,0.98) 50%, color-mix(in srgb, var(--accent) 6%, white) 100%);
+      border-radius: 28px;
+      padding: 52px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 48px;
+      align-items: center;
+      box-shadow: 0 20px 48px -12px color-mix(in srgb, var(--accent) 16%, rgba(10,25,49,0.08)), 0 1px 2px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+    /* Soft translucent ambient aura smoothly blending inside the card */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: -80px;
+      width: 440px;
+      height: 440px;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent) 0%, color-mix(in srgb, var(--accent) 5%, transparent) 45%, transparent 70%);
+      pointer-events: none;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+    /* STRICTLY ELIMINATE ANY INNER BLUR / RECTANGULAR TINTS / PSEUDO PRE-ICONS */
+    .hero > div,
+    .hero > div * {
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      box-shadow: none !important;
+    }
+    .hero h1::before,
+    .hero h1::after,
+    .hero h1 *::before,
+    .hero h1 *::after {
+      content: none !important;
+      display: none !important;
+    }
+    .eyebrow { color: var(--accent); font-weight: 900; letter-spacing: 0.18em; font-size: 12px; text-transform: uppercase; }
+    .hero h1 { font-size: clamp(2.4rem, 4.5vw, 3.8rem); line-height: 1.02; color: #0a1931; margin: 16px 0 18px; font-weight: 900; letter-spacing: -0.02em; }
+    .hero p { font-size: 17px; line-height: 1.6; color: #4a5568; max-width: 680px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0; }
+    .chips span { border: 1px solid #dce4eb; border-radius: 999px; background: #ffffff !important; padding: 7px 14px; font-size: 12px; font-weight: 800; color: #0a1931; }
+    .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .actions a { padding: 13px 24px; border-radius: 999px; text-decoration: none; font-weight: 900; font-size: 14px; display: inline-flex; align-items: center; transition: transform 0.15s ease; }
+    .actions a:hover { transform: translateY(-2px); }
+    .primary { background: #0a1931 !important; color: #ffffff !important; box-shadow: 0 8px 20px rgba(10,25,49,0.2) !important; }
+    .primary:hover { background: #00b8d9 !important; color: #06162d !important; }
+    .secondary { border: 1px solid #cad4df; color: #0a1931; background: #ffffff !important; }
+    .secondary:hover { border-color: #00b8d9; color: #00b8d9; }
+
+    /* ULTRA CRISP, VIBRANT COURSE HERO SHIELD BADGE (IMMUNE TO BLUR / WASH-OUT) */
+    .ts-course-hero-badge {
+      position: relative !important;
+      height: 400px !important;
+      width: 100% !important;
+      max-width: 330px !important;
+      margin: 0 auto !important;
+      color: #ffffff !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      background: linear-gradient(155deg, var(--accent) 0%, #0c213d 55%, #05101f 100%) !important;
+      clip-path: polygon(50% 0, 94% 14%, 94% 70%, 50% 100%, 6% 70%, 6% 14%) !important;
+      filter: drop-shadow(0 20px 35px rgba(7, 24, 46, 0.45)) !important;
+      padding: 36px 24px !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      box-sizing: border-box !important;
+    }
+    .ts-course-hero-badge i {
+      display: grid !important;
+      place-items: center !important;
+      width: 78px !important;
+      height: 78px !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+      color: var(--accent) !important;
+      font-size: 36px !important;
+      font-style: normal !important;
+      line-height: 1 !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+      margin-bottom: 20px !important;
+      flex-shrink: 0 !important;
+    }
+    .ts-course-hero-badge small {
+      letter-spacing: 0.18em !important;
+      font-weight: 900 !important;
+      font-size: 11px !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+      text-transform: uppercase !important;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+      margin-bottom: 8px !important;
+      display: block !important;
+    }
+    .ts-course-hero-badge strong {
+      font-size: 27px !important;
+      line-height: 1.15 !important;
+      font-weight: 900 !important;
+      color: #ffffff !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7) !important;
+      margin-bottom: 12px !important;
+      display: block !important;
+    }
+    .ts-course-hero-badge em {
+      font-style: normal !important;
+      font-weight: 900 !important;
+      letter-spacing: 0.22em !important;
+      font-size: 11px !important;
+      color: #f6d761 !important;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+      text-transform: uppercase !important;
+      display: block !important;
+    }
+    /* STRICTLY ELIMINATE ALL PSEUDO PRE-ICONS FROM BADGE */
+    .ts-course-hero-badge::before,
+    .ts-course-hero-badge::after,
+    .ts-course-hero-badge *::before,
+    .ts-course-hero-badge *::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .details { display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 32px; margin-top: 42px; }
+    .details > div, .details aside { border: 1px solid #dce4eb; border-radius: 24px; padding: 36px; background: #ffffff; box-shadow: 0 10px 30px rgba(10,25,49,0.04); }
+    .details h2 { font-size: 28px; color: #0a1931; margin: 10px 0 24px; font-weight: 900; }
+    .details ol { list-style: none; padding: 0; margin: 0; }
+    .details ol li { display: flex; gap: 18px; align-items: center; padding: 18px 0; border-top: 1px solid #edf2f7; color: #2d3748; font-weight: 600; font-size: 15px; }
+    .details ol b { color: var(--accent); font: 900 15px ui-monospace, monospace; width: 28px; }
+    .details aside { background: #0a1931; color: #ffffff; border-color: #0a1931; }
+    .details aside h2 { color: #ffffff; }
+    .details aside p { font-size: 15px; line-height: 1.6; color: #cbd5e1; margin-bottom: 24px; }
+    .details aside hr { border: 0; border-top: 1px solid rgba(255,255,255,0.14); margin: 24px 0; }
+    .details aside h3 { font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 14px; }
+    .details aside ul { list-style: none; padding: 0; margin: 0; }
+    .details aside li { margin: 12px 0; color: #e2e8f0; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+    .details aside li::before { content: '✓'; color: #00b8d9; font-weight: 900; }
+    .details aside a.aside-btn { display: block; margin-top: 28px; padding: 14px 20px; border-radius: 999px; background: #00b8d9; color: #06162d; font-weight: 900; font-size: 14px; text-align: center; text-decoration: none; transition: transform 0.15s ease, background 0.15s ease; }
+    .details aside a.aside-btn:hover { background: #00d4ff; transform: translateY(-2px); }
+    footer { background: #0a1931; color: #ffffff; padding: 36px max(24px, calc((100% - 1280px)/2)); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+    footer a { color: #ffffff; text-decoration: none; font-weight: 800; }
+    footer span { color: rgba(255,255,255,0.65); font-size: 13px; }
+    @media (max-width: 900px) {
+      .hero { padding: 32px 24px; grid-template-columns: 1fr; }
+      .ts-course-hero-badge { height: 350px; }
+      .details { grid-template-columns: 1fr; }
+      .actions { flex-direction: column; }
+      .actions a { text-align: center; justify-content: center; }
+      footer { flex-direction: column; text-align: center; gap: 12px; }
+    }
+  </style>
+  <style id="ts-alegreya-global">
+  *, *::before, *::after, html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, strong, small, div, nav, header, footer {
+    font-family: 'Alegreya Sans', sans-serif !important;
+  }
+</style>
+</head>
+<body>
+  <div class="stripe"></div>
+  <header>
+    <a href="/home.html" class="brand">
+      <img src="/truststack-home-logo.png" alt="TrustStack Academy logo">
+      <strong><span style="color:#0A1931">TrustStack </span><span style="color:#00b8d9">Academy</span></strong>
+    </a>
+    <nav>
+      <a href="/home.html">Home</a>
+      <a href="/courses">Courses</a>
+      <a href="/scholarship">Scholarship<sup class="ts-nav-new-badge" style="color:#ef4444;font-size:9.5px;font-weight:900;vertical-align:super;margin-left:2px;letter-spacing:0.04em;line-height:1;text-transform:uppercase;display:inline-block;">NEW</sup></a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="/login" style="color:#000000;font-weight:800;text-decoration:none;font-size:14px;padding:0 8px;">Login</a>
+      <a class="btn-cta" href="/pay?track=threat-intelligence">Enroll (₦25k)</a>
+    </div>
+  </header>
+
+  <main style="--accent:#8b5cf6;">
+    <a class="back" href="/courses">← View All 8 Career Tracks</a>
+    <section class="hero" data-no-track-badge="true">
+      <div data-no-track-badge="true">
+        <span class="eyebrow" data-no-track-badge="true">TRUSTSTACK CAREER TRACK</span>
+        <h1 data-no-track-badge="true">Threat Intelligence</h1>
+        <p data-no-track-badge="true">Turn threat data into actionable intelligence using structured analysis, adversary tracking and operational intelligence workflows.</p>
+        <div class="chips" data-no-track-badge="true">
+          <span>Intermediate Level</span>
+          <span>6 Weeks</span>
+          <span>12 Practical Labs</span>
+          <span>₦25,000 / $25</span>
+        </div>
+        <div class="actions" data-no-track-badge="true">
+          <a class="primary" href="/pay?track=threat-intelligence">Enroll in this track →</a>
+          <a class="secondary" href="/courses">Compare all tracks</a>
+        </div>
+      </div>
+      <div class="ts-course-hero-badge" data-no-track-badge="true" aria-label="Threat Intelligence badge">
+        <i>◉</i>
+        <small>TRUSTSTACK ACADEMY</small>
+        <strong>Threat Intelligence</strong>
+        <em>CAREER TRACK</em>
+      </div>
+    </section>
+
+    <section class="details">
+      <div>
+        <span class="eyebrow">CURRICULUM</span>
+        <h2>What you will learn</h2>
+        <ol>
+          <li><b>01</b><span>Intelligence lifecycle and requirements</span></li>
+          <li><b>02</b><span>OSINT collection and source validation</span></li>
+          <li><b>03</b><span>Indicators, TTPs and ATT&CK mapping</span></li>
+          <li><b>04</b><span>Threat actor and campaign analysis</span></li>
+          <li><b>05</b><span>Intelligence reporting and dissemination</span></li>
+          <li><b>06</b><span>Capstone: intelligence assessment</span></li>
+        </ol>
+      </div>
+      <aside>
+        <span class="eyebrow" style="color:#00d4ff;">TOOLS & OUTCOMES</span>
+        <h2>Built for practical work</h2>
+        <p>MISP · OpenCTI · MITRE ATT&CK · OSINT</p>
+        <hr>
+        <h3>Included with this track</h3>
+        <ul>
+          <li>Guided hands-on cloud labs</li>
+          <li>Scenario-based capstone assessment</li>
+          <li>Official verifiable credential</li>
+          <li>Career-ready portfolio evidence</li>
+          <li>Lifetime learning reference access</li>
+        </ul>
+        <a class="aside-btn" href="/pay?track=threat-intelligence">Start learning (₦25,000) →</a>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <a href="/home.html">TrustStack <span style="color:#00b8d9">Academy</span></a>
+    <span>Practical cybersecurity education for Africa. All rights reserved.</span>
+  </footer>
+
+  <script src="/site-navigation.js?v=card-blend-2026"></script>
+</body>
+</html>

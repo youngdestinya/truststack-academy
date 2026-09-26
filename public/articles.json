@@ -1,8 +1,146 @@
 {
-  "articles": [],
+  "articles": [
+    {
+      "title": "NDPA Compliance Blueprint for African Cloud Infrastructure",
+      "slug": "ndpa-compliance-blueprint-african-cloud",
+      "author": "Engr. Destiny Young",
+      "category": "Data Protection NDPA",
+      "categories": [
+        "Data Protection NDPA",
+        "Cloud Security"
+      ],
+      "tags": [
+        "NDPA",
+        "Compliance",
+        "Audit"
+      ],
+      "status": "publish",
+      "excerpt": "A step-by-step technical audit guide to ensure cloud data residency and processing complies with Nigeria Data Protection Act requirements.",
+      "content": "<h2>NDPA Compliance Overview</h2><p>Article 24 of the NDPA mandates strict data sovereignty controls for controllers and processors of high-value PII.</p>",
+      "seoTitle": "NDPA Compliance Cloud Guide | TrustStack Academy",
+      "metaDescription": "Step-by-step technical audit guide for NDPA compliance in African cloud infrastructure.",
+      "schemaType": "TechArticle",
+      "focusKeyword": "NDPA compliance cloud",
+      "updatedAt": "2026-09-25T23:41:38.952Z",
+      "id": "article-1790379698952",
+      "createdAt": "2026-09-25T23:41:38.952Z"
+    },
+    {
+      "id": "brief-1",
+      "slug": "bvn-nin-linkage-risks",
+      "title": "BVN NIN Linkage Risks: How Nigerian Fintechs Leak PII",
+      "excerpt": "A practical review of exposed fintech endpoints and the controls that reduce identity-data leakage under NDPA compliance.",
+      "category": "Threat Intel",
+      "categories": [
+        "Threat Intel",
+        "Fintech Security"
+      ],
+      "tags": [
+        "Fintech",
+        "Privacy",
+        "NDPA",
+        "PII Leak"
+      ],
+      "author": "Engr. Destiny Young",
+      "readTime": "6 min read",
+      "color": "#dff4fb",
+      "status": "publish",
+      "publishDate": "2026-09-18T10:00:00",
+      "seoTitle": "BVN NIN Linkage Risks: Fintech Data Leaks | TrustStack",
+      "metaDescription": "Practical review of exposed fintech endpoints and controls that reduce identity-data leakage under NDPA.",
+      "focusKeyword": "fintech security",
+      "canonical": "https://truststack.academy/knowledge-base?article=bvn-nin-linkage-risks",
+      "noindex": false,
+      "nofollow": false,
+      "image": "/hero-cyber-lab-v2.jpg",
+      "imageTitle": "Fintech API Security Architecture",
+      "imageAlt": "Fintech API Security Architecture and Data Protection Controls",
+      "imageCaption": "TrustStack Cybersecurity Architecture Lab",
+      "imageDescription": "Diagram of secure API gateway with mTLS and tokenized PII exchange",
+      "schemaType": "TechArticle",
+      "content": "<h2>Exposed Fintech Endpoints in Africa</h2><p>As Nigerian financial institutions accelerate digital onboarding, third-party KYC aggregators and API gateways are frequently found leaking Personally Identifiable Information (PII) during BVN and NIN validation calls.</p><h3>Key Vulnerabilities Observed</h3><ul><li>Unauthenticated verification webhooks exposing full customer BVN records.</li><li>Overly permissive CORS headers on mobile backend microservices.</li><li>Lack of payload encryption for biometric exchange endpoints.</li></ul><h3>Remediation Controls</h3><p>Security engineers must enforce mTLS for all bank-to-fintech connections, mask PII in transit, and implement automated token revocation policies.</p>",
+      "updatedAt": "2026-09-24T18:00:00.000Z",
+      "createdAt": "2026-09-18T10:00:00.000Z"
+    },
+    {
+      "id": "brief-2",
+      "slug": "wireshark-cbn-fraud-patterns",
+      "title": "Wireshark for SOC Analysts: Detecting CBN Fraud Patterns",
+      "excerpt": "Learn useful Wireshark filters, JA3 indicators and payment-webhook monitoring techniques for Nigerian banking infrastructure.",
+      "category": "Penetration Testing",
+      "categories": [
+        "Penetration Testing",
+        "SOC Operations"
+      ],
+      "tags": [
+        "Wireshark",
+        "SOC",
+        "Fraud Detection",
+        "PCAP"
+      ],
+      "author": "TrustStack Editorial Team",
+      "readTime": "8 min read",
+      "color": "#fff0e5",
+      "status": "publish",
+      "publishDate": "2026-09-20T14:30:00",
+      "seoTitle": "Wireshark SOC Guide: Detecting CBN Fraud Patterns",
+      "metaDescription": "Useful Wireshark filters, JA3 fingerprints and payment webhook monitoring for African SOC analysts.",
+      "focusKeyword": "wireshark fraud patterns",
+      "canonical": "https://truststack.academy/knowledge-base?article=wireshark-cbn-fraud-patterns",
+      "noindex": false,
+      "nofollow": false,
+      "image": "/hero-cyber-lab-v2.jpg",
+      "imageTitle": "Wireshark SOC Packet Capture Analysis",
+      "imageAlt": "Wireshark SOC Packet Capture Analysis and Threat Hunting",
+      "imageCaption": "Packet inspection inside TrustStack Cloud Pods",
+      "imageDescription": "Wireshark packet stream analyzing suspicious transaction webhooks",
+      "schemaType": "TechArticle",
+      "content": "<h2>Detecting Illicit Interbank Transactions</h2><p>In this field guide, we examine actual packet captures from financial transaction gateways to identify anomalous routing behavior, unauthorized webhook retries, and credential stuffing attacks against settlement switches.</p><h3>Critical Wireshark Display Filters</h3><pre><code>http.request.method == \"POST\" && http.request.uri contains \"/v1/settle\"</code></pre><p>Filter on anomalous JA3 fingerprints to identify headless botnet runners orchestrating concurrent transaction bursts across African payment corridors.</p>",
+      "updatedAt": "2026-09-24T18:00:00.000Z",
+      "createdAt": "2026-09-20T14:30:00.000Z"
+    },
+    {
+      "id": "brief-3",
+      "slug": "aws-misconfigurations-nigerian-startups",
+      "title": "AWS Misconfigurations Costing Nigerian Startups Millions",
+      "excerpt": "A remediation guide for exposed storage, permissive security groups and missing MFA across African cloud infrastructure.",
+      "category": "Cloud Security",
+      "categories": [
+        "Cloud Security",
+        "DevSecOps"
+      ],
+      "tags": [
+        "AWS",
+        "Cloud",
+        "Misconfiguration",
+        "S3 Bucket"
+      ],
+      "author": "Engr. Destiny Young",
+      "readTime": "5 min read",
+      "color": "#f3e4ff",
+      "status": "publish",
+      "publishDate": "2026-09-22T09:15:00",
+      "seoTitle": "AWS Misconfigurations in African Tech: Complete Fix Guide",
+      "metaDescription": "A practical remediation guide for exposed S3 buckets, permissive security groups and missing IAM MFA.",
+      "focusKeyword": "AWS cloud security",
+      "canonical": "https://truststack.academy/knowledge-base?article=aws-misconfigurations-nigerian-startups",
+      "noindex": false,
+      "nofollow": false,
+      "image": "/hero-cyber-lab-v2.jpg",
+      "imageTitle": "AWS Cloud Security Hardening Architecture",
+      "imageAlt": "AWS Cloud Security Hardening Architecture for African Startups",
+      "imageCaption": "Cloud Security Pod Architecture in AWS af-south-1",
+      "imageDescription": "AWS architecture diagram showing IAM guardrails and S3 block public access",
+      "schemaType": "TechArticle",
+      "content": "<h2>The Hidden Cost of Cloud Insecurity</h2><p>Over 70% of cloud security incidents among African tech startups stem from trivial misconfigurations rather than sophisticated zero-day exploits. Here is how to audit your cloud posture in under 30 minutes.</p><h3>Top Three AWS Exposure Vectors</h3><ol><li><strong>Public S3 Buckets containing database snapshots:</strong> Ensure AWS S3 Block Public Access is enforced at the organization root level.</li><li><strong>Security Groups with 0.0.0.0/0 on port 22 or 3389:</strong> Replace direct SSH with AWS Systems Manager (SSM) Session Manager.</li><li><strong>Root user accounts without Hardware MFA:</strong> Enforce strict FIDO2/WebAuthn keys on all AWS root identities.</li></ol>",
+      "updatedAt": "2026-09-24T18:00:00.000Z",
+      "createdAt": "2026-09-22T09:15:00.000Z"
+    }
+  ],
   "meta": {
     "version": "1.0.0",
-    "total": 0,
-    "storage": "TrustStack native GitHub-backed article registry"
+    "total": 4,
+    "storage": "TrustStack local & cloud registry",
+    "updatedAt": "2026-09-25T23:41:38.952Z"
   }
 }

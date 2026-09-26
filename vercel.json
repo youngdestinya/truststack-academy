@@ -4,6 +4,18 @@
   "outputDirectory": ".next",
   "installCommand": "npm install",
   "devCommand": "next dev",
+  "redirects": [
+    {
+      "source": "/courses-tracks.html",
+      "destination": "/courses",
+      "permanent": true
+    },
+    {
+      "source": "/courses-tracks",
+      "destination": "/courses",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/site-navigation.js",

@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Fcdpo\u002Fday\u002F[day]","\u002Fcourses\u002F[slug]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

@@ -29,9 +29,16 @@ export default function Scholarship(){
     event.preventDefault();
     setState({status:'loading',message:''});
     try{
-      const response = await fetch('https://gifabmhvfxqleilpipsz.supabase.co/functions/v1/scholarship-waitlist',{
-        method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(form)
-      });
+      let response;
+      try {
+        response = await fetch('/api/scholarship/apply', {
+          method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(form)
+        });
+      } catch (err) {
+        response = await fetch('https://gifabmhvfxqleilpipsz.supabase.co/functions/v1/scholarship-waitlist', {
+          method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(form)
+        });
+      }
       const result = await response.json().catch(()=>({}));
       if(!response.ok) throw new Error(result.message || 'We could not submit your application. Please try again.');
       setForm(emptyForm);

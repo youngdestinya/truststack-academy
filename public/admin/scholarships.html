@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scholarship Applicants Registry | TrustStack Academy Admin</title>
+  <meta name="description" content="Administrative control center to review, shortlist, and approve candidates for the TrustStack Academy Early Bird Scholarship.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="/Truststack_Logo_PNG.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;0,800;0,900;1,900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Alegreya Sans', sans-serif !important; }
+    :root {
+      --navy: #07182e;
+      --navy-light: #0d2746;
+      --cyan: #00b8d9;
+      --cyan-soft: #e0f7fc;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #ef4444;
+      --bg: #f4f7fb;
+      --border: #dce5ed;
+      --text: #081a35;
+      --text-muted: #627087;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      height: 72px;
+      background: var(--navy);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 2px solid rgba(0, 184, 217, 0.4);
+      box-shadow: 0 8px 24px rgba(7, 24, 46, 0.25);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .brand-wrap img { width: 42px; height: 42px; object-fit: contain; }
+    .brand-title { font-size: 20px; font-weight: 900; letter-spacing: -0.01em; }
+    .brand-title span { color: var(--cyan); }
+    .brand-sub { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; color: #79e2fb; text-transform: uppercase; }
+
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 32px;
+    }
+    .nav-tab {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-tab:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .nav-tab.active {
+      color: var(--navy);
+      background: var(--cyan);
+      box-shadow: 0 0 16px rgba(0, 184, 217, 0.4);
+    }
+    .nav-tab .tab-badge {
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+
+    .top-nav-actions { display: flex; align-items: center; gap: 12px; }
+    .admin-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 800; color: #d8edf7;
+    }
+    .admin-pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3); }
+    .nav-btn {
+      padding: 7px 15px; border-radius: 999px; font-size: 13px; font-weight: 800;
+      text-decoration: none; transition: all 0.2s ease; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+    }
+    .nav-btn-ghost { color: #c4d6e6; background: transparent; border: 1px solid rgba(255, 255, 255, 0.18); }
+    .nav-btn-ghost:hover { background: rgba(255, 255, 255, 0.12); color: #ffffff; }
+
+    /* DASHBOARD CONTENT */
+    .dashboard-container {
+      max-width: 1560px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+      flex: 1;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .page-title {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+    .page-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .page-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn {
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 0;
+    }
+    .btn-primary {
+      background: var(--navy);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #0d2746;
+      transform: translateY(-1px);
+    }
+    .btn-cyan {
+      background: var(--cyan);
+      color: var(--navy);
+      font-weight: 900;
+    }
+    .btn-cyan:hover {
+      background: #38c8e2;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    /* STATS METRIC TILES */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(7, 24, 46, 0.04);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--card-accent, var(--cyan));
+    }
+    .stat-card.c-total { --card-accent: #00b8d9; }
+    .stat-card.c-pending { --card-accent: #f59e0b; }
+    .stat-card.c-shortlisted { --card-accent: #3b82f6; }
+    .stat-card.c-approved { --card-accent: #10b981; }
+    .stat-card.c-toptrack { --card-accent: #8b5cf6; }
+
+    .stat-lbl {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .stat-val {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--navy);
+      margin: 6px 0 2px;
+      line-height: 1;
+    }
+    .stat-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* REGISTRY PANEL */
+    .registry-panel {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(7, 24, 46, 0.05);
+    }
+
+    /* TOOLBAR & SEARCH */
+    .toolbar-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      height: 44px;
+      padding: 0 16px 0 42px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-box input:focus {
+      border-color: var(--cyan);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(0, 184, 217, 0.15);
+    }
+    .search-box svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      stroke: #94a3b8;
+    }
+
+    .filter-select {
+      height: 44px;
+      padding: 0 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+    .filter-select:focus {
+      border-color: var(--cyan);
+    }
+
+    /* TABLE */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th {
+      background: #f8fafc;
+      padding: 14px 18px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      vertical-align: middle;
+    }
+    tr:last-child td {
+      border-bottom: 0;
+    }
+    tr:hover td {
+      background: #fbfdfe;
+    }
+
+    .app-id {
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0284c7;
+      background: #e0f2fe;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .candidate-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), #0b395d);
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 13px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .candidate-email {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .candidate-location {
+      font-size: 11px;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .track-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .track-soc { background: #e0f2fe; color: #0369a1; }
+    .track-pentest { background: #fef2f2; color: #b91c1c; }
+    .track-cloud { background: #ecfdf5; color: #047857; }
+    .track-grc { background: #fefce8; color: #a16207; }
+    .track-forensics { background: #faf5ff; color: #7e22ce; }
+    .track-intel { background: #fff1f2; color: #be123c; }
+    .track-malware { background: #fff7ed; color: #c2410c; }
+    .track-eng { background: #f0fdf4; color: #15803d; }
+
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: capitalize;
+    }
+    .status-pending { background: #fef3c7; color: #92400e; }
+    .status-shortlisted { background: #dbeafe; color: #1e40af; }
+    .status-approved { background: #dcfce7; color: #166534; }
+    .status-rejected { background: #fee2e2; color: #991b1b; }
+
+    .action-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .act-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .act-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+    .act-btn.act-view:hover { background: #e0f2fe; border-color: #38bdf8; color: #0284c7; }
+    .act-btn.act-shortlist:hover { background: #dbeafe; border-color: #60a5fa; color: #1d4ed8; }
+    .act-btn.act-approve:hover { background: #dcfce7; border-color: #4ade80; color: #15803d; }
+    .act-btn.act-delete:hover { background: #fee2e2; border-color: #f87171; color: #b91c1c; }
+
+    .wa-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #059669;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .wa-link:hover {
+      text-decoration: underline;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 24, 46, 0.7);
+      backdrop-filter: blur(6px);
+      display: none;
+      place-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: grid;
+    }
+    .modal-card {
+      background: #ffffff;
+      border-radius: 24px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+      padding: 32px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--navy);
+      font-size: 20px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+    .modal-close:hover {
+      background: #f1f5f9;
+    }
+
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .dossier-item {
+      background: #f8fafc;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .dossier-lbl {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .dossier-val {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .motivation-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 14px;
+      padding: 18px;
+      margin: 16px 0;
+    }
+    .motivation-box p {
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: #166534;
+      font-style: italic;
+    }
+
+    .notes-box textarea {
+      width: 100%;
+      height: 80px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      outline: none;
+      resize: vertical;
+    }
+    .notes-box textarea:focus {
+      border-color: var(--cyan);
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--navy);
+      color: #ffffff;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      border-left: 4px solid var(--cyan);
+      display: none;
+      z-index: 3000;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div style="display:flex; align-items:center;">
+      <a href="/admin/scholarships" class="brand-wrap">
+        <img src="/Truststack_Logo_PNG.png" alt="TrustStack Logo">
+        <div>
+          <div class="brand-title">TrustStack <span>Academy</span></div>
+          <div class="brand-sub">Scholarship Admissions Portal</div>
+        </div>
+      </a>
+
+      <!-- NAVIGATION TABS -->
+      <nav class="nav-tabs">
+        <a href="/admin/scholarships" class="nav-tab active">
+          <span>🎓 Scholarship Waitlist</span>
+          <span class="tab-badge" id="nav-count-badge">12</span>
+        </a>
+        <a href="/admin/articles" class="nav-tab">
+          <span>📰 Article Publishing CMS</span>
+        </a>
+        <a href="/lms-control" class="nav-tab">
+          <span>🛡️ LMS &amp; Lab Control</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="top-nav-actions">
+      <div class="admin-pill">
+        <i></i>
+        <span>Engr. Destiny Young · Super Admin</span>
+      </div>
+      <a href="/home.html" class="nav-btn nav-btn-ghost" target="_blank">View Live Website ↗</a>
+      <button class="nav-btn nav-btn-ghost" onclick="handleLogout()">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- DASHBOARD MAIN -->
+  <main class="dashboard-container">
+    
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Early Bird Scholarship Applicants</h1>
+        <p class="page-subtitle">Official registry for 2026 fully-funded cohort applications across 8 practical cybersecurity tracks.</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-outline" onclick="fetchApplicants(true)">
+          <span>🔄 Refresh</span>
+        </button>
+        <button class="btn btn-outline" onclick="exportCSV()">
+          <span>📥 Export to CSV</span>
+        </button>
+        <button class="btn btn-cyan" onclick="openManualModal()">
+          <span>➕ Add Applicant</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- METRIC CARDS -->
+    <section class="stats-grid">
+      <div class="stat-card c-total">
+        <span class="stat-lbl">TOTAL APPLICANTS</span>
+        <span class="stat-val" id="st-total">--</span>
+        <span class="stat-sub">Registered waitlist candidates</span>
+      </div>
+      <div class="stat-card c-pending">
+        <span class="stat-lbl">PENDING REVIEW</span>
+        <span class="stat-val" id="st-pending">--</span>
+        <span class="stat-sub">Awaiting admissions triage</span>
+      </div>
+      <div class="stat-card c-shortlisted">
+        <span class="stat-lbl">SHORTLISTED</span>
+        <span class="stat-val" id="st-shortlisted">--</span>
+        <span class="stat-sub">Selected for Cohort 1 interview</span>
+      </div>
+      <div class="stat-card c-approved">
+        <span class="stat-lbl">SCHOLARSHIP AWARDED</span>
+        <span class="stat-val" id="st-approved">--</span>
+        <span class="stat-sub">100% Tuition funded slots</span>
+      </div>
+      <div class="stat-card c-toptrack">
+        <span class="stat-lbl">TOP CAREER TRACK</span>
+        <span class="stat-val" style="font-size:22px; margin-top:12px;" id="st-toptrack">SOC Analyst</span>
+        <span class="stat-sub">Highest applicant demand</span>
+      </div>
+    </section>
+
+    <!-- REGISTRY TABLE PANEL -->
+    <section class="registry-panel">
+      
+      <!-- TOOLBAR -->
+      <div class="toolbar-row">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="searchInput" placeholder="Search by candidate name, email, phone, or application ID..." oninput="applyFilters()">
+        </div>
+
+        <select class="filter-select" id="trackFilter" onchange="applyFilters()">
+          <option value="">All Career Tracks (8)</option>
+          <option value="SOC Analyst">SOC Analyst</option>
+          <option value="Penetration Testing">Penetration Testing</option>
+          <option value="Cloud Security">Cloud Security</option>
+          <option value="Digital Forensics">Digital Forensics</option>
+          <option value="Threat Intelligence">Threat Intelligence</option>
+          <option value="Governance & GRC">Governance &amp; GRC</option>
+          <option value="Malware Analysis">Malware Analysis</option>
+          <option value="Security Engineering">Security Engineering</option>
+        </select>
+
+        <select class="filter-select" id="statusFilter" onchange="applyFilters()">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending Review</option>
+          <option value="Shortlisted">Shortlisted</option>
+          <option value="Approved">Scholarship Awarded</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+
+        <select class="filter-select" id="sortFilter" onchange="applyFilters()">
+          <option value="newest">Sort: Newest First</option>
+          <option value="oldest">Sort: Oldest First</option>
+          <option value="name">Sort: Candidate Name</option>
+        </select>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Applicant</th>
+              <th>WhatsApp / Contact</th>
+              <th>Career Track</th>
+              <th>Date Applied</th>
+              <th>Status</th>
+              <th>Admissions Actions</th>
+            </tr>
+          </thead>
+          <tbody id="applicantTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="emptyNotice" style="display:none; text-align:center; padding:48px 20px; color:var(--text-muted);">
+        <p style="font-size:18px; font-weight:800;">No matching applicants found</p>
+        <p style="font-size:14px; margin-top:4px;">Try changing your search terms or filters.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- APPLICANT DOSSIER MODAL -->
+  <div class="modal-overlay" id="dossierModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeDossierModal()">&times;</button>
+      
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
+        <div class="avatar" id="m-avatar" style="width:52px; height:52px; font-size:20px;">AO</div>
+        <div>
+          <h2 id="m-name" style="font-size:24px; font-weight:900; color:var(--navy);">Candidate Name</h2>
+          <div style="display:flex; gap:8px; align-items:center; margin-top:2px;">
+            <span class="app-id" id="m-id">SCH-2026-001</span>
+            <span class="status-badge status-pending" id="m-status-badge">Pending</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dossier-grid">
+        <div class="dossier-item">
+          <div class="dossier-lbl">EMAIL ADDRESS</div>
+          <div class="dossier-val" id="m-email">candidate@example.com</div>
+        </div>
+        <div class="dossier-item">
+          <div class="dossier-lbl">WHATSAPP / MOBILE</div>
+          <div class="dossier-val" id="m-mobile">+234 800 000 0000</div>
+        </div>
+        <div class="dossier-item">
+          <div class="dossier-lbl">SELECTED CAREER TRACK</div>
+          <div class="dossier-val" id="m-track">SOC Analyst</div>
+        </div>
+        <div class="dossier-item">
+          <div class="dossier-lbl">LOCATION / REGION</div>
+          <div class="dossier-val" id="m-location">Lagos, Nigeria</div>
+        </div>
+        <div class="dossier-item" style="grid-column:1/-1;">
+          <div class="dossier-lbl">SUBMISSION TIMESTAMP</div>
+          <div class="dossier-val" id="m-date">24 September 2026 at 10:15 AM</div>
+        </div>
+      </div>
+
+      <div class="dossier-lbl">PERSONAL MOTIVATION STATEMENT</div>
+      <div class="motivation-box">
+        <p id="m-comment">No motivation statement provided.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px;">
+        <div>
+          <div class="dossier-lbl">DECISION STATUS</div>
+          <select id="m-status-select" class="filter-select" style="width:100%; margin-top:4px;">
+            <option value="Pending">Pending Review</option>
+            <option value="Shortlisted">Shortlisted for Cohort 1</option>
+            <option value="Approved">Awarded Full Scholarship</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div style="display:flex; align-items:flex-end; gap:8px;">
+          <a id="m-wa-btn" href="#" target="_blank" class="btn btn-outline" style="flex:1; justify-content:center; color:#059669; border-color:#059669;">
+            <span>💬 WhatsApp</span>
+          </a>
+          <a id="m-mail-btn" href="#" class="btn btn-outline" style="flex:1; justify-content:center;">
+            <span>✉️ Email</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="notes-box" style="margin-top:16px;">
+        <div class="dossier-lbl">INTERNAL ADMISSIONS COMMITTEE NOTES</div>
+        <textarea id="m-notes" placeholder="Write internal reviewer feedback or interview evaluation notes..."></textarea>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; padding-top:16px; border-top:1px solid var(--border);">
+        <button class="btn btn-outline" style="color:#b91c1c; border-color:#fca5a5;" onclick="deleteCurrentApplicant()">
+          <span>🗑️ Remove Applicant</span>
+        </button>
+        <button class="btn btn-primary" onclick="saveDossierChanges()">
+          <span>Save Decision &amp; Notes ✓</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADD MANUAL APPLICANT MODAL -->
+  <div class="modal-overlay" id="manualModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeManualModal()">&times;</button>
+      <h2 style="font-size:24px; font-weight:900; color:var(--navy); margin-bottom:6px;">Add Scholarship Applicant</h2>
+      <p style="font-size:14px; color:var(--text-muted); margin-bottom:20px;">Record an application received via WhatsApp, email, or institutional referral.</p>
+
+      <form onsubmit="handleManualSubmit(event)">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div>
+            <label style="font-size:12px; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">FIRST NAME *</label>
+            <input type="text" id="man-first" required class="filter-select" style="width:100%;" placeholder="e.g. Samuel">
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">LAST NAME *</label>
+            <input type="text" id="man-last" required class="filter-select" style="width:100%;" placeholder="e.g. Adeyemi">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div>
+            <label style="font-size:12px; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">EMAIL ADDRESS *</label>
+            <input type="email" id="man-email" required class="filter-select" style="width:100%;" placeholder="candidate@example.com">
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">WHATSAPP / MOBILE *</label>
+            <input type="tel" id="man-mobile" required class="filter-select" style="width:100%;" placeholder="+234...">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div>
+            <label style="font-size:12px; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">PREFERRED CAREER TRACK *</label>
+            <select id="man-track" required class="filter-select" style="width:100%;">
+              <option value="SOC Analyst">SOC Analyst</option>
+              <option value="Penetration Testing">Penetration Testing</option>
+              <option value="Cloud Security">Cloud Security</option>
+              <option value="Digital Forensics">Digital Forensics</option>
+              <option value="Threat Intelligence">Threat Intelligence</option>
+              <option value="Governance & GRC">Governance &amp; GRC</option>
+              <option value="Malware Analysis">Malware Analysis</option>
+              <option value="Security Engineering">Security Engineering</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">LOCATION / CITY</label>
+            <input type="text" id="man-location" class="filter-select" style="width:100%;" placeholder="e.g. Lagos, Nigeria">
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="font-size:12px; font-weight:800; color:var(--text-muted); display:block; margin-bottom:4px;">WHY ARE THEY INTERESTED? (STATEMENT)</label>
+          <textarea id="man-comment" class="notes-box textarea" style="width:100%; height:75px; padding:10px; border-radius:10px; border:1px solid var(--border);" placeholder="Motivation or background statement..."></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+          <button type="button" class="btn btn-outline" onclick="closeManualModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="man-submit-btn">Save to Registry →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <!-- CONTROLLER SCRIPT -->
+  <script>
+    let allApplicants = [];
+    let currentDossierId = null;
+
+    // Check authentication
+    function checkAuth() {
+      const auth = sessionStorage.getItem('ts_admin_authenticated') || localStorage.getItem('ts_admin_session');
+      if (!auth) {
+        window.location.href = '/admin/login?next=/admin/scholarships';
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('ts_admin_authenticated');
+      localStorage.removeItem('ts_admin_session');
+      window.location.href = '/admin/login';
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3200);
+    }
+
+    function getTrackClass(track) {
+      const t = (track || '').toLowerCase();
+      if (t.includes('soc')) return 'track-soc';
+      if (t.includes('penetration') || t.includes('ethical')) return 'track-pentest';
+      if (t.includes('cloud')) return 'track-cloud';
+      if (t.includes('grc') || t.includes('governance')) return 'track-grc';
+      if (t.includes('forensic')) return 'track-forensics';
+      if (t.includes('threat') || t.includes('intel')) return 'track-intel';
+      if (t.includes('malware')) return 'track-malware';
+      return 'track-eng';
+    }
+
+    function getStatusClass(status) {
+      const s = (status || '').toLowerCase();
+      if (s === 'approved') return 'status-approved';
+      if (s === 'shortlisted') return 'status-shortlisted';
+      if (s === 'rejected') return 'status-rejected';
+      return 'status-pending';
+    }
+
+    function formatDate(d) {
+      if (!d) return '--';
+      try {
+        const dt = new Date(d);
+        return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      } catch (e) {
+        return d;
+      }
+    }
+
+    async function fetchApplicants(showNotice = false) {
+      try {
+        const res = await fetch('/api/admin/scholarship-applications');
+        const data = await res.json();
+        if (data.ok && Array.isArray(data.applications)) {
+          allApplicants = data.applications;
+          updateMetrics(data.stats);
+          applyFilters();
+          if (showNotice) showToast('Applicants registry refreshed ✓');
+        }
+      } catch (err) {
+        console.error('Error fetching applicants:', err);
+        showToast('Error connecting to scholarship registry');
+      }
+    }
+
+    function updateMetrics(stats) {
+      if (!stats) return;
+      document.getElementById('st-total').textContent = stats.total || allApplicants.length;
+      document.getElementById('st-pending').textContent = stats.pending || 0;
+      document.getElementById('st-shortlisted').textContent = stats.shortlisted || 0;
+      document.getElementById('st-approved').textContent = stats.approved || 0;
+      document.getElementById('nav-count-badge').textContent = stats.total || allApplicants.length;
+
+      // Find top track
+      const trackCounts = {};
+      allApplicants.forEach(a => {
+        if (a.track) trackCounts[a.track] = (trackCounts[a.track] || 0) + 1;
+      });
+      let topTrack = 'SOC Analyst';
+      let maxCount = 0;
+      for (const [tr, cnt] of Object.entries(trackCounts)) {
+        if (cnt > maxCount) {
+          maxCount = cnt;
+          topTrack = tr;
+        }
+      }
+      document.getElementById('st-toptrack').textContent = topTrack;
+    }
+
+    function applyFilters() {
+      const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+      const tr = document.getElementById('trackFilter').value;
+      const st = document.getElementById('statusFilter').value;
+      const sort = document.getElementById('sortFilter').value;
+
+      let filtered = allApplicants.filter(a => {
+        const matchQ = !q || 
+          (a.fullName || '').toLowerCase().includes(q) ||
+          (a.email || '').toLowerCase().includes(q) ||
+          (a.mobile || '').toLowerCase().includes(q) ||
+          (a.id || '').toLowerCase().includes(q) ||
+          (a.location || '').toLowerCase().includes(q);
+
+        const matchTr = !tr || (a.track === tr);
+        const matchSt = !st || ((a.status || '').toLowerCase() === st.toLowerCase());
+
+        return matchQ && matchTr && matchSt;
+      });
+
+      if (sort === 'name') {
+        filtered.sort((a, b) => (a.fullName || '').localeCompare(b.fullName || ''));
+      } else if (sort === 'oldest') {
+        filtered.sort((a, b) => new Date(a.appliedAt || 0) - new Date(b.appliedAt || 0));
+      } else {
+        filtered.sort((a, b) => new Date(b.appliedAt || 0) - new Date(a.appliedAt || 0));
+      }
+
+      renderTable(filtered);
+    }
+
+    function renderTable(applicants) {
+      const tbody = document.getElementById('applicantTableBody');
+      const empty = document.getElementById('emptyNotice');
+
+      if (!applicants.length) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      tbody.innerHTML = applicants.map(a => {
+        const initials = ((a.firstName ? a.firstName[0] : '') + (a.lastName ? a.lastName[0] : '')).toUpperCase() || 'ST';
+        const cleanMobile = (a.mobile || '').replace(/[^0-9]/g, '');
+        const waLink = cleanMobile ? `https://wa.me/${cleanMobile}?text=Hello%20${encodeURIComponent(a.firstName || '')},%20this%20is%20TrustStack%20Academy%20Admissions%20regarding%20your%20Scholarship%20application.` : '#';
+
+        return `
+          <tr>
+            <td>
+              <span class="app-id">${a.id}</span>
+            </td>
+            <td>
+              <div class="candidate-name">
+                <div class="avatar">${initials}</div>
+                <div>
+                  <div>${a.fullName || 'Anonymous'}</div>
+                  <div class="candidate-email">${a.email || '--'}</div>
+                  <div class="candidate-location">📍 ${a.location || 'Africa'}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div style="font-weight:700;">${a.mobile || '--'}</div>
+              ${cleanMobile ? `<a href="${waLink}" target="_blank" class="wa-link">💬 Chat on WhatsApp</a>` : ''}
+            </td>
+            <td>
+              <span class="track-badge ${getTrackClass(a.track)}">
+                <span>🛡️</span>
+                <span>${a.track || 'SOC Analyst'}</span>
+              </span>
+            </td>
+            <td style="color:#64748b; font-weight:600; white-space:nowrap;">
+              ${formatDate(a.appliedAt)}
+            </td>
+            <td>
+              <span class="status-badge ${getStatusClass(a.status)}">
+                ● ${a.status || 'Pending'}
+              </span>
+            </td>
+            <td>
+              <div class="action-group">
+                <button class="act-btn act-view" title="View Full Dossier" onclick="openDossier('${a.id}')">👁️</button>
+                <button class="act-btn act-shortlist" title="Quick Shortlist" onclick="quickUpdateStatus('${a.id}', 'Shortlisted')">✓</button>
+                <button class="act-btn act-approve" title="Award Scholarship Slot" onclick="quickUpdateStatus('${a.id}', 'Approved')">★</button>
+                <button class="act-btn act-delete" title="Delete Applicant" onclick="quickDelete('${a.id}')">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openDossier(id) {
+      const a = allApplicants.find(x => x.id === id);
+      if (!a) return;
+      currentDossierId = id;
+
+      const initials = ((a.firstName ? a.firstName[0] : '') + (a.lastName ? a.lastName[0] : '')).toUpperCase() || 'ST';
+      document.getElementById('m-avatar').textContent = initials;
+      document.getElementById('m-name').textContent = a.fullName || 'Anonymous Candidate';
+      document.getElementById('m-id').textContent = a.id;
+      
+      const sb = document.getElementById('m-status-badge');
+      sb.className = 'status-badge ' + getStatusClass(a.status);
+      sb.textContent = a.status || 'Pending';
+
+      document.getElementById('m-email').textContent = a.email || '--';
+      document.getElementById('m-mobile').textContent = a.mobile || '--';
+      document.getElementById('m-track').textContent = a.track || '--';
+      document.getElementById('m-location').textContent = a.location || 'Africa';
+      document.getElementById('m-date').textContent = new Date(a.appliedAt || Date.now()).toLocaleString();
+      document.getElementById('m-comment').textContent = a.comment || 'No personal motivation statement provided.';
+      document.getElementById('m-status-select').value = a.status || 'Pending';
+      document.getElementById('m-notes').value = a.notes || '';
+
+      const cleanMobile = (a.mobile || '').replace(/[^0-9]/g, '');
+      const waBtn = document.getElementById('m-wa-btn');
+      if (cleanMobile) {
+        waBtn.href = `https://wa.me/${cleanMobile}?text=Hello%20${encodeURIComponent(a.firstName || '')},%20this%20is%20TrustStack%20Academy%20Admissions%20regarding%20your%20Scholarship%20application.`;
+        waBtn.style.display = 'inline-flex';
+      } else {
+        waBtn.style.display = 'none';
+      }
+
+      const mailBtn = document.getElementById('m-mail-btn');
+      mailBtn.href = `mailto:${encodeURIComponent(a.email || '')}?subject=TrustStack%20Academy%20Scholarship%20Application%20Update`;
+
+      document.getElementById('dossierModal').classList.add('active');
+    }
+
+    function closeDossierModal() {
+      document.getElementById('dossierModal').classList.remove('active');
+      currentDossierId = null;
+    }
+
+    async function saveDossierChanges() {
+      if (!currentDossierId) return;
+      const newStatus = document.getElementById('m-status-select').value;
+      const newNotes = document.getElementById('m-notes').value;
+
+      try {
+        const res = await fetch('/api/admin/scholarship-applications/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: currentDossierId, status: newStatus, notes: newNotes })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          const idx = allApplicants.findIndex(x => x.id === currentDossierId);
+          if (idx !== -1) {
+            allApplicants[idx].status = newStatus;
+            allApplicants[idx].notes = newNotes;
+          }
+          closeDossierModal();
+          applyFilters();
+          showToast(`Candidate marked as ${newStatus} ✓`);
+        } else {
+          showToast('Failed to update: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        showToast('Error updating applicant');
+      }
+    }
+
+    async function quickUpdateStatus(id, newStatus) {
+      try {
+        const res = await fetch('/api/admin/scholarship-applications/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, status: newStatus })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          const idx = allApplicants.findIndex(x => x.id === id);
+          if (idx !== -1) {
+            allApplicants[idx].status = newStatus;
+          }
+          applyFilters();
+          showToast(`Applicant ${id} marked as ${newStatus} ✓`);
+        }
+      } catch (err) {
+        showToast('Error updating status');
+      }
+    }
+
+    async function quickDelete(id) {
+      if (!confirm(`Are you sure you want to delete application ${id}?`)) return;
+      try {
+        const res = await fetch('/api/admin/scholarship-applications/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          allApplicants = allApplicants.filter(x => x.id !== id);
+          applyFilters();
+          showToast(`Applicant ${id} removed from registry`);
+        }
+      } catch (err) {
+        showToast('Error removing applicant');
+      }
+    }
+
+    function deleteCurrentApplicant() {
+      if (!currentDossierId) return;
+      const id = currentDossierId;
+      closeDossierModal();
+      quickDelete(id);
+    }
+
+    function openManualModal() {
+      document.getElementById('manualModal').classList.add('active');
+    }
+    function closeManualModal() {
+      document.getElementById('manualModal').classList.remove('active');
+    }
+
+    async function handleManualSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('man-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+
+      const payload = {
+        firstName: document.getElementById('man-first').value.trim(),
+        lastName: document.getElementById('man-last').value.trim(),
+        email: document.getElementById('man-email').value.trim(),
+        mobile: document.getElementById('man-mobile').value.trim(),
+        track: document.getElementById('man-track').value,
+        location: document.getElementById('man-location').value.trim() || 'Nigeria / Remote',
+        comment: document.getElementById('man-comment').value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/scholarship/apply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.ok) {
+          closeManualModal();
+          showToast('Candidate successfully recorded to scholarship registry ✓');
+          fetchApplicants();
+        } else {
+          showToast(data.message || 'Error saving applicant');
+        }
+      } catch (err) {
+        showToast('Network error saving applicant');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save to Registry →';
+      }
+    }
+
+    function exportCSV() {
+      window.location.href = '/api/admin/scholarship-applications/export';
+    }
+
+    // Init
+    checkAuth();
+    fetchApplicants();
+  </script>
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Central Login Directory | TrustStack Academy</title>
+  <meta name="description" content="Centralized authentication directory for TrustStack Academy: access the Learner LMS, Global Administrator Editorial CMS, Faculty LMS Control, Virtual Cyber Labs, and Public Credential Verification.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://truststack.academy/central-login">
+  <link rel="icon" type="image/png" href="/Truststack_Logo_PNG.png">
+  
+  <!-- Alegreya Sans Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,800;1,900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Alegreya Sans', system-ui, -apple-system, sans-serif !important;
+    }
+
+    :root {
+      --navy-deep: #030a14;
+      --navy-dark: #07182e;
+      --navy-card: #0c2340;
+      --navy-card-hover: #102d52;
+      --border-subtle: rgba(0, 184, 217, 0.22);
+      --border-active: rgba(0, 184, 217, 0.65);
+      --cyan: #00b8d9;
+      --cyan-bright: #33ddff;
+      --cyan-soft: rgba(0, 184, 217, 0.12);
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --purple: #8b5cf6;
+      --rose: #f43f5e;
+      --teal: #14b8a6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #0c2747 0%, #061529 45%, #030a14 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* TOP TELEMETRY STRIP */
+    .top-strip {
+      background: rgba(3, 10, 20, 0.85);
+      border-bottom: 1px solid rgba(0, 184, 217, 0.18);
+      padding: 6px 24px;
+      font-size: 12px;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .strip-left, .strip-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #34d399;
+      font-weight: 800;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald);
+      animation: tsPulse 2s infinite;
+    }
+    @keyframes tsPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .strip-link {
+      color: #7dd3fc;
+      font-weight: 700;
+      transition: color 0.15s;
+    }
+    .strip-link:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    /* TOP NAVBAR */
+    .central-nav {
+      height: 74px;
+      background: rgba(7, 24, 46, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-wrap img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 184, 217, 0.4));
+    }
+    .brand-title {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .brand-title span {
+      color: var(--cyan);
+    }
+    .brand-badge {
+      background: rgba(0, 184, 217, 0.12);
+      border: 1px solid var(--border-subtle);
+      color: #67e8f9;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-left: 6px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-link {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #cbd5e1;
+      transition: color 0.15s ease;
+    }
+    .nav-link:hover {
+      color: #ffffff;
+    }
+    .nav-btn-home {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ffffff;
+      transition: all 0.2s;
+    }
+    .nav-btn-home:hover {
+      background: rgba(0, 184, 217, 0.18);
+      border-color: var(--cyan);
+      transform: translateY(-1px);
+    }
+
+    /* MAIN CONTAINER */
+    .main-wrapper {
+      max-width: 1320px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HERO INTRO */
+    .hero-section {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 48px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      background: rgba(0, 184, 217, 0.1);
+      border: 1px solid rgba(0, 184, 217, 0.28);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-size: clamp(36px, 5vw, 54px);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 720px;
+      margin: 0 auto 32px;
+    }
+
+    /* SEARCH FILTER BAR */
+    .search-filter-wrap {
+      max-width: 580px;
+      margin: 0 auto 48px;
+      position: relative;
+    }
+    .search-box {
+      width: 100%;
+      height: 52px;
+      background: rgba(12, 35, 64, 0.7);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 0 46px 0 48px;
+      font-size: 15px;
+      color: #ffffff;
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+    .search-box:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(0, 184, 217, 0.16);
+      background: rgba(16, 45, 82, 0.85);
+    }
+    .search-box::placeholder {
+      color: #64748b;
+    }
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--cyan);
+      font-size: 18px;
+      pointer-events: none;
+    }
+    .search-clear-btn {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 16px;
+      display: none;
+    }
+
+    /* LOGIN PORTALS GRID */
+    .portals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    /* LOGIN CARD */
+    .portal-card {
+      background: var(--navy-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 22px;
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 16px 40px rgba(3, 10, 20, 0.4);
+    }
+    .portal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--card-accent, var(--cyan));
+      opacity: 0.8;
+      transition: opacity 0.25s;
+    }
+    .portal-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-active);
+      background: var(--navy-card-hover);
+      box-shadow: 0 24px 60px rgba(0, 184, 217, 0.15);
+    }
+    .portal-card:hover::before {
+      opacity: 1;
+      height: 5px;
+      box-shadow: 0 0 16px var(--card-accent, var(--cyan));
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .portal-icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+    .portal-pill {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--pill-color, #94a3b8);
+    }
+
+    .portal-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+    .portal-desc {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .portal-features-list {
+      list-style: none;
+      margin-bottom: 24px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .portal-features-list li {
+      font-size: 13px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+    }
+    .portal-features-list li span.dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--card-accent, var(--cyan));
+      display: inline-block;
+    }
+
+    .portal-action-btn {
+      width: 100%;
+      height: 48px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--btn-bg, var(--cyan));
+      color: var(--btn-color, #041426);
+      border: 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+    .portal-action-btn:hover {
+      background: var(--btn-hover-bg, var(--cyan-bright));
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 184, 217, 0.3);
+    }
+
+    /* ACCENT PALETTES PER PORTAL */
+    .portal-student {
+      --card-accent: var(--cyan);
+      --pill-color: #38bdf8;
+      --btn-bg: var(--cyan);
+      --btn-hover-bg: #38d4f0;
+      --btn-color: #041426;
+    }
+    .portal-admin {
+      --card-accent: var(--emerald);
+      --pill-color: #34d399;
+      --btn-bg: #10b981;
+      --btn-hover-bg: #34d399;
+      --btn-color: #041b12;
+    }
+    .portal-control {
+      --card-accent: var(--amber);
+      --pill-color: #fbbf24;
+      --btn-bg: #f59e0b;
+      --btn-hover-bg: #fbbf24;
+      --btn-color: #1f1203;
+    }
+    .portal-labs {
+      --card-accent: var(--purple);
+      --pill-color: #c084fc;
+      --btn-bg: #8b5cf6;
+      --btn-hover-bg: #a855f7;
+      --btn-color: #ffffff;
+    }
+    .portal-verify {
+      --card-accent: var(--teal);
+      --pill-color: #2dd4bf;
+      --btn-bg: #14b8a6;
+      --btn-hover-bg: #2dd4bf;
+      --btn-color: #041f1c;
+    }
+    .portal-complaint {
+      --card-accent: var(--rose);
+      --pill-color: #fb7185;
+      --btn-bg: #f43f5e;
+      --btn-hover-bg: #fb7185;
+      --btn-color: #ffffff;
+    }
+
+    /* DIRECTORY TRUST BADGES STRIP */
+    .trust-footer-strip {
+      margin-top: 60px;
+      padding: 30px;
+      background: rgba(12, 35, 64, 0.45);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+    .trust-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .trust-col-icon {
+      font-size: 22px;
+      color: var(--cyan);
+      margin-bottom: 4px;
+    }
+    .trust-col-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+    }
+    .trust-col-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* HELP & SUPPORT SECTION */
+    .support-footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .support-footer a {
+      color: var(--cyan);
+      font-weight: 800;
+    }
+    .support-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 1100px) {
+      .portals-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      .trust-footer-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-strip {
+        flex-direction: column;
+        text-align: center;
+        padding: 8px 14px;
+      }
+      .central-nav {
+        height: auto;
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .brand-title {
+        font-size: 18px;
+      }
+      .brand-badge {
+        display: none;
+      }
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .main-wrapper {
+        padding: 32px 14px 60px;
+      }
+      .hero-title {
+        font-size: 32px;
+      }
+      .hero-subtitle {
+        font-size: 15px;
+      }
+      .portals-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .portal-card {
+        padding: 24px 20px 22px;
+        border-radius: 18px;
+      }
+      .trust-footer-strip {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 22px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP TELEMETRY STRIP -->
+  <div class="top-strip">
+    <div class="strip-left">
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span>ALL SYSTEMS OPERATIONAL (AWS af-south-1)</span>
+      </div>
+      <span>&bull;</span>
+      <span>Encrypted TLS 1.3 &bull; 256-Bit SSL</span>
+    </div>
+    <div class="strip-right">
+      <span>General Enquiries: <a href="mailto:helpdesk@truststack.academy" class="strip-link">helpdesk@truststack.academy</a></span>
+      <span>&bull;</span>
+      <span>Learner Support: <a href="mailto:techsupport@truststack.academy" class="strip-link">techsupport@truststack.academy</a></span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION NAVBAR -->
+  <header class="central-nav">
+    <a href="/home.html" class="brand-wrap">
+      <img src="/truststack-home-logo.png" alt="TrustStack Academy">
+      <div class="brand-title">TrustStack <span>Academy</span></div>
+      <span class="brand-badge">Central Directory</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/home.html" class="nav-link">Home</a>
+      <a href="/courses" class="nav-link">Courses</a>
+      <a href="/knowledge-base" class="nav-link">Knowledge Base</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/home.html" class="nav-btn-home">← Return Home</a>
+    </nav>
+  </header>
+
+  <!-- MAIN ACCESS WORKSPACE -->
+  <main class="main-wrapper">
+
+    <!-- HERO INTRO -->
+    <section class="hero-section">
+      <div class="hero-eyebrow">
+        <span>🔒</span>
+        <span>UNIFIED AUTHENTICATION DIRECTORY</span>
+      </div>
+      <h1 class="hero-title">
+        Single Gateway to <span>All Academy Portals.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Select your designated TrustStack Academy login gateway below to authenticate with your role-based credentials, Microsoft 365 Tenant SSO, or cryptographic clearance keys.
+      </p>
+
+      <!-- SEARCH / FILTER BOX -->
+      <div class="search-filter-wrap">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="portalSearch" 
+          class="search-box" 
+          placeholder="Filter login gateways (e.g. learner, admin, faculty, exam, lab)..." 
+          oninput="handleSearch(this.value)"
+        >
+        <button id="clearSearchBtn" class="search-clear-btn" onclick="clearSearch()">&times;</button>
+      </div>
+    </section>
+
+    <!-- PORTALS GRID (6 DISTINCT DESTINATIONS) -->
+    <div class="portals-grid" id="portalsGrid">
+
+      <!-- 1. LEARNER LMS PORTAL -->
+      <article class="portal-card portal-student" data-keywords="learner student lms course progress results transcript capstone fee payments certificates chinedu login">
+        <div class="card-top">
+          <div class="portal-icon-box">🎓</div>
+          <span class="portal-pill">ACTIVE LEARNERS</span>
+        </div>
+        <h2 class="portal-title">Learner LMS Portal</h2>
+        <p class="portal-desc">
+          Dedicated student dashboard for enrolled cyber defenders. Track syllabus milestones, launch hands-on labs, review exam results, and retrieve verifiable diplomas.
+        </p>
+        <ul class="portal-features-list">
+          <li><span class="dot"></span> 8 Practical Cyber Career Tracks</li>
+          <li><span class="dot"></span> Real-time Lab Progress &amp; Grades</li>
+          <li><span class="dot"></span> Verifiable Digital Certificates</li>
+          <li><span class="dot"></span> Payment Invoices &amp; Tax Receipts</li>
+        </ul>
+        <a href="/student-lms" class="portal-action-btn">
+          <span>Sign In to Learner LMS</span>
+          <span>→</span>
+        </a>
+      </article>
+
+      <!-- 2. GLOBAL ADMINISTRATOR & EDITORIAL CMS -->
+      <article class="portal-card portal-admin" data-keywords="admin administrator editorial publish articles seo yoast rank math schema json-ld destiny young cms control management login">
+        <div class="card-top">
+          <div class="portal-icon-box">🛡️</div>
+          <span class="portal-pill">SUPER ADMIN &amp; CMS</span>
+        </div>
+        <h2 class="portal-title">Global Administrator Gateway</h2>
+        <p class="portal-desc">
+          Administrative gateway for TrustStack Academy leadership. Access editorial publishing, WordPress-grade SEO intelligence, Google Schema JSON-LD generators, and tenant controls.
+        </p>
+        <ul class="portal-features-list">
+          <li><span class="dot"></span> Editorial CMS &amp; Advisory Publisher</li>
+          <li><span class="dot"></span> WordPress / Yoast SEO Snippets</li>
+          <li><span class="dot"></span> Google Schema.org Structured Data</li>
+          <li><span class="dot"></span> Microsoft 365 Tenant SSO Enabled</li>
+        </ul>
+        <a href="/admin/login" class="portal-action-btn">
+          <span>Administrator Sign In</span>
+          <span>→</span>
+        </a>
+      </article>
+
+      <!-- 3. FACULTY & LMS ACADEMIC CONTROL -->
+      <article class="portal-card portal-control" data-keywords="faculty instructor academic control teacher grader evaluation rubric cohort lab pods ombudsman">
+        <div class="card-top">
+          <div class="portal-icon-box">⚡</div>
+          <span class="portal-pill">FACULTY &amp; EVALUATORS</span>
+        </div>
+        <h2 class="portal-title">Faculty &amp; LMS Academic Control</h2>
+        <p class="portal-desc">
+          Operational console for course instructors and evaluators. Manage cohort schedules, grade capstone investigations, review memory forensics reports, and supervise live pods.
+        </p>
+        <ul class="portal-features-list">
+          <li><span class="dot"></span> Cohort Progression Analytics</li>
+          <li><span class="dot"></span> Capstone Practical Lab Rubrics</li>
+          <li><span class="dot"></span> Learner Directory Moderation</li>
+          <li><span class="dot"></span> Real-time Pod Resource Health</li>
+        </ul>
+        <a href="/lms-control" class="portal-action-btn">
+          <span>Enter Faculty Console</span>
+          <span>→</span>
+        </a>
+      </article>
+
+      <!-- 4. CLOUD CYBER RANGE & LAB TERMINAL -->
+      <article class="portal-card portal-labs" data-keywords="labs virtual terminal cyber range wireshark splunk siem nmap bash sandbox flag ssh kali aws af-south-1">
+        <div class="card-top">
+          <div class="portal-icon-box">🧪</div>
+          <span class="portal-pill">CYBER RANGE</span>
+        </div>
+        <h2 class="portal-title">Cloud Cyber Range &amp; Sandbox</h2>
+        <p class="portal-desc">
+          Direct authentication into isolated cloud defense environments hosted in AWS af-south-1. Conduct packet dissection, SIEM log analysis, and incident triage labs.
+        </p>
+        <ul class="portal-features-list">
+          <li><span class="dot"></span> Dedicated Pod IP Allocation</li>
+          <li><span class="dot"></span> Live Wireshark &amp; Splunk Tooling</li>
+          <li><span class="dot"></span> Automated Flag Validation</li>
+          <li><span class="dot"></span> Defensible Lab Audit Logging</li>
+        </ul>
+        <a href="/student-lms#tab-labs" class="portal-action-btn">
+          <span>Launch Lab Terminal</span>
+          <span>→</span>
+        </a>
+      </article>
+
+      <!-- 5. EMPLOYER & CERTIFICATE VERIFICATION -->
+      <article class="portal-card portal-verify" data-keywords="verify verification employer certificate seal credential blockchain hash sha-256 public registry HR diploma check">
+        <div class="card-top">
+          <div class="portal-icon-box">🔍</div>
+          <span class="portal-pill">PUBLIC REGISTRY</span>
+        </div>
+        <h2 class="portal-title">Employer Credential Verification</h2>
+        <p class="portal-desc">
+          Public, zero-login cryptographic verification registry for employers, sponsors, and recruiters to validate learner diplomas and career badge authenticity.
+        </p>
+        <ul class="portal-features-list">
+          <li><span class="dot"></span> Cryptographic SHA-256 Signatures</li>
+          <li><span class="dot"></span> Real-time Chain-of-Custody Check</li>
+          <li><span class="dot"></span> Instant Transcript Verification</li>
+          <li><span class="dot"></span> Official Anti-Tamper Badging</li>
+        </ul>
+        <a href="/verify" class="portal-action-btn">
+          <span>Verify a Credential</span>
+          <span>→</span>
+        </a>
+      </article>
+
+      <!-- 6. OMBUDSMAN & GRIEVANCE RESOLUTION -->
+      <article class="portal-card portal-complaint" data-keywords="complaint grievance ombudsman escalation dispute grading appeal refund SLA helpdesk support">
+        <div class="card-top">
+          <div class="portal-icon-box">⚖️</div>
+          <span class="portal-pill">24H SLA REVIEW</span>
+        </div>
+        <h2 class="portal-title">Ombudsman &amp; Grievances Desk</h2>
+        <p class="portal-desc">
+          Formal, confidential escalation portal for grading appeals, academic disputes, or lab environment support with a guaranteed 24-hour response SLA.
+        </p>
+        <ul class="portal-features-list">
+          <li><span class="dot"></span> Guaranteed 24-Hour SLA</li>
+          <li><span class="dot"></span> Direct Provost Review Path</li>
+          <li><span class="dot"></span> Fully Encrypted Audit Trail</li>
+          <li><span class="dot"></span> Unbiased Dispute Resolution</li>
+        </ul>
+        <a href="/complaint" class="portal-action-btn">
+          <span>Lodge an Escalation</span>
+          <span>→</span>
+        </a>
+      </article>
+
+    </div>
+
+    <!-- EMPTY SEARCH STATE -->
+    <div id="noResults" style="display:none;text-align:center;padding:60px 20px;background:rgba(12,35,64,0.4);border-radius:20px;margin-top:20px;">
+      <div style="font-size:36px;margin-bottom:12px;">🔍</div>
+      <h3 style="font-size:20px;font-weight:900;color:#fff;">No Matching Gateways Found</h3>
+      <p style="font-size:14px;color:#94a3b8;margin-top:4px;">Try searching for "learner", "admin", "faculty", "labs", or "verify".</p>
+      <button onclick="clearSearch()" style="margin-top:16px;background:var(--cyan);color:#041426;border:0;padding:8px 20px;border-radius:999px;font-weight:900;cursor:pointer;">Reset Search</button>
+    </div>
+
+    <!-- TRUST & SECURITY STRIP -->
+    <section class="trust-footer-strip">
+      <div class="trust-col">
+        <div class="trust-col-icon">🛡️</div>
+        <div class="trust-col-title">ZERO-TRUST SECURITY</div>
+        <div class="trust-col-sub">Strict least-privilege role boundaries and cryptographic token signing.</div>
+      </div>
+      <div class="trust-col">
+        <div class="trust-col-icon">☁️</div>
+        <div class="trust-col-title">MICROSOFT 365 SSO</div>
+        <div class="trust-col-sub">Single Sign-On integration with institutional M365 tenant directories.</div>
+      </div>
+      <div class="trust-col">
+        <div class="trust-col-icon">🇳🇬</div>
+        <div class="trust-col-title">NDPA COMPLIANT</div>
+        <div class="trust-col-sub">Audited learner privacy complying with Nigeria Data Protection Act 2023.</div>
+      </div>
+      <div class="trust-col">
+        <div class="trust-col-icon">⚡</div>
+        <div class="trust-col-title">99.9% UPTIME SLA</div>
+        <div class="trust-col-sub">Resilient AWS af-south-1 multi-AZ high availability infrastructure.</div>
+      </div>
+    </section>
+
+    <!-- SUPPORT FOOTER -->
+    <footer class="support-footer">
+      <span>Need assistance signing in?</span>
+      <span>General Enquiries: <a href="mailto:helpdesk@truststack.academy">helpdesk@truststack.academy</a></span>
+      <span>&bull;</span>
+      <span>Learner Support: <a href="mailto:techsupport@truststack.academy">techsupport@truststack.academy</a></span>
+      <span>&bull;</span>
+      <span>Emergency Escalation: <a href="/complaint">Ombudsman 24h SLA</a></span>
+    </footer>
+
+  </main>
+
+  <script>
+    function handleSearch(query) {
+      const q = query.trim().toLowerCase();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      clearBtn.style.display = q ? 'block' : 'none';
+
+      const cards = document.querySelectorAll('.portal-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const keywords = card.getAttribute('data-keywords') || '';
+        const title = card.querySelector('.portal-title').textContent.toLowerCase();
+        const desc = card.querySelector('.portal-desc').textContent.toLowerCase();
+
+        if (!q || keywords.includes(q) || title.includes(q) || desc.includes(q)) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const noResults = document.getElementById('noResults');
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('portalSearch');
+      input.value = '';
+      handleSearch('');
+      input.focus();
+    }
+  </script>
+</body>
+</html>

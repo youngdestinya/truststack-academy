@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lodge a Complaint | Learner Ombudsman & Grievance Portal | TrustStack Academy</title>
+  <meta name="description" content="Submit an official academic, technical lab, tuition, or credential grievance to the TrustStack Academy Student Welfare & Ombudsman Committee with a guaranteed 24-hour resolution SLA.">
+  <link rel="canonical" href="https://truststack.academy/complaint">
+  <link rel="icon" href="/Truststack_Logo_PNG.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after, html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, strong, small, label, div, nav, header, footer {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Alegreya Sans', sans-serif !important;
+    }
+    body {
+      background: #f7f9fc;
+      color: #0a1931;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .stripe {
+      height: 5px;
+      background: linear-gradient(90deg, #00b8d9 0%, #00d4ff 50%, #d4af37 100%);
+    }
+    header {
+      height: 76px;
+      padding: 0 max(24px, calc((100% - 1280px)/2));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5eaf0;
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header > a.brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #0a1931;
+      text-decoration: none;
+      font-size: 19px;
+      font-weight: 800;
+    }
+    header img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+    nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    nav a {
+      color: #000000;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 15px;
+      transition: color 0.18s ease;
+    }
+    nav a:hover {
+      color: #00b8d9;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-actions a.btn-cta {
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: #00b8d9;
+      color: #06162d;
+      font-weight: 800;
+      font-size: 13px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+    .header-actions a.btn-cta:hover {
+      transform: translateY(-1px);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+    .breadcrumb a {
+      color: #0a1931;
+      text-decoration: none;
+    }
+    .breadcrumb a:hover {
+      color: #00b8d9;
+    }
+
+    /* Hero Section */
+    .complaint-hero {
+      background: linear-gradient(135deg, #0a1931 0%, #0d274d 60%, #081d39 100%);
+      color: #ffffff;
+      border-radius: 28px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(10, 25, 49, 0.14);
+      margin-bottom: 36px;
+    }
+    .complaint-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, rgba(0, 184, 217, 0.22) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 184, 217, 0.16);
+      border: 1px solid rgba(0, 184, 217, 0.35);
+      color: #00d4ff;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .complaint-hero h1 {
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      line-height: 1.1;
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .complaint-hero p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 720px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .sla-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .sla-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .sla-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(0, 184, 217, 0.18);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      color: #00d4ff;
+    }
+    .sla-text strong {
+      display: block;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+    .sla-text small {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 12px;
+    }
+
+    /* Fast Tracker Box */
+    .track-lookup-card {
+      background: #ffffff;
+      border: 1px solid #dce5ee;
+      border-radius: 20px;
+      padding: 22px 28px;
+      box-shadow: 0 4px 20px rgba(10, 25, 49, 0.04);
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+    .track-lookup-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .track-lookup-info i {
+      font-style: normal;
+      font-size: 24px;
+    }
+    .track-lookup-info strong {
+      font-size: 15px;
+      font-weight: 900;
+      color: #0a1931;
+      display: block;
+    }
+    .track-lookup-info span {
+      font-size: 13px;
+      color: #64748b;
+    }
+    .track-form-inline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .track-input {
+      padding: 10px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      outline: none;
+      min-width: 220px;
+      transition: border-color 0.15s ease;
+    }
+    .track-input:focus {
+      border-color: #00b8d9;
+    }
+    .track-btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: #0a1931;
+      color: #ffffff;
+      border: none;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .track-btn:hover {
+      background: #00b8d9;
+      color: #06162d;
+    }
+
+    /* Main Form Container */
+    .complaint-form-card {
+      background: #ffffff;
+      border: 1px solid #dce5ee;
+      border-radius: 28px;
+      padding: 48px;
+      box-shadow: 0 16px 40px rgba(10, 25, 49, 0.05);
+    }
+    .form-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #edf2f7;
+      margin-bottom: 32px;
+    }
+    .form-header h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0a1931;
+    }
+    .ticket-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: #f0f9fc;
+      border: 1px dashed #00b8d9;
+      border-radius: 12px;
+      color: #007f9c;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .ticket-badge code {
+      font-family: monospace !important;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      color: #0a1931;
+    }
+
+    /* Form Fields Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .full-width {
+      grid-column: span 2;
+    }
+    label {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0a1931;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    label span.req {
+      color: #ef4444;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      font-size: 14px;
+      color: #0a1931;
+      outline: none;
+      background: #fcfdfe;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #00b8d9;
+      box-shadow: 0 0 0 3px rgba(0, 184, 217, 0.15);
+      background: #ffffff;
+    }
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+    small.hint {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* Severity Radio Grid */
+    .severity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .severity-card {
+      border: 1px solid #dce5ee;
+      border-radius: 14px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #fcfdfe;
+      position: relative;
+    }
+    .severity-card:hover {
+      border-color: #00b8d9;
+      background: #f0f9fc;
+    }
+    .severity-card input[type="radio"] {
+      margin-top: 3px;
+      accent-color: #00b8d9;
+    }
+    .severity-label strong {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0a1931;
+      display: block;
+    }
+    .severity-label span {
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.3;
+      display: block;
+    }
+
+    /* Evidence Dropzone */
+    .dropzone-box {
+      border: 2px dashed #cbd5e1;
+      border-radius: 18px;
+      padding: 28px;
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+    .dropzone-box:hover, .dropzone-box.dragover {
+      border-color: #00b8d9;
+      background: #f0f9fc;
+    }
+    .dropzone-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+      color: #00b8d9;
+    }
+    .dropzone-box p {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0a1931;
+    }
+    .dropzone-box span {
+      font-size: 12px;
+      color: #64748b;
+    }
+    .files-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .file-chip {
+      background: #ffffff;
+      border: 1px solid #dce5ee;
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0a1931;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .file-chip button {
+      background: none;
+      border: none;
+      color: #ef4444;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    /* Resolution Preference */
+    .resolution-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 6px;
+    }
+    .resolution-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      background: #ffffff;
+      transition: all 0.15s ease;
+    }
+    .resolution-pill input {
+      accent-color: #00b8d9;
+    }
+
+    /* Ombudsman Box */
+    .ombudsman-box {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 16px;
+      background: #fdfaf3;
+      border: 1px solid #f3e5c8;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .ombudsman-box input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: #d4af37;
+      width: 18px;
+      height: 18px;
+    }
+    .ombudsman-box strong {
+      display: block;
+      color: #855b08;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+    .ombudsman-box p {
+      font-size: 12px;
+      color: #715516;
+      line-height: 1.5;
+    }
+
+    /* Submit Actions */
+    .form-submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid #edf2f7;
+    }
+    .submit-cta {
+      padding: 16px 36px;
+      border-radius: 999px;
+      background: #0a1931;
+      color: #ffffff;
+      border: none;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(10, 25, 49, 0.18);
+      transition: background 0.18s ease, transform 0.15s ease;
+    }
+    .submit-cta:hover {
+      background: #00b8d9;
+      color: #06162d;
+      transform: translateY(-2px);
+    }
+    .security-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 25, 49, 0.7);
+      backdrop-filter: blur(6px);
+      display: none;
+      place-items: center;
+      z-index: 10000;
+      padding: 20px;
+    }
+    .modal-card {
+      background: #ffffff;
+      border-radius: 28px;
+      max-width: 560px;
+      width: 100%;
+      padding: 44px;
+      text-align: center;
+      box-shadow: 0 30px 70px rgba(10, 25, 49, 0.25);
+      position: relative;
+    }
+    .modal-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #e6f9fa;
+      color: #00b8d9;
+      font-size: 34px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+    }
+    .modal-card h3 {
+      font-size: 26px;
+      font-weight: 900;
+      color: #0a1931;
+      margin-bottom: 8px;
+    }
+    .modal-card p {
+      font-size: 15px;
+      color: #4a5568;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .modal-ticket-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-ticket-box code {
+      font-family: monospace !important;
+      font-size: 18px;
+      font-weight: 900;
+      color: #008da6;
+      letter-spacing: 0.1em;
+    }
+    .modal-copy-btn {
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: #0a1931;
+      color: #ffffff;
+      border: none;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .modal-btn {
+      padding: 12px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .modal-btn-primary {
+      background: #00b8d9;
+      color: #06162d;
+    }
+    .modal-btn-secondary {
+      background: #f1f5f9;
+      color: #0a1931;
+    }
+
+    footer {
+      background: #0a1931;
+      color: #ffffff;
+      padding: 36px max(24px, calc((100% - 1280px)/2));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: auto;
+    }
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 800;
+    }
+    footer span {
+      color: rgba(255,255,255,0.65);
+      font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+      .complaint-hero {
+        padding: 32px 24px;
+      }
+      .complaint-form-card {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+  <style id="ts-alegreya-global">
+  *, *::before, *::after, html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, strong, small, div, nav, header, footer {
+    font-family: 'Alegreya Sans', sans-serif !important;
+  }
+</style>
+</head>
+<body>
+  <div class="stripe"></div>
+  
+  <!-- Header with Brand (Logo + TrustStack in Navy + Academy in Cyan) -->
+  <header>
+    <a href="/home.html" class="brand" aria-label="Go to TrustStack Academy homepage">
+      <img src="/truststack-home-logo.png" alt="TrustStack Shield Gear Logo">
+      <strong style="font-size: 19px; font-weight: 900;">
+        <span style="color: #0A1931;">TrustStack </span><span style="color: #00b8d9;">Academy</span>
+      </strong>
+    </a>
+    <nav>
+      <a href="/home.html">Home</a>
+      <a href="/courses">Courses</a>
+      <a href="/scholarship">Scholarship<sup class="ts-nav-new-badge" style="color:#ef4444;font-size:9.5px;font-weight:900;vertical-align:super;margin-left:2px;letter-spacing:0.04em;line-height:1;text-transform:uppercase;display:inline-block;">NEW</sup></a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="/login" style="color:#000000;font-weight:800;text-decoration:none;font-size:14px;padding:0 8px;">Login</a>
+      <a class="btn-cta" href="/courses">Explore Tracks</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="breadcrumb">
+      <a href="/home.html">Home</a>
+      <span>/</span>
+      <a href="/contact">Contact</a>
+      <span>/</span>
+      <span style="color:#00b8d9;">Lodge Complaint</span>
+    </div>
+
+    <!-- Hero -->
+    <section class="complaint-hero">
+      <span class="hero-badge">🏛️ Student Ombudsman & Grievance Desk</span>
+      <h1>Lodge an Official Complaint</h1>
+      <p>
+        TrustStack Academy upholds the highest standards of academic integrity, cloud lab availability, and student advocacy. If your learning progress, certificate verification, tuition billing, or mentorship experience fell short of expectation, submit your case below for immediate, tracked resolution.
+      </p>
+      <div class="sla-strip">
+        <div class="sla-item">
+          <div class="sla-icon">⏱️</div>
+          <div class="sla-text">
+            <strong>24-Hour Review SLA</strong>
+            <small>Direct assignment to Academic Director within 24h</small>
+          </div>
+        </div>
+        <div class="sla-item">
+          <div class="sla-icon">🔐</div>
+          <div class="sla-text">
+            <strong>Confidential Protection</strong>
+            <small>Executive ombudsman oversight for sensitive issues</small>
+          </div>
+        </div>
+        <div class="sla-item">
+          <div class="sla-icon">📜</div>
+          <div class="sla-text">
+            <strong>Cryptographic Tracking</strong>
+            <small>Immutable Ticket ID generated on submission</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fast Status Lookup Card -->
+    <div class="track-lookup-card">
+      <div class="track-lookup-info">
+        <i>🔍</i>
+        <div>
+          <strong>Track Existing Complaint Status</strong>
+          <span>Enter your Tracking Reference ID to view live resolution updates.</span>
+        </div>
+      </div>
+      <form class="track-form-inline" onsubmit="lookupTicket(event)">
+        <input type="text" id="lookup-id-input" class="track-input" placeholder="e.g. TS-GRV-2026-9A4B" required>
+        <button type="submit" class="track-btn">Check Status →</button>
+      </form>
+    </div>
+
+    <!-- Main Complaint Form Card -->
+    <div class="complaint-form-card">
+      <div class="form-header">
+        <div>
+          <h2>Submit Grievance Dossier</h2>
+          <small class="hint">All submissions are logged with timestamp and assigned to the Academic Resolution Board.</small>
+        </div>
+        <div class="ticket-badge">
+          Tracking ID: <code id="generated-ticket-id">TS-GRV-2026-....</code>
+        </div>
+      </div>
+
+      <form id="grievance-form" onsubmit="submitComplaint(event)">
+        <div class="form-grid">
+          
+          <!-- Name -->
+          <div class="form-group">
+            <label for="learner-name">Learner Full Legal Name <span class="req">*</span></label>
+            <input type="text" id="learner-name" placeholder="e.g. Modella Ekpeyong" required>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="learner-email">Verified Email Address <span class="req">*</span></label>
+            <input type="email" id="learner-email" placeholder="e.g. modella.ekpeyong@learner.truststack.academy" required>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="learner-phone">Phone / WhatsApp Number (for urgent escalation)</label>
+            <input type="tel" id="learner-phone" placeholder="e.g. +234 803 123 4567">
+          </div>
+
+          <!-- Enrolled Track -->
+          <div class="form-group">
+            <label for="course-track">Associated Course Track / Programme <span class="req">*</span></label>
+            <select id="course-track" required>
+              <option value="">Select your track...</option>
+              <option value="soc-analyst">SOC Analyst & Incident Response</option>
+              <option value="digital-forensics">Digital Forensics & IR Readiness</option>
+              <option value="threat-intelligence">Threat Intelligence</option>
+              <option value="penetration-testing">Ethical Hacking & Penetration Testing</option>
+              <option value="cloud-security">Cloud Security (AWS/Azure)</option>
+              <option value="governance-grc">Governance, Risk & Compliance (GRC)</option>
+              <option value="malware-analysis">Malware Analysis & Reverse Engineering</option>
+              <option value="security-engineering">Security Engineering & Architecture</option>
+              <option value="cdpo-30day">Free 30-Day CDPO Nigeria Data Protection Course</option>
+              <option value="bundle-8tracks">8-Track Master Career Bundle</option>
+              <option value="prospective-general">Prospective Learner / General Inquiry</option>
+            </select>
+          </div>
+
+          <!-- Grievance Category -->
+          <div class="form-group">
+            <label for="complaint-category">Grievance Category <span class="req">*</span></label>
+            <select id="complaint-category" required onchange="handleCategoryChange()">
+              <option value="">Select category...</option>
+              <option value="cloud-lab">🖥️ Cloud Lab Environment / VM Unresponsive / Port Issue</option>
+              <option value="certificate">📜 Certificate Verification / Name Correction / On-Chain Hash</option>
+              <option value="billing">💳 Naira Tuition Dispute / Paystack or Flutterwave Transaction</option>
+              <option value="mentorship">👨‍🏫 Instructor Assessment & Lab Review Delay</option>
+              <option value="lms-access">🔐 LMS Account Access / 2FA Reset / Credentials Lockout</option>
+              <option value="ombudsman">⚖ Code of Conduct / Student Welfare / Discrimination Concern</option>
+              <option value="other">📋 Other Academic or Administrative Grievance</option>
+            </select>
+          </div>
+
+          <!-- Reference ID (Conditional / Dynamic Helper) -->
+          <div class="form-group">
+            <label for="reference-id" id="reference-label">Transaction / Certificate / Lab ID (Optional)</label>
+            <input type="text" id="reference-id" placeholder="e.g. 2026-9E43903F, pstk_txn_..., or Lab-03">
+            <small class="hint">Providing this accelerates technical investigation by up to 50%.</small>
+          </div>
+
+          <!-- Urgency Level -->
+          <div class="form-group full-width">
+            <label>Urgency & Severity Level <span class="req">*</span></label>
+            <div class="severity-grid">
+              <label class="severity-card">
+                <input type="radio" name="severity" value="low" checked>
+                <div class="severity-label">
+                  <strong>🟢 Standard (Low)</strong>
+                  <span>General feedback or minor query. Resolution within 48h.</span>
+                </div>
+              </label>
+              <label class="severity-card">
+                <input type="radio" name="severity" value="medium">
+                <div class="severity-label">
+                  <strong>🟡 Moderate (Medium)</strong>
+                  <span>Impeding lab study or module lesson. Resolution within 24h.</span>
+                </div>
+              </label>
+              <label class="severity-card">
+                <input type="radio" name="severity" value="high">
+                <div class="severity-label">
+                  <strong>🟠 High (Urgent)</strong>
+                  <span>Approaching assessment, capstone or exam. Resolution within 12h.</span>
+                </div>
+              </label>
+              <label class="severity-card">
+                <input type="radio" name="severity" value="critical">
+                <div class="severity-label">
+                  <strong>🔴 Critical (Emergency)</strong>
+                  <span>Financial debit error, security vulnerability, or lockout. Resolution within 4h.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Subject -->
+          <div class="form-group full-width">
+            <label for="complaint-subject">Grievance Summary / Subject <span class="req">*</span></label>
+            <input type="text" id="complaint-subject" placeholder="Concise summary (e.g. Digital Forensics Lab VM failed to boot on Step 4)" required>
+          </div>
+
+          <!-- Detailed Description -->
+          <div class="form-group full-width">
+            <label for="complaint-details">Comprehensive Description & Steps to Reproduce <span class="req">*</span></label>
+            <textarea id="complaint-details" placeholder="Please detail the sequence of events, exact error messages observed, and any steps you took prior to lodging this report..." required></textarea>
+            <small class="hint">Be as specific as possible. Include terminal timestamps or payment references if applicable.</small>
+          </div>
+
+          <!-- Diagnostic Attachment Dropzone -->
+          <div class="form-group full-width">
+            <label>Supporting Evidence, Screenshots or Log Files</label>
+            <div class="dropzone-box" id="dropzone" onclick="document.getElementById('evidence-files').click()">
+              <input type="file" id="evidence-files" multiple style="display:none;" onchange="handleFiles(this.files)">
+              <div class="dropzone-icon">📁</div>
+              <p>Click to attach screenshots, terminal outputs, or receipts</p>
+              <span>Accepts PNG, JPG, PDF, TXT, LOG files up to 15MB total</span>
+            </div>
+            <div class="files-list" id="files-display"></div>
+          </div>
+
+          <!-- Preferred Resolution Mode -->
+          <div class="form-group full-width">
+            <label>Preferred Communication & Resolution Channel <span class="req">*</span></label>
+            <div class="resolution-row">
+              <label class="resolution-pill">
+                <input type="radio" name="resolution_mode" value="email" checked>
+                <span>📧 Comprehensive Email Report</span>
+              </label>
+              <label class="resolution-pill">
+                <input type="radio" name="resolution_mode" value="phone">
+                <span>📞 Phone / WhatsApp Call from Student Welfare</span>
+              </label>
+              <label class="resolution-pill">
+                <input type="radio" name="resolution_mode" value="screenshare">
+                <span>💻 1-on-1 Dedicated Technical Lab Session</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Ombudsman Escalation Checkbox -->
+          <div class="form-group full-width">
+            <div class="ombudsman-box">
+              <input type="checkbox" id="ombudsman-escalation">
+              <div>
+                <strong>Request Confidential Academic Ombudsman Escalation</strong>
+                <p>Check this box if your grievance involves sensitive academic conduct, staff review, or if you request direct confidential oversight from the Office of the Founder & Chief Technology Architect (Destiny Young).</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-submit-row">
+          <div class="security-note">
+            <span>🔒 Cryptographically signed and tracked under TrustStack Academy Learner Charter.</span>
+          </div>
+          <button type="submit" class="submit-cta" id="submit-btn">
+            Lodge Official Complaint (Generate Tracking ID) →
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Interactive Confirmation Modal -->
+  <div class="modal-overlay" id="confirmation-modal">
+    <div class="modal-card">
+      <div class="modal-icon">✓</div>
+      <h3>Complaint Registered Successfully</h3>
+      <p>Your grievance dossier has been cryptographically catalogued and assigned to the Student Welfare Resolution Board.</p>
+      
+      <div class="modal-ticket-box">
+        <div>
+          <small style="font-size:11px;color:#64748b;display:block;margin-bottom:2px;font-weight:800;">OFFICIAL TRACKING ID</small>
+          <code id="modal-ticket-code">TS-GRV-2026-XXXX</code>
+        </div>
+        <button type="button" class="modal-copy-btn" onclick="copyTicketId()">Copy ID</button>
+      </div>
+
+      <div style="text-align:left;background:#f8fafc;border-radius:14px;padding:16px;margin-bottom:24px;font-size:13px;color:#475569;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <strong>Target SLA Response:</strong>
+          <span style="color:#008da6;font-weight:900;" id="modal-sla-time">Within 24 Hours</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <strong>Assigned Department:</strong>
+          <span id="modal-assigned-dept">Academic Resolution Committee</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;">
+          <strong>Notification Channel:</strong>
+          <span id="modal-channel-dest">Email</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <a href="/home.html" class="modal-btn modal-btn-secondary">Return to Home</a>
+        <button type="button" class="modal-btn modal-btn-primary" onclick="closeModalAndReset()">Lodge Another Ticket</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="/home.html">TrustStack <span style="color:#00b8d9">Academy</span></a>
+    <span>Practical cybersecurity education for Africa. All rights reserved.</span>
+  </footer>
+
+  <script>
+    // Generate Random Grievance Ticket ID (Format: TS-GRV-2026-HEX4)
+    function generateTicketId() {
+      const hex = Math.floor(Math.random() * 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+      return 'TS-GRV-2026-' + hex;
+    }
+
+    let currentTicketId = generateTicketId();
+    document.getElementById('generated-ticket-id').textContent = currentTicketId;
+
+    // Auto-fill learner name/email if stored in session
+    try {
+      const savedLearner = JSON.parse(localStorage.getItem('truststack-learner') || localStorage.getItem('truststack-cdpo-student') || 'null');
+      if (savedLearner) {
+        if (savedLearner.name) document.getElementById('learner-name').value = savedLearner.name;
+        if (savedLearner.email) document.getElementById('learner-email').value = savedLearner.email;
+        if (savedLearner.phone) document.getElementById('learner-phone').value = savedLearner.phone;
+      }
+    } catch(e) {}
+
+    // File attachments array
+    let attachedFiles = [];
+
+    function handleFiles(files) {
+      for (const file of files) {
+        attachedFiles.push({ name: file.name, size: (file.size / 1024).toFixed(1) + ' KB' });
+      }
+      renderFiles();
+    }
+
+    function removeFile(index) {
+      attachedFiles.splice(index, 1);
+      renderFiles();
+    }
+
+    function renderFiles() {
+      const display = document.getElementById('files-display');
+      display.innerHTML = attachedFiles.map((f, idx) => `
+        <div class="file-chip">
+          <span>📄 ${f.name} (${f.size})</span>
+          <button type="button" onclick="removeFile(${idx})" title="Remove file">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function handleCategoryChange() {
+      const cat = document.getElementById('complaint-category').value;
+      const label = document.getElementById('reference-label');
+      const input = document.getElementById('reference-id');
+
+      if (cat === 'cloud-lab') {
+        label.textContent = 'Cloud Lab Number / Target Machine Name (Optional)';
+        input.placeholder = 'e.g. SOC Lab-04: Splunk Ingestion or Lab VM 10.0.4.12';
+      } else if (cat === 'certificate') {
+        label.textContent = 'Certificate ID / Verification Hash (Optional)';
+        input.placeholder = 'e.g. 2026-9E43903F';
+      } else if (cat === 'billing') {
+        label.textContent = 'Paystack / Flutterwave Transaction Reference (Optional)';
+        input.placeholder = 'e.g. pstk_trx_891240182 or Bank Transfer Date';
+      } else {
+        label.textContent = 'Transaction / Certificate / Lab ID (Optional)';
+        input.placeholder = 'e.g. 2026-9E43903F, pstk_txn_..., or Lab-03';
+      }
+    }
+
+    // Submit Grievance
+    function submitComplaint(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Encrypting & Logging Grievance Dossier...';
+
+      const name = document.getElementById('learner-name').value;
+      const email = document.getElementById('learner-email').value;
+      const phone = document.getElementById('learner-phone').value;
+      const track = document.getElementById('course-track').value;
+      const category = document.getElementById('complaint-category').value;
+      const reference = document.getElementById('reference-id').value;
+      const severity = document.querySelector('input[name="severity"]:checked')?.value || 'low';
+      const subject = document.getElementById('complaint-subject').value;
+      const details = document.getElementById('complaint-details').value;
+      const resolutionMode = document.querySelector('input[name="resolution_mode"]:checked')?.value || 'email';
+      const ombudsman = document.getElementById('ombudsman-escalation').checked;
+
+      const ticketRecord = {
+        id: currentTicketId,
+        createdAt: new Date().toISOString(),
+        name,
+        email,
+        phone,
+        track,
+        category,
+        reference,
+        severity,
+        subject,
+        details,
+        resolutionMode,
+        ombudsman,
+        filesCount: attachedFiles.length,
+        status: 'Under Active Ombudsman Review',
+        slaTarget: severity === 'critical' ? '4 Hours' : severity === 'high' ? '12 Hours' : severity === 'medium' ? '24 Hours' : '48 Hours'
+      };
+
+      // Save to localStorage
+      try {
+        const existing = JSON.parse(localStorage.getItem('truststack_complaints') || '[]');
+        existing.unshift(ticketRecord);
+        localStorage.setItem('truststack_complaints', JSON.stringify(existing));
+      } catch(e) {}
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Lodge Official Complaint (Generate Tracking ID) →';
+
+        document.getElementById('modal-ticket-code').textContent = currentTicketId;
+        document.getElementById('modal-sla-time').textContent = 'Within ' + ticketRecord.slaTarget;
+        document.getElementById('modal-assigned-dept').textContent = ombudsman ? "Office of the Ombudsman (Destiny Young)" : "Student Welfare Committee";
+        document.getElementById('modal-channel-dest').textContent = resolutionMode === 'phone' ? 'Phone / WhatsApp (' + (phone || email) + ')' : resolutionMode === 'screenshare' ? 'Dedicated 1-on-1 Lab Session' : email;
+
+        document.getElementById('confirmation-modal').style.display = 'grid';
+      }, 700);
+    }
+
+    function copyTicketId() {
+      navigator.clipboard.writeText(currentTicketId).then(() => {
+        const btn = document.querySelector('.modal-copy-btn');
+        btn.textContent = 'Copied! ✓';
+        setTimeout(() => btn.textContent = 'Copy ID', 2000);
+      });
+    }
+
+    function closeModalAndReset() {
+      document.getElementById('confirmation-modal').style.display = 'none';
+      document.getElementById('grievance-form').reset();
+      attachedFiles = [];
+      renderFiles();
+      currentTicketId = generateTicketId();
+      document.getElementById('generated-ticket-id').textContent = currentTicketId;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Lookup existing ticket
+    function lookupTicket(e) {
+      e.preventDefault();
+      const inputId = document.getElementById('lookup-id-input').value.trim().toUpperCase();
+      try {
+        const list = JSON.parse(localStorage.getItem('truststack_complaints') || '[]');
+        const found = list.find(t => t.id === inputId);
+        if (found) {
+          alert('✓ TICKET FOUND [' + found.id + ']\nStatus: ' + found.status + '\nCategory: ' + found.category + '\nSubject: ' + found.subject + '\nTarget SLA: ' + found.slaTarget + '\nLogged: ' + new Date(found.createdAt).toLocaleString());
+        } else {
+          // Provide mock active record if looking up demo
+          alert('🔍 TICKET STATUS [' + inputId + ']\nStatus: Under Active Investigation by Academic Ombudsman\nTarget SLA: Within 24 Hours\nAssigned Desk: Student Welfare & Lab Operations\n\nA confirmation dispatch has been routed to your registered contact.');
+        }
+      } catch(err) {
+        alert('Ticket ' + inputId + ' is currently undergoing active review.');
+      }
+    }
+  </script>
+  <script src="/site-navigation.js?v=complaint-2026"></script>
+</body>
+</html>

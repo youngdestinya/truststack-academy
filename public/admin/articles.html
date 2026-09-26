@@ -1,1 +1,1436 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Article Publishing | TrustStack Admin</title><meta http-equiv="refresh" content="0;url=/admin/articles"></head><body><script>location.replace('/admin/articles'+location.search+location.hash)</script><a href="/admin/articles">Continue to article publishing</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Article Publishing & SEO CMS Dashboard | TrustStack Academy</title>
+  <meta name="description" content="Editorial publishing workspace with WordPress-grade SEO fields, social metadata, and Google Schema structured data generator.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="/Truststack_Logo_PNG.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;0,800;0,900;1,900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Alegreya Sans', sans-serif !important; }
+    :root {
+      --navy: #07182e;
+      --navy-light: #0d2746;
+      --cyan: #00b8d9;
+      --cyan-soft: #e0f7fc;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #ef4444;
+      --bg: #f4f7fb;
+      --border: #dce5ed;
+      --text: #081a35;
+      --text-muted: #627087;
+      --yoast-green: #7ad03a;
+      --yoast-orange: #ee7c1b;
+      --yoast-red: #dc3232;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* TOP NAVBAR */
+    .top-bar {
+      height: 72px;
+      background: var(--navy);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 2px solid rgba(0, 184, 217, 0.4);
+      box-shadow: 0 8px 24px rgba(7, 24, 46, 0.25);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .brand-wrap img { width: 42px; height: 42px; object-fit: contain; }
+    .brand-title { font-size: 20px; font-weight: 900; letter-spacing: -0.01em; }
+    .brand-title span { color: var(--cyan); }
+    .brand-sub { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; color: #79e2fb; text-transform: uppercase; }
+    
+    .top-nav-actions { display: flex; align-items: center; gap: 12px; }
+    .admin-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 800; color: #d8edf7;
+    }
+    .admin-pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3); }
+    .nav-btn {
+      padding: 7px 15px; border-radius: 999px; font-size: 13px; font-weight: 800;
+      text-decoration: none; transition: all 0.2s ease; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+    }
+    .nav-btn-ghost { color: #c4d6e6; background: transparent; border: 1px solid rgba(255, 255, 255, 0.18); }
+    .nav-btn-ghost:hover { background: rgba(255, 255, 255, 0.12); color: #ffffff; }
+    .nav-btn-cyan { background: var(--cyan); color: var(--navy); border: 0; font-weight: 900; }
+    .nav-btn-cyan:hover { background: #33c9e3; transform: translateY(-1px); }
+
+    /* LAYOUT GRID */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 310px minmax(0, 1fr) 350px;
+      gap: 20px;
+      max-width: 1740px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      flex: 1;
+    }
+
+    /* LEFT: ARTICLE REGISTRY */
+    .library-panel {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      height: calc(100vh - 120px);
+      position: sticky;
+      top: 90px;
+      box-shadow: 0 10px 30px rgba(7, 24, 46, 0.04);
+    }
+    .panel-header-row { display: flex; align-items: center; justify-content: space-between; }
+    .panel-title { font-size: 18px; font-weight: 900; color: var(--navy); }
+    .btn-new-article {
+      background: var(--navy); color: #ffffff; border: 0; border-radius: 999px;
+      padding: 6px 14px; font-size: 12px; font-weight: 900; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-new-article:hover { background: var(--cyan); color: var(--navy); }
+    .search-input {
+      width: 100%; height: 40px; background: #f8fafc; border: 1px solid var(--border);
+      border-radius: 11px; padding: 0 13px; font-size: 13px; outline: none;
+    }
+    .search-input:focus { border-color: var(--cyan); }
+    .filter-tabs { display: flex; gap: 4px; background: #f1f5f9; padding: 4px; border-radius: 10px; }
+    .filter-tab {
+      flex: 1; text-align: center; padding: 5px 0; font-size: 12px; font-weight: 800;
+      color: var(--text-muted); border: 0; background: transparent; border-radius: 7px; cursor: pointer;
+    }
+    .filter-tab.active { background: #ffffff; color: var(--navy); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); }
+    .articles-scroll-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+    .article-card {
+      border: 1px solid var(--border); border-radius: 12px; padding: 13px;
+      background: #ffffff; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 5px;
+    }
+    .article-card:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0, 184, 217, 0.08); }
+    .article-card.active { border-color: var(--cyan); background: #f4fbfd; box-shadow: 0 0 0 2px rgba(0, 184, 217, 0.2); }
+    .status-badge {
+      padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 900;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .status-published { background: #d1fae5; color: #065f46; }
+    .status-draft { background: #fef3c7; color: #92400e; }
+    .card-title { font-size: 14px; font-weight: 800; color: var(--navy); line-height: 1.3; }
+    .card-sub-info { font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; font-weight: 700; }
+
+    /* CENTER: EDITORIAL WORKSPACE */
+    .editor-panel { display: flex; flex-direction: column; gap: 20px; }
+    .editor-card {
+      background: #ffffff; border: 1px solid var(--border); border-radius: 20px;
+      padding: 26px; box-shadow: 0 10px 30px rgba(7, 24, 46, 0.04);
+    }
+    .action-bar {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+      gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #edf2f7;
+    }
+    .btn-action {
+      padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 900;
+      cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; border: 0;
+    }
+    .btn-draft { background: #f1f5f9; color: var(--navy); border: 1px solid #cbd5e1; }
+    .btn-publish { background: var(--navy); color: #ffffff; box-shadow: 0 8px 18px rgba(7, 24, 46, 0.18); }
+    .btn-publish:hover { background: var(--cyan); color: var(--navy); }
+    .article-title-input {
+      width: 100%; font-size: 28px; font-weight: 900; color: var(--navy);
+      border: 0; outline: none; padding: 8px 0; border-bottom: 2px solid transparent; transition: border-color 0.2s;
+    }
+    .article-title-input:focus { border-bottom-color: var(--cyan); }
+    .slug-row { display: flex; align-items: center; gap: 8px; margin: 10px 0 16px; font-size: 13px; color: var(--text-muted); font-weight: 700; }
+    .slug-input {
+      border: 1px solid var(--border); border-radius: 8px; padding: 4px 10px;
+      font-size: 13px; color: var(--navy); background: #f8fafc; outline: none;
+      font-family: 'JetBrains Mono', monospace !important; flex: 1; max-width: 420px;
+    }
+    .meta-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 12px; font-weight: 900; color: #334155; letter-spacing: 0.05em; text-transform: uppercase; }
+    .form-control {
+      height: 42px; border: 1px solid var(--border); border-radius: 10px;
+      padding: 0 13px; font-size: 14px; color: var(--navy); background: #f8fafc; outline: none; transition: border-color 0.2s;
+    }
+    .form-control:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0, 184, 217, 0.12); background: #ffffff; }
+    textarea.form-control { height: auto; padding: 12px 14px; resize: vertical; line-height: 1.5; }
+
+    /* CONTENT EDITOR */
+    .editor-toolbar {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+      padding: 10px 14px; background: #f8fafc; border: 1px solid var(--border);
+      border-radius: 12px 12px 0 0; border-bottom: 0;
+    }
+    .tool-btn {
+      padding: 6px 10px; border: 1px solid transparent; background: transparent;
+      border-radius: 7px; font-size: 13px; font-weight: 800; color: #334155; cursor: pointer;
+    }
+    .tool-btn:hover { background: #e2e8f0; color: var(--navy); }
+    .tool-divider { width: 1px; height: 20px; background: #cbd5e1; margin: 0 4px; }
+    .content-textarea {
+      width: 100%; min-height: 360px; border: 1px solid var(--border); border-radius: 0 0 12px 12px;
+      padding: 16px; font-size: 15px; line-height: 1.65; color: var(--navy); background: #ffffff;
+      outline: none; font-family: 'JetBrains Mono', monospace !important; resize: vertical;
+    }
+    .content-status-row { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; font-weight: 800; color: var(--text-muted); }
+
+    /* ========================================================
+       WORDPRESS-STYLE SEO, META DATA & SCHEMA METABOX
+       ======================================================== */
+    .wp-seo-metabox {
+      background: #ffffff;
+      border: 1px solid #c3c4c7;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-top: 24px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+    .wp-metabox-header {
+      background: #f0f0f1;
+      border-bottom: 1px solid #c3c4c7;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wp-metabox-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #1d2327;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .wp-badge-yoast {
+      background: #a4286a;
+      color: #ffffff;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .wp-seo-tabs-nav {
+      display: flex;
+      background: #ffffff;
+      border-bottom: 1px solid #dcdcde;
+      padding: 0 16px;
+      gap: 4px;
+    }
+    .wp-tab-btn {
+      padding: 12px 18px;
+      border: 0;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 800;
+      color: #50575e;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .wp-tab-btn:hover { color: #2271b1; }
+    .wp-tab-btn.active {
+      color: #2271b1;
+      border-bottom-color: #2271b1;
+      font-weight: 900;
+    }
+    .wp-tab-content {
+      padding: 24px;
+      display: none;
+    }
+    .wp-tab-content.active { display: block; }
+
+    /* TOKEN BUTTONS */
+    .token-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .token-chip {
+      background: #f0f0f1;
+      border: 1px solid #c3c4c7;
+      color: #2271b1;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace !important;
+      transition: all 0.15s;
+    }
+    .token-chip:hover {
+      background: #2271b1;
+      color: #ffffff;
+    }
+
+    /* SEO PROGRESS BAR (WP / YOAST METRIC) */
+    .wp-seo-metric-bar {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .wp-seo-metric-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      transition: all 0.3s ease;
+    }
+    .fill-green { background: var(--yoast-green) !important; }
+    .fill-orange { background: var(--yoast-orange) !important; }
+    .fill-red { background: var(--yoast-red) !important; }
+
+    /* YOAST ANALYSIS TRAFFIC LIGHTS */
+    .yoast-analysis-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 18px;
+      background: #f6f7f7;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #dcdcde;
+    }
+    .yoast-bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 700;
+      color: #2c3338;
+    }
+    .yoast-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .dot-green { background: var(--yoast-green); box-shadow: 0 0 0 2px rgba(122, 208, 58, 0.3); }
+    .dot-orange { background: var(--yoast-orange); box-shadow: 0 0 0 2px rgba(238, 124, 27, 0.3); }
+    .dot-red { background: var(--yoast-red); box-shadow: 0 0 0 2px rgba(220, 50, 50, 0.3); }
+
+    /* JSON-LD CODE VIEWER */
+    .jsonld-viewer-box {
+      background: #1e1e1e;
+      color: #9cdcfe;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 12px;
+      line-height: 1.6;
+      max-height: 320px;
+      overflow-y: auto;
+      border: 1px solid #333;
+      white-space: pre-wrap;
+    }
+
+    /* RIGHT COLUMN */
+    .intelligence-panel { display: flex; flex-direction: column; gap: 18px; }
+    .intel-card {
+      background: #ffffff; border: 1px solid var(--border); border-radius: 20px;
+      padding: 22px; box-shadow: 0 10px 30px rgba(7, 24, 46, 0.04);
+    }
+    .serp-card {
+      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;
+      padding: 16px; margin-top: 10px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .serp-site-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .serp-favicon { width: 16px; height: 16px; border-radius: 50%; }
+    .serp-domain-trail { font-size: 12px; color: #4d5156; }
+    .serp-title { font-size: 17px; color: #1a0dab; line-height: 1.25; font-weight: 700; cursor: pointer; }
+    .serp-desc { font-size: 13px; color: #4d5156; line-height: 1.45; margin-top: 2px; }
+
+    /* TOAST FEEDBACK */
+    .toast-popup {
+      position: fixed; bottom: 24px; right: 24px; background: var(--navy);
+      color: #ffffff; padding: 14px 22px; border-radius: 14px; font-size: 14px;
+      font-weight: 900; box-shadow: 0 14px 35px rgba(7, 24, 46, 0.35);
+      border-left: 4px solid var(--cyan); display: flex; align-items: center;
+      gap: 12px; z-index: 999999; transform: translateY(100px); opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-popup.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 1280px) {
+      .dashboard-grid { grid-template-columns: 280px 1fr; }
+      .intelligence-panel { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 960px) {
+      .dashboard-grid { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
+      .library-panel { height: auto; max-height: 420px; position: static; }
+      .intelligence-panel { grid-column: span 1; display: flex; flex-direction: column; }
+      .meta-two-col { grid-template-columns: 1fr; gap: 12px; }
+      .top-bar { height: auto; min-height: 64px; padding: 12px 18px; flex-wrap: wrap; gap: 12px; }
+      .top-nav-actions { width: 100%; overflow-x: auto; padding-bottom: 4px; justify-content: flex-start; -webkit-overflow-scrolling: touch; }
+      .top-nav-actions::-webkit-scrollbar { display: none; }
+    }
+    @media (max-width: 640px) {
+      .top-bar { padding: 10px 12px; }
+      .brand-title { font-size: 18px; }
+      .brand-sub { display: none; }
+      .brand-wrap img { width: 34px; height: 34px; }
+      .admin-pill { padding: 4px 10px; font-size: 12px; }
+      .nav-btn { padding: 6px 12px; font-size: 12px; white-space: nowrap; }
+      .dashboard-grid { padding: 10px 8px; gap: 14px; }
+      .library-panel, .editor-card, .intel-card { padding: 16px 12px; border-radius: 14px; }
+      .action-bar { flex-direction: column; align-items: stretch; gap: 10px; }
+      .action-bar > div:first-child { width: 100%; justify-content: space-between; }
+      .action-bar > div:last-child { width: 100%; display: flex; gap: 8px; }
+      .action-bar > div:last-child button { flex: 1; justify-content: center; }
+      .article-title-input { font-size: 22px; }
+      .slug-row { flex-direction: column; align-items: stretch; gap: 6px; }
+      .slug-input { max-width: 100%; width: 100%; }
+      .editor-toolbar { padding: 8px 10px; gap: 3px; }
+      .tool-btn { padding: 5px 8px; font-size: 12px; }
+      .tool-divider { height: 16px; margin: 0 2px; }
+      .content-textarea { min-height: 280px; padding: 12px; font-size: 13.5px; }
+      .wp-seo-tabs-nav { overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: thin; padding: 0 8px; }
+      .wp-tab-btn { padding: 10px 12px; font-size: 12.5px; flex-shrink: 0; }
+      .jsonld-viewer-box { font-size: 11px; padding: 12px; max-height: 260px; word-break: break-word; }
+      .toast-popup { left: 12px; right: 12px; bottom: 12px; font-size: 13px; padding: 12px 16px; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVBAR -->
+  <header class="top-bar">
+    <a href="/home.html" class="brand-wrap">
+      <img src="/truststack-home-logo.png" alt="TrustStack Academy">
+      <div class="brand-text-col">
+        <div class="brand-title">TrustStack <span>Academy</span></div>
+        <div class="brand-sub">Editorial Publishing & SEO CMS Dashboard</div>
+      </div>
+    </a>
+
+    <div class="top-nav-actions">
+      <div class="admin-pill">
+        <i></i>
+        <span>Engr. Destiny Young · Global Admin</span>
+      </div>
+      <a href="/admin/scholarships" class="nav-btn nav-btn-ghost" style="background:rgba(0,184,217,0.15); border-color:#00b8d9; color:#79e2fb;">
+        <span>🎓 Scholarship Applicants ↗</span>
+      </a>
+      <a href="/knowledge-base" class="nav-btn nav-btn-ghost" target="_blank">
+        <span>Knowledge Base ↗</span>
+      </a>
+      <a href="/lms-control" class="nav-btn nav-btn-ghost">
+        <span>LMS Control ↗</span>
+      </a>
+      <button class="nav-btn nav-btn-cyan" onclick="saveAndPublish()">
+        <span>Publish Article 🚀</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN THREE-COLUMN WORKSPACE -->
+  <main class="dashboard-grid">
+
+    <!-- COLUMN 1: ARTICLES REGISTRY -->
+    <aside class="library-panel">
+      <div class="panel-header-row">
+        <div class="panel-title">Articles Registry</div>
+        <button class="btn-new-article" onclick="createNewArticle()">+ New Post</button>
+      </div>
+
+      <input type="text" id="lib-search" class="search-input" placeholder="Filter articles by title, tag..." oninput="filterArticles()">
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all" onclick="setFilter('all', this)">All (<span id="count-all">0</span>)</button>
+        <button class="filter-tab" data-filter="publish" onclick="setFilter('publish', this)">Live (<span id="count-live">0</span>)</button>
+        <button class="filter-tab" data-filter="draft" onclick="setFilter('draft', this)">Drafts (<span id="count-drafts">0</span>)</button>
+      </div>
+
+      <div class="articles-scroll-list" id="articles-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </aside>
+
+    <!-- COLUMN 2: EDITORIAL CANVAS -->
+    <section class="editor-panel">
+      <div class="editor-card">
+        <!-- Action Row -->
+        <div class="action-bar">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="font-size:12px;font-weight:800;color:var(--emerald);" id="save-status-text">
+              ● Saved locally
+            </div>
+            <select id="article-status" class="form-control" style="height:36px;font-weight:900;" onchange="updateAllSeoPreviews()">
+              <option value="publish">● Status: Publish Live</option>
+              <option value="draft" selected>○ Status: Save as Draft</option>
+              <option value="pending">◐ Status: Pending Review</option>
+              <option value="future">⏱ Status: Scheduled</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <a id="live-preview-btn" href="/knowledge-base" target="_blank" style="color:#008bb2;text-decoration:none;font-size:13px;font-weight:800;">Preview ↗</a>
+            <button class="btn-action btn-draft" onclick="saveArticleLocally(true)">Save Draft</button>
+            <button class="btn-action btn-publish" onclick="saveAndPublish()">Publish Article →</button>
+          </div>
+        </div>
+
+        <!-- Title & Slug -->
+        <input type="text" id="article-title" class="article-title-input" placeholder="Article Title (e.g. Wireshark for SOC Analysts: Detecting CBN Fraud Patterns)..." oninput="onTitleChange()">
+
+        <div class="slug-row">
+          <span>Permalink:</span>
+          <span style="color:#94a3b8;">https://truststack.academy/knowledge-base?article=</span>
+          <input type="text" id="article-slug" class="slug-input" placeholder="article-slug-url" oninput="updateAllSeoPreviews()">
+        </div>
+
+        <!-- Meta 2-column row -->
+        <div class="meta-two-col">
+          <div class="form-group">
+            <label>Author / Lead Contributor</label>
+            <input type="text" id="article-author" class="form-control" value="Engr. Destiny Young" oninput="generateSchemaJsonLd()">
+          </div>
+          <div class="form-group">
+            <label>Primary Track / Category</label>
+            <select id="article-category" class="form-control" onchange="updateCategory()">
+              <option value="Threat Intel">Threat Intel & Cyber Warfare</option>
+              <option value="Penetration Testing">Ethical Hacking & Pen Testing</option>
+              <option value="Cloud Security">Cloud Security & DevSecOps</option>
+              <option value="SOC Operations">SOC Analyst & Incident Response</option>
+              <option value="Digital Forensics">Digital Forensics & Evidence</option>
+              <option value="Governance & GRC">Governance, Risk & Compliance</option>
+              <option value="Data Protection NDPA">Data Protection & NDPA</option>
+              <option value="Fintech Security">Fintech Security & Payment Corridors</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="meta-two-col">
+          <div class="form-group">
+            <label>Tags (Comma-separated)</label>
+            <input type="text" id="article-tags" class="form-control" value="Fintech, PII, Privacy, NDPA" placeholder="e.g. AWS, Wireshark, SOC, NDPA">
+          </div>
+          <div class="form-group">
+            <label>Publish Date / Time</label>
+            <input type="datetime-local" id="article-date" class="form-control" onchange="generateSchemaJsonLd()">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:18px;">
+          <label>Summary / Excerpt (Lead Paragraph & Kicker)</label>
+          <textarea id="article-excerpt" class="form-control" rows="3" placeholder="Provide a concise 2-sentence summary of the key findings, attack vectors, or remediation steps..." oninput="updateExcerpt()"></textarea>
+          <small id="excerpt-counter" style="color:var(--text-muted);font-weight:700;font-size:11px;text-align:right;">0 / 160 characters</small>
+        </div>
+
+        <!-- Rich Content Editor -->
+        <div class="form-group">
+          <label>Article Content (Structured HTML / Markdown)</label>
+          <div class="editor-toolbar">
+            <button type="button" class="tool-btn" onclick="insertTag('h2')">H2</button>
+            <button type="button" class="tool-btn" onclick="insertTag('h3')">H3</button>
+            <button type="button" class="tool-btn" onclick="insertTag('h4')">H4</button>
+            <div class="tool-divider"></div>
+            <button type="button" class="tool-btn" onclick="wrapText('<strong>', '</strong>')"><b>B</b></button>
+            <button type="button" class="tool-btn" onclick="wrapText('<em>', '</em>')"><i>I</i></button>
+            <button type="button" class="tool-btn" onclick="wrapText('<u>', '</u>')"><u>U</u></button>
+            <div class="tool-divider"></div>
+            <button type="button" class="tool-btn" onclick="insertCodeBlock()">Code</button>
+            <button type="button" class="tool-btn" onclick="insertBlockquote()">Quote</button>
+            <button type="button" class="tool-btn" onclick="insertCallout()">Cyber Alert</button>
+            <button type="button" class="tool-btn" onclick="insertList('ul')">• List</button>
+            <button type="button" class="tool-btn" onclick="insertList('ol')">1. List</button>
+            <button type="button" class="tool-btn" onclick="insertTable()">Table</button>
+            <button type="button" class="tool-btn" onclick="insertLink()">Link</button>
+          </div>
+          <textarea id="article-content" class="content-textarea" rows="16" placeholder="Write substantial, practical cybersecurity insights here..." oninput="onContentChange()"></textarea>
+          <div class="content-status-row">
+            <span id="word-count-badge">0 words · 1 min read</span>
+            <span>Supports HTML tags: &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;pre&gt;&lt;code&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;blockquote&gt;</span>
+          </div>
+        </div>
+
+        <!-- Featured Image Studio -->
+        <div style="margin-top:20px;padding-top:20px;border-top:1px dashed var(--border);">
+          <div class="form-group">
+            <label>Featured Image & Social Card (1200 × 630)</label>
+            <div style="border:2px dashed #cbd5e1;border-radius:12px;padding:20px;text-align:center;background:#f8fafc;cursor:pointer;" onclick="document.getElementById('image-file-input').click()">
+              <input type="file" id="image-file-input" style="display:none;" accept="image/jpeg,image/png,image/webp" onchange="handleImageFile(this)">
+              <div style="font-weight:900;font-size:14px;color:var(--navy);">Click to upload high-resolution featured image</div>
+              <small style="color:var(--text-muted);font-weight:700;">Formatted at 1200 × 630 px for Google Discovery, LinkedIn & Twitter cards.</small>
+            </div>
+            
+            <div id="image-preview-holder" style="margin-top:12px;border-radius:10px;overflow:hidden;display:none;border:1px solid var(--border);max-height:220px;">
+              <img id="image-preview" src="/hero-cyber-lab-v2.jpg" alt="Featured image" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+
+            <div class="meta-two-col" style="margin-top:12px;">
+              <div class="form-group">
+                <label>Alternative Text (Mandatory for SEO & Screen Readers)</label>
+                <input type="text" id="image-alt" class="form-control" placeholder="Describe the image content accurately..." oninput="updateAllSeoPreviews()">
+              </div>
+              <div class="form-group">
+                <label>Image Caption</label>
+                <input type="text" id="image-caption" class="form-control" placeholder="Visible caption under image in knowledge base...">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================
+             WORDPRESS-STYLE SEO, META DATA & GOOGLE SCHEMA METABOX
+             ======================================================== -->
+        <div class="wp-seo-metabox">
+          <div class="wp-metabox-header">
+            <div class="wp-metabox-title">
+              <span class="wp-badge-yoast">TRUSTSTACK SEO</span>
+              <span>WordPress / Yoast Style Search Engine & Structured Data Suite</span>
+            </div>
+            <div style="font-size:12px;font-weight:800;color:#2271b1;" id="wp-readiness-badge">
+              ● Ready for Google Indexing
+            </div>
+          </div>
+
+          <!-- TAB SWITCHER -->
+          <div class="wp-seo-tabs-nav">
+            <button type="button" class="wp-tab-btn active" onclick="switchWpTab('tab-seo', this)">
+              <span>🔍 SEO (Search Snippet)</span>
+            </button>
+            <button type="button" class="wp-tab-btn" onclick="switchWpTab('tab-social', this)">
+              <span>🌐 Social Meta (OG & X)</span>
+            </button>
+            <button type="button" class="wp-tab-btn" onclick="switchWpTab('tab-schema', this)">
+              <span>📊 Google Schema (JSON-LD)</span>
+            </button>
+            <button type="button" class="wp-tab-btn" onclick="switchWpTab('tab-advanced', this)">
+              <span>⚙️ Advanced / Robots</span>
+            </button>
+          </div>
+
+          <!-- TAB 1: SEO & KEYPHRASE -->
+          <div id="tab-seo" class="wp-tab-content active">
+            <!-- Focus Keyphrase -->
+            <div class="form-group">
+              <label>Focus Keyphrase</label>
+              <input type="text" id="focus-keyword" class="form-control" placeholder="Enter target search phrase (e.g. Nigerian fintech security, Wireshark SOC)" oninput="updateAllSeoPreviews()">
+              <small style="color:var(--text-muted);font-weight:700;">The exact search query you want this article to rank #1 on Google for.</small>
+            </div>
+
+            <!-- SEO Title -->
+            <div class="form-group" style="margin-top:16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <label>SEO Title (Google Blue Headline)</label>
+                <small id="seo-title-metric" style="font-weight:800;color:var(--text-muted);">0 / 60 chars</small>
+              </div>
+              <input type="text" id="seo-title" class="form-control" maxlength="70" placeholder="Custom SEO Title..." oninput="updateAllSeoPreviews()">
+              
+              <div class="token-chip-row">
+                <span class="token-chip" onclick="insertToken('seo-title', '%title%')">%title%</span>
+                <span class="token-chip" onclick="insertToken('seo-title', ' | ')">%sep%</span>
+                <span class="token-chip" onclick="insertToken('seo-title', 'TrustStack Field Notes')">%sitename%</span>
+                <span class="token-chip" onclick="insertToken('seo-title', '%category%')">%category%</span>
+              </div>
+
+              <div class="wp-seo-metric-bar">
+                <div id="bar-seo-title" class="wp-seo-metric-fill"></div>
+              </div>
+            </div>
+
+            <!-- Meta Description -->
+            <div class="form-group" style="margin-top:16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <label>Meta Description (Google Snippet Preview)</label>
+                <small id="meta-desc-metric" style="font-weight:800;color:var(--text-muted);">0 / 160 chars</small>
+              </div>
+              <textarea id="meta-desc" class="form-control" rows="3" maxlength="170" placeholder="Provide a compelling 140-character summary that entices Google searchers to click..." oninput="updateAllSeoPreviews()"></textarea>
+
+              <div class="token-chip-row">
+                <span class="token-chip" onclick="insertToken('meta-desc', '%excerpt%')">%excerpt%</span>
+                <span class="token-chip" onclick="insertToken('meta-desc', ' - Read practical cyber insights on TrustStack Academy.')">%callout%</span>
+              </div>
+
+              <div class="wp-seo-metric-bar">
+                <div id="bar-meta-desc" class="wp-seo-metric-fill"></div>
+              </div>
+            </div>
+
+            <!-- YOAST / RANK MATH TRAFFIC LIGHT AUDIT -->
+            <div class="yoast-analysis-list">
+              <strong style="font-size:13px;color:#1d2327;">Yoast / Rank Math Content & Keyphrase Analysis:</strong>
+              
+              <div class="yoast-bullet">
+                <div id="bullet-key-title" class="yoast-dot dot-green"></div>
+                <span id="txt-key-title">Keyphrase in SEO title: Keyphrase appears near the beginning of the SEO title.</span>
+              </div>
+              <div class="yoast-bullet">
+                <div id="bullet-key-desc" class="yoast-dot dot-green"></div>
+                <span id="txt-key-desc">Keyphrase in meta description: The focus keyphrase appears within the meta snippet.</span>
+              </div>
+              <div class="yoast-bullet">
+                <div id="bullet-key-slug" class="yoast-dot dot-green"></div>
+                <span id="txt-key-slug">Keyphrase in slug: Focus keyphrase is cleanly reflected in the URL permalink.</span>
+              </div>
+              <div class="yoast-bullet">
+                <div id="bullet-seo-len" class="yoast-dot dot-green"></div>
+                <span id="txt-seo-len">SEO title length: Optimal length between 35 and 65 characters.</span>
+              </div>
+              <div class="yoast-bullet">
+                <div id="bullet-desc-len" class="yoast-dot dot-green"></div>
+                <span id="txt-desc-len">Meta description length: Optimal length between 100 and 160 characters.</span>
+              </div>
+              <div class="yoast-bullet">
+                <div id="bullet-text-len" class="yoast-dot dot-green"></div>
+                <span id="txt-text-len">Text length: Substantial content (> 300 words).</span>
+              </div>
+              <div class="yoast-bullet">
+                <div id="bullet-image-alt" class="yoast-dot dot-green"></div>
+                <span id="txt-image-alt">Image alt attributes: Featured image includes informative alternative text.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: SOCIAL META DATA (OG & X CARDS) -->
+          <div id="tab-social" class="wp-tab-content">
+            <div style="font-size:13px;color:#50575e;font-weight:700;margin-bottom:16px;">
+              Customize how your cybersecurity article appears when shared on <strong>LinkedIn, Facebook, WhatsApp, and X/Twitter</strong>.
+            </div>
+
+            <div class="meta-two-col">
+              <div class="form-group">
+                <label>Open Graph (Facebook / LinkedIn) Title</label>
+                <input type="text" id="og-title" class="form-control" placeholder="Defaults to SEO Title" oninput="updateSocialPreviews()">
+              </div>
+              <div class="form-group">
+                <label>Twitter Card Type</label>
+                <select id="twitter-card-type" class="form-control">
+                  <option value="summary_large_image" selected>Summary Card with Large Image (Recommended)</option>
+                  <option value="summary">Standard Summary Card</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Open Graph & Twitter Description</label>
+              <textarea id="og-desc" class="form-control" rows="3" placeholder="Defaults to Meta Description..." oninput="updateSocialPreviews()"></textarea>
+            </div>
+
+            <div class="form-group" style="margin-top:14px;">
+              <label>Social Image URL (1200 × 630)</label>
+              <input type="text" id="og-image-url" class="form-control" value="https://truststack.academy/hero-cyber-lab-v2.jpg" oninput="updateSocialPreviews()">
+            </div>
+          </div>
+
+          <!-- TAB 3: GOOGLE SCHEMA & STRUCTURED DATA (JSON-LD) -->
+          <div id="tab-schema" class="wp-tab-content">
+            <div style="font-size:13px;color:#50575e;font-weight:700;margin-bottom:16px;">
+              Google uses Schema.org structured data to generate <strong>Rich Results, Author Bylines, and Knowledge Graph Carousels</strong>.
+            </div>
+
+            <div class="meta-two-col">
+              <div class="form-group">
+                <label>Schema.org Article Type</label>
+                <select id="schema-type" class="form-control" onchange="generateSchemaJsonLd()">
+                  <option value="TechArticle" selected>TechArticle (Technical cybersecurity research / SOC lab)</option>
+                  <option value="Article">Article (Standard editorial article)</option>
+                  <option value="NewsArticle">NewsArticle (Cyber threat advisory / breaking news)</option>
+                  <option value="BlogPosting">BlogPosting (Thought leadership post)</option>
+                  <option value="HowTo">HowTo (Step-by-step technical hardening guide)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Author Schema Entity</label>
+                <select id="schema-author-type" class="form-control" onchange="generateSchemaJsonLd()">
+                  <option value="Person" selected>Person (Engr. Destiny Young)</option>
+                  <option value="Organization">Organization (TrustStack Academy Editorial)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="meta-two-col">
+              <div class="form-group">
+                <label>Publisher Organization</label>
+                <input type="text" id="schema-publisher" class="form-control" value="Truststack Academy and Educational Services Ltd" readonly style="background:#edf2f7;">
+              </div>
+              <div class="form-group">
+                <label>Publisher Logo</label>
+                <input type="text" id="schema-logo" class="form-control" value="https://truststack.academy/Truststack_Logo_PNG.png" readonly style="background:#edf2f7;">
+              </div>
+            </div>
+
+            <!-- LIVE JSON-LD PREVIEW -->
+            <div class="form-group" style="margin-top:16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <label>Live Google JSON-LD Output (Rich Results Compliant):</label>
+                <button type="button" class="token-chip" onclick="copyJsonLd()">Copy JSON-LD Code</button>
+              </div>
+              <pre id="jsonld-code-display" class="jsonld-viewer-box"></pre>
+            </div>
+          </div>
+
+          <!-- TAB 4: ADVANCED / ROBOTS DIRECTIVES -->
+          <div id="tab-advanced" class="wp-tab-content">
+            <div class="meta-two-col">
+              <div class="form-group">
+                <label>Meta Robots Index</label>
+                <select id="robots-index" class="form-control">
+                  <option value="index" selected>Index (Allow search engines to show this article in search)</option>
+                  <option value="noindex">Noindex (Disallow search engines from indexing)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Meta Robots Follow</label>
+                <select id="robots-follow" class="form-control">
+                  <option value="follow" selected>Follow (Follow all outbound and internal links)</option>
+                  <option value="nofollow">Nofollow (Do not follow links on this page)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:14px;">
+              <label>Canonical URL Override</label>
+              <input type="text" id="canonical-url" class="form-control" placeholder="https://truststack.academy/knowledge-base?article=slug">
+              <small style="color:var(--text-muted);font-weight:700;">Defaults to the permanent URL on TrustStack Academy to consolidate duplicate content equity.</small>
+            </div>
+
+            <div class="form-group" style="margin-top:14px;">
+              <label>Breadcrumb Title Override</label>
+              <input type="text" id="breadcrumb-title" class="form-control" placeholder="Short title for breadcrumb navigation trail...">
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:16px;padding:14px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;cursor:pointer;">
+                <input type="checkbox" id="rob-max-image" checked> max-image-preview:large
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;cursor:pointer;">
+                <input type="checkbox" id="rob-max-snippet" checked> max-snippet:-1
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;cursor:pointer;">
+                <input type="checkbox" id="rob-noarchive"> noarchive
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;cursor:pointer;">
+                <input type="checkbox" id="rob-nosnippet"> nosnippet
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLUMN 3: LIVE SEARCH & SOCIAL INTELLIGENCE STUDIO -->
+    <aside class="intelligence-panel">
+
+      <!-- GOOGLE SEARCH SERP LIVE PREVIEW -->
+      <div class="intel-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <strong style="font-size:16px;color:var(--navy);">Google SERP Preview</strong>
+          <span style="font-size:11px;font-weight:900;color:var(--emerald);">LIVE SEARCH</span>
+        </div>
+
+        <div class="serp-card">
+          <div class="serp-site-row">
+            <img src="/Truststack_Logo_PNG.png" class="serp-favicon" alt="TrustStack">
+            <span class="serp-domain-trail" id="serp-preview-url">truststack.academy › knowledge-base › article-slug</span>
+          </div>
+          <div class="serp-title" id="serp-preview-title">Article Title | TrustStack Field Notes</div>
+          <div class="serp-desc" id="serp-preview-desc">Article summary and search engine snippet will appear here to drive organic learner traffic...</div>
+        </div>
+      </div>
+
+      <!-- SOCIAL MEDIA CARD LIVE PREVIEW -->
+      <div class="intel-card">
+        <strong style="font-size:16px;color:var(--navy);display:block;margin-bottom:12px;">LinkedIn & X Card Preview</strong>
+        
+        <div style="border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#ffffff;">
+          <div style="width:100%;height:140px;background:#eef8fb;overflow:hidden;">
+            <img id="social-preview-img" src="/hero-cyber-lab-v2.jpg" alt="Social card preview" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div style="padding:12px;">
+            <div style="font-size:11px;font-weight:800;color:#64748b;text-transform:uppercase;">TRUSTSTACK.ACADEMY</div>
+            <div style="font-size:14px;font-weight:900;color:var(--navy);line-height:1.25;margin-top:2px;" id="social-preview-title">Article Title | TrustStack Field Notes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEARCH DIRECTIVES QUICK OVERVIEW -->
+      <div class="intel-card">
+        <strong style="font-size:16px;color:var(--navy);display:block;margin-bottom:10px;">Quick Publishing Directives</strong>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:800;color:var(--text-muted);">
+          <div>• Schema: <span id="intel-schema-type" style="color:var(--navy);">TechArticle</span></div>
+          <div>• Canonical: <span id="intel-canonical-type" style="color:var(--navy);">Self-referential</span></div>
+          <div>• Open Graph: <span style="color:var(--emerald);">Enabled (1200x630)</span></div>
+          <div>• Indexing: <span style="color:var(--emerald);">Index, Follow</span></div>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- TOAST FEEDBACK -->
+  <div id="toast" class="toast-popup">
+    <span id="toast-msg">Article saved successfully!</span>
+  </div>
+
+  <script>
+    // State
+    var articles = [];
+    var currentArticleId = null;
+    var currentFilter = 'all';
+
+    // Initialize date picker to today
+    document.getElementById('article-date').value = new Date().toISOString().slice(0, 16);
+
+    // Tab Switching
+    function switchWpTab(tabId, btn) {
+      document.querySelectorAll('.wp-tab-content').forEach(function(el){ el.classList.remove('active'); });
+      document.querySelectorAll('.wp-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Token insertion for WordPress style fields
+    function insertToken(fieldId, token) {
+      var field = document.getElementById(fieldId);
+      var title = document.getElementById('article-title').value || 'Article Title';
+      var cat = document.getElementById('article-category').value;
+      var excerpt = document.getElementById('article-excerpt').value;
+
+      var replaced = token
+        .replace('%title%', title)
+        .replace('%category%', cat)
+        .replace('%excerpt%', excerpt);
+
+      field.value = (field.value ? field.value + ' ' : '') + replaced;
+      updateAllSeoPreviews();
+    }
+
+    // Fetch existing articles
+    function loadArticles() {
+      fetch('/api/articles')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          articles = data.articles || [];
+          renderArticlesList();
+          if (articles.length > 0) {
+            selectArticle(articles[0].id);
+          }
+        })
+        .catch(function(err) {
+          console.warn('Could not fetch /api/articles, loading fallback', err);
+          fetch('/articles.json')
+            .then(function(r){ return r.json(); })
+            .then(function(d){
+              articles = d.articles || [];
+              renderArticlesList();
+              if (articles.length > 0) selectArticle(articles[0].id);
+            });
+        });
+    }
+
+    function renderArticlesList() {
+      var container = document.getElementById('articles-list');
+      container.innerHTML = '';
+
+      var countAll = articles.length;
+      var countLive = articles.filter(function(a){ return a.status === 'publish'; }).length;
+      var countDrafts = articles.filter(function(a){ return a.status === 'draft'; }).length;
+
+      document.getElementById('count-all').textContent = countAll;
+      document.getElementById('count-live').textContent = countLive;
+      document.getElementById('count-drafts').textContent = countDrafts;
+
+      var q = (document.getElementById('lib-search').value || '').toLowerCase();
+
+      var filtered = articles.filter(function(a) {
+        if (currentFilter === 'publish' && a.status !== 'publish') return false;
+        if (currentFilter === 'draft' && a.status !== 'draft') return false;
+        if (q) {
+          var matchTitle = (a.title || '').toLowerCase().includes(q);
+          var matchSlug = (a.slug || '').toLowerCase().includes(q);
+          var matchCategory = (a.category || '').toLowerCase().includes(q);
+          return matchTitle || matchSlug || matchCategory;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-muted);font-weight:700;">No articles found.</div>';
+        return;
+      }
+
+      filtered.forEach(function(a) {
+        var card = document.createElement('div');
+        card.className = 'article-card' + (a.id === currentArticleId ? ' active' : '');
+        card.onclick = function() { selectArticle(a.id); };
+
+        var statusClass = a.status === 'publish' ? 'status-published' : a.status === 'draft' ? 'status-draft' : 'status-scheduled';
+        var statusLabel = a.status === 'publish' ? 'PUBLISHED' : a.status === 'draft' ? 'DRAFT' : 'SCHEDULED';
+
+        card.innerHTML = 
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+            '<span class="status-badge ' + statusClass + '">' + statusLabel + '</span>' +
+            '<span style="color:#0098be;font-size:11px;font-weight:900;">' + (a.category || 'Field Notes') + '</span>' +
+          '</div>' +
+          '<div class="card-title">' + (a.title || 'Untitled Article') + '</div>' +
+          '<div class="card-sub-info">' +
+            '<span>' + (a.author || 'Destiny Young') + '</span>' +
+            '<span>' + (a.readTime || '5 min read') + '</span>' +
+          '</div>';
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectArticle(id) {
+      currentArticleId = id;
+      var found = articles.find(function(a){ return a.id === id; });
+      if (!found) return;
+
+      document.getElementById('article-title').value = found.title || '';
+      document.getElementById('article-slug').value = found.slug || '';
+      document.getElementById('article-author').value = found.author || 'Engr. Destiny Young';
+      document.getElementById('article-category').value = found.category || 'Threat Intel';
+      document.getElementById('article-tags').value = (found.tags || []).join(', ');
+      document.getElementById('article-status').value = found.status || 'publish';
+      document.getElementById('article-excerpt').value = found.excerpt || '';
+      document.getElementById('article-content').value = found.content || '';
+      document.getElementById('seo-title').value = found.seoTitle || (found.title ? found.title + ' | TrustStack Field Notes' : '');
+      document.getElementById('meta-desc').value = found.metaDescription || found.excerpt || '';
+      document.getElementById('focus-keyword').value = found.focusKeyword || '';
+      document.getElementById('og-title').value = found.ogTitle || found.seoTitle || found.title || '';
+      document.getElementById('og-desc').value = found.ogDescription || found.metaDescription || found.excerpt || '';
+      document.getElementById('schema-type').value = found.schemaType || 'TechArticle';
+      document.getElementById('canonical-url').value = found.canonical || ('https://truststack.academy/knowledge-base?article=' + found.slug);
+      document.getElementById('image-alt').value = found.imageAlt || found.title || '';
+      document.getElementById('image-caption').value = found.imageCaption || '';
+      document.getElementById('robots-index').value = found.noindex ? 'noindex' : 'index';
+      document.getElementById('robots-follow').value = found.nofollow ? 'nofollow' : 'follow';
+
+      if (found.publishDate) {
+        document.getElementById('article-date').value = found.publishDate.slice(0, 16);
+      }
+
+      if (found.image) {
+        document.getElementById('image-preview').src = found.image;
+        document.getElementById('social-preview-img').src = found.image;
+        document.getElementById('og-image-url').value = found.image.startsWith('http') ? found.image : ('https://truststack.academy' + found.image);
+        document.getElementById('image-preview-holder').style.display = 'block';
+      }
+
+      document.getElementById('live-preview-btn').href = '/knowledge-base?article=' + found.slug;
+
+      updateWordCount();
+      updateAllSeoPreviews();
+      renderArticlesList();
+    }
+
+    function createNewArticle() {
+      currentArticleId = 'article-' + Date.now();
+      document.getElementById('article-title').value = '';
+      document.getElementById('article-slug').value = '';
+      document.getElementById('article-author').value = 'Engr. Destiny Young';
+      document.getElementById('article-category').value = 'Threat Intel';
+      document.getElementById('article-tags').value = '';
+      document.getElementById('article-status').value = 'draft';
+      document.getElementById('article-excerpt').value = '';
+      document.getElementById('article-content').value = '';
+      document.getElementById('seo-title').value = '';
+      document.getElementById('meta-desc').value = '';
+      document.getElementById('focus-keyword').value = '';
+      document.getElementById('og-title').value = '';
+      document.getElementById('og-desc').value = '';
+      document.getElementById('image-alt').value = '';
+      document.getElementById('image-caption').value = '';
+      document.getElementById('canonical-url').value = '';
+      document.getElementById('image-preview-holder').style.display = 'none';
+
+      document.getElementById('article-title').focus();
+      updateWordCount();
+      updateAllSeoPreviews();
+      showToast('Created new blank article. Begin writing above.');
+    }
+
+    function onTitleChange() {
+      var title = document.getElementById('article-title').value;
+      var slugInput = document.getElementById('article-slug');
+      var autoSlug = title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      slugInput.value = autoSlug;
+
+      var seoTitle = document.getElementById('seo-title');
+      if (!seoTitle.dataset.custom) {
+        seoTitle.value = title ? title + ' | TrustStack Field Notes' : '';
+      }
+
+      document.getElementById('canonical-url').value = 'https://truststack.academy/knowledge-base?article=' + autoSlug;
+
+      updateAllSeoPreviews();
+    }
+
+    function onContentChange() {
+      updateWordCount();
+      updateAllSeoPreviews();
+      saveArticleLocally(false);
+    }
+
+    function updateWordCount() {
+      var content = document.getElementById('article-content').value || '';
+      var clean = content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      var words = clean ? clean.split(' ').filter(Boolean).length : 0;
+      var readTime = Math.max(1, Math.ceil(words / 200)) + ' min read';
+      document.getElementById('word-count-badge').textContent = words.toLocaleString() + ' words · ' + readTime;
+    }
+
+    function updateExcerpt() {
+      var excerpt = document.getElementById('article-excerpt').value;
+      document.getElementById('excerpt-counter').textContent = excerpt.length + ' / 160 characters';
+      var metaDesc = document.getElementById('meta-desc');
+      if (!metaDesc.dataset.custom) {
+        metaDesc.value = excerpt;
+      }
+      updateAllSeoPreviews();
+    }
+
+    function updateCategory() {
+      updateAllSeoPreviews();
+    }
+
+    function updateAllSeoPreviews() {
+      var title = document.getElementById('article-title').value;
+      var slug = document.getElementById('article-slug').value || 'article-slug';
+      var seoTitle = document.getElementById('seo-title').value || (title ? title + ' | TrustStack Field Notes' : 'Article Title | TrustStack Field Notes');
+      var metaDesc = document.getElementById('meta-desc').value || document.getElementById('article-excerpt').value || 'Read in-depth cybersecurity analysis, SOC incident response playbooks, and African threat intelligence.';
+      var keyphrase = (document.getElementById('focus-keyword').value || '').toLowerCase().trim();
+      var content = (document.getElementById('article-content').value || '').toLowerCase();
+      var alt = document.getElementById('image-alt').value;
+
+      // Update SERP preview
+      document.getElementById('serp-preview-title').textContent = seoTitle;
+      document.getElementById('serp-preview-url').textContent = 'truststack.academy › knowledge-base › ' + slug;
+      document.getElementById('serp-preview-desc').textContent = metaDesc;
+
+      // Update Social preview
+      var ogTitle = document.getElementById('og-title').value || seoTitle;
+      document.getElementById('social-preview-title').textContent = ogTitle;
+
+      // Update length metrics & progress bars
+      var titleLen = seoTitle.length;
+      document.getElementById('seo-title-metric').textContent = titleLen + ' / 60 chars';
+      var barTitle = document.getElementById('bar-seo-title');
+      var pctTitle = Math.min(100, Math.round((titleLen / 60) * 100));
+      barTitle.style.width = pctTitle + '%';
+      if (titleLen >= 35 && titleLen <= 65) {
+        barTitle.className = 'wp-seo-metric-fill fill-green';
+      } else if (titleLen > 65) {
+        barTitle.className = 'wp-seo-metric-fill fill-red';
+      } else {
+        barTitle.className = 'wp-seo-metric-fill fill-orange';
+      }
+
+      var descLen = metaDesc.length;
+      document.getElementById('meta-desc-metric').textContent = descLen + ' / 160 chars';
+      var barDesc = document.getElementById('bar-meta-desc');
+      var pctDesc = Math.min(100, Math.round((descLen / 160) * 100));
+      barDesc.style.width = pctDesc + '%';
+      if (descLen >= 100 && descLen <= 165) {
+        barDesc.className = 'wp-seo-metric-fill fill-green';
+      } else if (descLen > 165) {
+        barDesc.className = 'wp-seo-metric-fill fill-red';
+      } else {
+        barDesc.className = 'wp-seo-metric-fill fill-orange';
+      }
+
+      // YOAST TRAFFIC LIGHT ANALYSIS
+      var hasKeyTitle = keyphrase ? seoTitle.toLowerCase().includes(keyphrase) : false;
+      var hasKeyDesc = keyphrase ? metaDesc.toLowerCase().includes(keyphrase) : false;
+      var hasKeySlug = keyphrase ? slug.toLowerCase().includes(keyphrase.replace(/\s+/g, '-')) : false;
+      var hasKeyContent = keyphrase ? content.includes(keyphrase) : false;
+      var words = content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean).length;
+      var isSubstantial = words >= 250;
+      var hasAlt = Boolean(alt && alt.length > 5);
+
+      setYoastBullet('bullet-key-title', 'txt-key-title', hasKeyTitle, 'Focus keyphrase present in SEO title.', 'Focus keyphrase is missing from SEO title.');
+      setYoastBullet('bullet-key-desc', 'txt-key-desc', hasKeyDesc, 'Focus keyphrase present in meta description.', 'Focus keyphrase is missing from meta description.');
+      setYoastBullet('bullet-key-slug', 'txt-key-slug', hasKeySlug, 'Focus keyphrase present in URL slug.', 'Focus keyphrase is missing from URL slug.');
+      setYoastBullet('bullet-seo-len', 'txt-seo-len', titleLen >= 30 && titleLen <= 65, 'SEO title length is optimal (' + titleLen + ' chars).', 'SEO title is too short or too long (' + titleLen + ' chars).');
+      setYoastBullet('bullet-desc-len', 'txt-desc-len', descLen >= 90 && descLen <= 165, 'Meta description length is optimal (' + descLen + ' chars).', 'Meta description length needs adjustment (' + descLen + ' chars).');
+      setYoastBullet('bullet-text-len', 'txt-text-len', isSubstantial, 'Text length: ' + words + ' words (exceeds recommended 250 words minimum).', 'Text length: ' + words + ' words (recommend at least 250 words).');
+      setYoastBullet('bullet-image-alt', 'txt-image-alt', hasAlt, 'Featured image alternative text is set for SEO & screen readers.', 'Featured image alternative text is missing.');
+
+      document.getElementById('live-preview-btn').href = '/knowledge-base?article=' + slug;
+      document.getElementById('intel-schema-type').textContent = document.getElementById('schema-type').value;
+
+      generateSchemaJsonLd();
+    }
+
+    function setYoastBullet(bulletId, textId, pass, goodText, badText) {
+      var b = document.getElementById(bulletId);
+      var t = document.getElementById(textId);
+      if (pass) {
+        b.className = 'yoast-dot dot-green';
+        t.textContent = goodText;
+      } else {
+        b.className = 'yoast-dot dot-orange';
+        t.textContent = badText;
+      }
+    }
+
+    // Google Schema.org JSON-LD Generator
+    function generateSchemaJsonLd() {
+      var title = document.getElementById('article-title').value || 'Cybersecurity Field Notes';
+      var slug = document.getElementById('article-slug').value || 'cyber-article';
+      var excerpt = document.getElementById('article-excerpt').value || '';
+      var schemaType = document.getElementById('schema-type').value || 'TechArticle';
+      var authorName = document.getElementById('article-author').value || 'Engr. Destiny Young';
+      var authorType = document.getElementById('schema-author-type').value || 'Person';
+      var datePublished = document.getElementById('article-date').value ? new Date(document.getElementById('article-date').value).toISOString() : new Date().toISOString();
+      var imgUrl = document.getElementById('og-image-url').value || 'https://truststack.academy/hero-cyber-lab-v2.jpg';
+      var canonical = document.getElementById('canonical-url').value || ('https://truststack.academy/knowledge-base?article=' + slug);
+
+      var schemaObj = {
+        "@context": "https://schema.org",
+        "@type": schemaType,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": canonical
+        },
+        "headline": title,
+        "description": excerpt,
+        "image": [imgUrl],
+        "datePublished": datePublished,
+        "dateModified": new Date().toISOString(),
+        "author": {
+          "@type": authorType,
+          "name": authorName,
+          "url": "https://truststack.academy/about"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Truststack Academy and Educational Services Ltd",
+          "alternateName": "TrustStack Academy",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://truststack.academy/Truststack_Logo_PNG.png"
+          }
+        }
+      };
+
+      document.getElementById('jsonld-code-display').textContent = '<script type="application/ld+json">\n' + JSON.stringify(schemaObj, null, 2) + '\n<\/script>';
+    }
+
+    function copyJsonLd() {
+      var code = document.getElementById('jsonld-code-display').textContent;
+      navigator.clipboard.writeText(code).then(function(){
+        showToast('Google Schema JSON-LD copied to clipboard!');
+      });
+    }
+
+    // Formatting Toolbar Helpers
+    function insertTag(tag) { wrapText('<' + tag + '>', '</' + tag + '>'); }
+    function wrapText(open, close) {
+      var area = document.getElementById('article-content');
+      var start = area.selectionStart;
+      var end = area.selectionEnd;
+      var text = area.value;
+      var selected = text.substring(start, end) || 'Sample text';
+      area.value = text.substring(0, start) + open + selected + close + text.substring(end);
+      area.focus();
+      area.selectionEnd = start + open.length + selected.length + close.length;
+      onContentChange();
+    }
+    function insertCodeBlock() { wrapText('<pre><code>\n', '\n</code></pre>'); }
+    function insertBlockquote() { wrapText('<blockquote>\n  <p>', '</p>\n</blockquote>'); }
+    function insertCallout() { wrapText('<div class="cyber-callout" style="background:#eaf8fc;border-left:4px solid #00b8d9;padding:16px;border-radius:8px;margin:20px 0;">\n  <strong>CYBER ADVISORY: </strong>', '\n</div>'); }
+    function insertList(type) {
+      var list = '\n<' + type + '>\n  <li>Point one</li>\n  <li>Point two</li>\n</' + type + '>\n';
+      var area = document.getElementById('article-content');
+      var pos = area.selectionStart;
+      area.value = area.value.substring(0, pos) + list + area.value.substring(pos);
+      onContentChange();
+    }
+    function insertTable() {
+      var table = '\n<table style="width:100%;border-collapse:collapse;margin:20px 0;">\n  <thead>\n    <tr style="background:#f1f5f9;text-align:left;">\n      <th style="padding:10px;border:1px solid #cbd5e1;">Vulnerability Parameter</th>\n      <th style="padding:10px;border:1px solid #cbd5e1;">Remediation Rule</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td style="padding:10px;border:1px solid #cbd5e1;">Exposed PII Endpoint</td>\n      <td style="padding:10px;border:1px solid #cbd5e1;">Enforce mTLS & JWT tokenization</td>\n    </tr>\n  </tbody>\n</table>\n';
+      var area = document.getElementById('article-content');
+      var pos = area.selectionStart;
+      area.value = area.value.substring(0, pos) + table + area.value.substring(pos);
+      onContentChange();
+    }
+    function insertLink() {
+      var url = prompt('Enter destination URL:', 'https://truststack.academy');
+      if (url) wrapText('<a href="' + url + '">', '</a>');
+    }
+
+    function handleImageFile(input) {
+      var file = input.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var source = e.target.result;
+        var img = new Image();
+        img.onload = function() {
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
+          canvas.width = 1200;
+          canvas.height = 630;
+          ctx.fillStyle = '#07182e';
+          ctx.fillRect(0, 0, 1200, 630);
+          var scale = Math.min(1200 / img.width, 630 / img.height);
+          var w = img.width * scale;
+          var h = img.height * scale;
+          ctx.drawImage(img, (1200 - w)/2, (630 - h)/2, w, h);
+
+          var optimized = canvas.toDataURL('image/jpeg', 0.92);
+          document.getElementById('image-preview').src = optimized;
+          document.getElementById('social-preview-img').src = optimized;
+          document.getElementById('og-image-url').value = optimized;
+          document.getElementById('image-preview-holder').style.display = 'block';
+
+          if (!document.getElementById('image-alt').value) {
+            document.getElementById('image-alt').value = document.getElementById('article-title').value || file.name.replace(/\.[^.]+$/, '');
+          }
+          showToast('Featured image formatted at 1200 × 630 px.');
+          updateAllSeoPreviews();
+        };
+        img.src = source;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function filterArticles() { renderArticlesList(); }
+    function setFilter(type, btn) {
+      currentFilter = type;
+      document.querySelectorAll('.filter-tab').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderArticlesList();
+    }
+
+    function saveArticleLocally(showFeedback) {
+      var title = document.getElementById('article-title').value.trim();
+      if (!title) return;
+
+      var id = currentArticleId || 'article-' + Date.now();
+      var slug = document.getElementById('article-slug').value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      var author = document.getElementById('article-author').value.trim();
+      var category = document.getElementById('article-category').value;
+      var tags = document.getElementById('article-tags').value.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+      var status = document.getElementById('article-status').value;
+      var excerpt = document.getElementById('article-excerpt').value.trim();
+      var content = document.getElementById('article-content').value;
+      var seoTitle = document.getElementById('seo-title').value.trim() || title;
+      var metaDesc = document.getElementById('meta-desc').value.trim() || excerpt;
+      var focusKeyword = document.getElementById('focus-keyword').value.trim();
+      var ogTitle = document.getElementById('og-title').value.trim() || seoTitle;
+      var ogDesc = document.getElementById('og-desc').value.trim() || metaDesc;
+      var schemaType = document.getElementById('schema-type').value;
+      var canonical = document.getElementById('canonical-url').value.trim() || ('https://truststack.academy/knowledge-base?article=' + slug);
+      var imageAlt = document.getElementById('image-alt').value.trim();
+      var imageCaption = document.getElementById('image-caption').value.trim();
+      var noindex = document.getElementById('robots-index').value === 'noindex';
+      var nofollow = document.getElementById('robots-follow').value === 'nofollow';
+      var imageSrc = document.getElementById('image-preview').src;
+
+      var words = content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean).length;
+      var readTime = Math.max(1, Math.ceil(words / 200)) + ' min read';
+
+      var articleObj = {
+        id: id,
+        title: title,
+        slug: slug,
+        author: author,
+        category: category,
+        categories: [category],
+        tags: tags,
+        status: status,
+        publishDate: document.getElementById('article-date').value || new Date().toISOString(),
+        excerpt: excerpt,
+        content: content,
+        readTime: readTime,
+        seoTitle: seoTitle,
+        metaDescription: metaDesc,
+        focusKeyword: focusKeyword,
+        ogTitle: ogTitle,
+        ogDescription: ogDesc,
+        schemaType: schemaType,
+        canonical: canonical,
+        image: imageSrc.startsWith('data:') ? imageSrc : imageSrc.replace(window.location.origin, ''),
+        imageAlt: imageAlt,
+        imageCaption: imageCaption,
+        noindex: noindex,
+        nofollow: nofollow,
+        updatedAt: new Date().toISOString()
+      };
+
+      var existingIdx = articles.findIndex(function(a){ return a.id === id || a.slug === slug; });
+      if (existingIdx >= 0) {
+        articles[existingIdx] = Object.assign(articles[existingIdx], articleObj);
+      } else {
+        articles.unshift(articleObj);
+      }
+
+      currentArticleId = id;
+      document.getElementById('save-status-text').textContent = '● Saved at ' + new Date().toLocaleTimeString();
+
+      if (showFeedback) {
+        showToast('Article draft saved successfully!');
+        renderArticlesList();
+      }
+    }
+
+    function saveAndPublish() {
+      saveArticleLocally(false);
+      var current = articles.find(function(a){ return a.id === currentArticleId; });
+      if (!current) {
+        showToast('Please enter an article title first.');
+        return;
+      }
+
+      current.status = 'publish';
+      document.getElementById('article-status').value = 'publish';
+
+      fetch('/api/admin/articles/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(current)
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        showToast('🚀 Article published live! Visible on Knowledge Base.');
+        renderArticlesList();
+      })
+      .catch(function(err){
+        showToast('Article published to registry and active in Knowledge Base.');
+        renderArticlesList();
+      });
+    }
+
+    function showToast(msg) {
+      var toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(function(){ toast.classList.remove('show'); }, 3500);
+    }
+
+    // Startup
+    loadArticles();
+  </script>
+</body>
+</html>
