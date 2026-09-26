@@ -607,13 +607,13 @@ export default function Scholarship() {
           <div className="footer-col">
             <div className="footer-col-head">QUICK LINKS</div>
             <ul className="footer-links">
-              <li><Link href="/">Home</Link></li>
-              <li><Link href="/courses">Courses</Link></li>
-              <li><Link href="/about">About</Link></li>
-              <li><Link href="/#whytruststack">Why TrustStack</Link></li>
-              <li><Link href="/contact">Contact</Link></li>
-              <li><Link href="/login">My Learning</Link></li>
-              <li><Link href="/verify">Verify</Link></li>
+              <li><Link href="/" className="footer-nav-link">Home</Link></li>
+              <li><Link href="/courses" className="footer-nav-link">Courses</Link></li>
+              <li><Link href="/about" className="footer-nav-link">About</Link></li>
+              <li><Link href="/#whytruststack" className="footer-nav-link">Why TrustStack</Link></li>
+              <li><Link href="/contact" className="footer-nav-link">Contact</Link></li>
+              <li><Link href="/login" className="footer-nav-link">My Learning</Link></li>
+              <li><Link href="/verify" className="footer-nav-link">Verify</Link></li>
             </ul>
           </div>
 
@@ -621,15 +621,15 @@ export default function Scholarship() {
           <div className="footer-col">
             <div className="footer-col-head">RESOURCES</div>
             <ul className="footer-links">
-              <li><Link href="/knowledge-base">Knowledge Base</Link></li>
-              <li><Link href="/cdpo">Free CDPO Course</Link></li>
-              <li><Link href="/career-badges">Career Badges</Link></li>
-              <li><Link href="/verify">Verify Certificate</Link></li>
-              <li><Link href="/learner">Verify Learner Registry</Link></li>
-              <li><Link href="/sample-certificate">Sample Certificate</Link></li>
-              <li><Link href="/scholarship">Scholarship</Link></li>
-              <li><Link href="/privacy">Privacy Policy</Link></li>
-              <li><Link href="/terms">Terms of Use</Link></li>
+              <li><Link href="/knowledge-base" className="footer-nav-link">Knowledge Base</Link></li>
+              <li><Link href="/cdpo" className="footer-nav-link">Free CDPO Course</Link></li>
+              <li><Link href="/career-badges" className="footer-nav-link">Career Badges</Link></li>
+              <li><Link href="/verify" className="footer-nav-link">Verify Certificate</Link></li>
+              <li><Link href="/learner" className="footer-nav-link">Verify Learner Registry</Link></li>
+              <li><Link href="/sample-certificate" className="footer-nav-link">Sample Certificate</Link></li>
+              <li><Link href="/scholarship" className="footer-nav-link">Scholarship</Link></li>
+              <li><Link href="/privacy" className="footer-nav-link">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="footer-nav-link">Terms of Use</Link></li>
             </ul>
             <div className="corporate-hq-box">
               <div className="hq-title">📍 CORPORATE HEADQUARTERS</div>
@@ -659,7 +659,7 @@ export default function Scholarship() {
           </div>
 
           {/* Column 5: Contact & Social */}
-          <div className="footer-col">
+          <div className="footer-col col-contact-social">
             <div className="footer-col-head">CONTACT &amp; SOCIAL</div>
             <div className="contact-details">
               <p>✉ hello@truststackacademy.com</p>
@@ -667,11 +667,64 @@ export default function Scholarship() {
               <p>📍 Uyo, Akwa Ibom</p>
             </div>
             <div className="footer-social-row">
-              <a href="https://web.facebook.com/truststackng" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
-              <a href="https://x.com/truststackng" target="_blank" rel="noopener noreferrer" aria-label="X">X</a>
-              <a href="https://www.linkedin.com/company/truststackng/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">IN</a>
-              <a href="https://instagram.com/truststackng" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
-              <a href="https://www.youtube.com/@TruststackNG" target="_blank" rel="noopener noreferrer" aria-label="YouTube">YT</a>
+              <a href="https://web.facebook.com/truststackng" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-btn social-fb">
+                <svg className="social-svg" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
+              <a href="https://x.com/truststackng" target="_blank" rel="noopener noreferrer" aria-label="X" className="social-btn social-x">
+                <svg className="social-svg" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </a>
+              <a href="https://www.linkedin.com/company/truststackng/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-btn social-li">
+                <svg className="social-svg" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </a>
+              <a href="https://instagram.com/truststackng" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-btn social-ig">
+                <svg className="social-svg" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                </svg>
+              </a>
+              <a href="https://wa.me/2348090243111" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="social-btn social-wa">
+                <svg className="social-svg" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+              </a>
+              <a href="https://www.youtube.com/@TruststackNG" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-btn social-yt">
+                <svg className="social-svg" viewBox="0 0 24 24">
+                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0-3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                </svg>
+              </a>
+            </div>
+            <div className="footer-handle-tag">@truststackng - Built in Nigeria</div>
+
+            {/* Email Subscription Box */}
+            <div className="newsletter-card">
+              <div className="newsletter-gold-line" />
+              <div className="newsletter-body">
+                <div className="newsletter-title">GET CYBER INSIGHTS WEEKLY</div>
+                <form
+                  className="newsletter-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    alert('Thank you for subscribing to TrustStack Cyber Insights!');
+                    e.target.reset();
+                  }}
+                >
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                    className="newsletter-input"
+                  />
+                  <button type="submit" className="newsletter-btn">
+                    SUBSCRIBE
+                  </button>
+                </form>
+                <div className="newsletter-subtext">No spam, unsubscribe anytime.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1592,23 +1645,24 @@ export default function Scholarship() {
 
         /* ── OFFICIAL 5-COLUMN FOOTER ── */
         .site-footer {
-          background: #0A1931;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-          padding-top: 80px;
+          background: #0A1931 !important;
+          color: #ffffff !important;
+          border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+          padding-top: 70px !important;
         }
         .footer-container {
           max-width: 1280px;
           margin: 0 auto;
           padding: 0 24px 60px;
           display: grid;
-          grid-template-columns: 1.4fr 0.9fr 1.1fr 0.9fr 1fr;
-          gap: 36px;
+          grid-template-columns: 1.25fr 0.85fr 1fr 1fr 1.35fr;
+          gap: 32px;
         }
         .footer-col-head {
           font-size: 12px;
           font-weight: 900;
           letter-spacing: .12em;
-          color: #ffffff;
+          color: #ffffff !important;
           margin-bottom: 20px;
           position: relative;
           padding-bottom: 8px;
@@ -1627,7 +1681,7 @@ export default function Scholarship() {
           align-items: center;
           gap: 10px;
           text-decoration: none;
-          color: #ffffff;
+          color: #ffffff !important;
           font-size: 18px;
           font-weight: 900;
           margin-bottom: 14px;
@@ -1635,7 +1689,7 @@ export default function Scholarship() {
         .footer-brand-desc {
           font-size: 13px;
           line-height: 1.6;
-          color: #94a3b8;
+          color: rgba(255, 255, 255, 0.8) !important;
           margin-bottom: 20px;
         }
         .founder-quote-box {
@@ -1647,7 +1701,7 @@ export default function Scholarship() {
         .founder-quote-box p {
           font-size: 12px;
           font-style: italic;
-          color: #cbd5e1;
+          color: rgba(255, 255, 255, 0.85) !important;
           line-height: 1.6;
         }
         .quote-author {
@@ -1655,39 +1709,53 @@ export default function Scholarship() {
           margin-top: 8px;
           font-size: 11px;
           font-weight: 700;
-          color: #D4AF37;
+          color: #D4AF37 !important;
         }
         .footer-links {
           list-style: none;
           display: grid;
           gap: 10px;
+          padding: 0;
+          margin: 0;
         }
-        .footer-links li a {
-          color: #94a3b8;
-          text-decoration: none;
-          font-size: 13px;
-          transition: color .15s;
+        :global(.site-footer a) {
+          color: #ffffff !important;
+          text-decoration: none !important;
+          transition: color .15s ease, transform .15s ease !important;
         }
-        .footer-links li a:hover {
-          color: #00D4FF;
+        :global(.site-footer a:hover) {
+          color: #00b8d9 !important;
+        }
+        :global(.site-footer .footer-nav-link) {
+          color: rgba(255, 255, 255, 0.85) !important;
+          font-size: 13px !important;
+          font-weight: 600 !important;
+          display: inline-block !important;
+          transition: color .15s ease, transform .15s ease !important;
+        }
+        :global(.site-footer .footer-nav-link:hover) {
+          color: #00D4FF !important;
+          transform: translateX(3px) !important;
         }
         .footer-courses-list {
           list-style: none;
           display: flex !important;
           flex-direction: column !important;
-          gap: 8px !important;
+          gap: 9px !important;
+          padding: 0;
+          margin: 0;
         }
-        .footer-course-link {
+        :global(.site-footer .footer-course-link) {
           display: inline-flex !important;
           align-items: center !important;
           gap: 9px !important;
-          color: #94a3b8 !important;
+          color: #ffffff !important;
           text-decoration: none !important;
           font-size: 13px !important;
           font-weight: 700 !important;
-          transition: color .15s, transform .15s !important;
+          transition: color .15s ease, transform .15s ease !important;
         }
-        .footer-course-link:hover {
+        :global(.site-footer .footer-course-link:hover) {
           color: #00D4FF !important;
           transform: translateX(3px) !important;
         }
@@ -1703,11 +1771,15 @@ export default function Scholarship() {
           font-weight: 900 !important;
           line-height: 1 !important;
           flex-shrink: 0 !important;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
         }
-        .footer-course-title {
-          color: inherit !important;
+        :global(.site-footer .footer-course-title) {
+          color: rgba(255, 255, 255, 0.88) !important;
           font-size: 13px !important;
+          font-weight: 700 !important;
+        }
+        :global(.site-footer .footer-course-link:hover .footer-course-title) {
+          color: #00D4FF !important;
         }
         .corporate-hq-box {
           margin-top: 24px;
@@ -1718,43 +1790,121 @@ export default function Scholarship() {
           font-size: 10px;
           font-weight: 900;
           letter-spacing: .08em;
-          color: #D4AF37;
+          color: #D4AF37 !important;
           margin-bottom: 6px;
         }
         .corporate-hq-box address {
           font-style: normal;
           font-size: 12px;
           line-height: 1.5;
-          color: #94a3b8;
+          color: rgba(255, 255, 255, 0.78) !important;
         }
         .contact-details p {
           font-size: 13px;
-          color: #94a3b8;
+          color: rgba(255, 255, 255, 0.82) !important;
           margin-bottom: 8px;
         }
         .footer-social-row {
           display: flex;
+          flex-wrap: wrap;
           gap: 10px;
           margin-top: 16px;
         }
-        .footer-social-row a {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.08);
-          color: #ffffff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        :global(.site-footer .social-btn) {
+          width: 36px !important;
+          height: 36px !important;
+          border-radius: 50% !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          text-decoration: none !important;
+          transition: transform .18s ease, box-shadow .18s ease !important;
+          flex-shrink: 0 !important;
+        }
+        :global(.site-footer .social-btn:hover) {
+          transform: scale(1.12) !important;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+        }
+        :global(.site-footer .social-fb) { background: #1877F2 !important; color: #ffffff !important; }
+        :global(.site-footer .social-x) { background: #000000 !important; border: 1px solid rgba(255, 255, 255, 0.25) !important; color: #ffffff !important; }
+        :global(.site-footer .social-li) { background: #0A66C2 !important; color: #ffffff !important; }
+        :global(.site-footer .social-ig) { background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5) !important; color: #ffffff !important; }
+        :global(.site-footer .social-wa) { background: #25D366 !important; color: #ffffff !important; }
+        :global(.site-footer .social-yt) { background: #FF0000 !important; color: #ffffff !important; }
+
+        .social-svg {
+          width: 17px;
+          height: 17px;
+          fill: #ffffff;
+        }
+        .footer-handle-tag {
+          margin-top: 8px;
+          font-size: 11px;
+          color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        /* ── NEWSLETTER CARD ── */
+        .newsletter-card {
+          margin-top: 18px;
+          background: #ffffff !important;
+          border-radius: 4px;
+          overflow: hidden;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+        .newsletter-gold-line {
+          height: 3px;
+          background: #D4AF37;
+        }
+        .newsletter-body {
+          padding: 16px;
+        }
+        .newsletter-title {
           font-size: 11px;
           font-weight: 900;
-          text-decoration: none;
-          transition: background .15s, transform .15s;
+          color: #0A1931 !important;
+          letter-spacing: .05em;
         }
-        .footer-social-row a:hover {
-          background: #00D4FF;
-          color: #030c18;
-          transform: translateY(-2px);
+        .newsletter-form {
+          margin-top: 10px;
+          display: flex;
+          gap: 6px;
+        }
+        .newsletter-input {
+          flex: 1;
+          height: 36px;
+          padding: 0 10px;
+          border: 1px solid rgba(10, 25, 49, 0.15) !important;
+          border-radius: 2px;
+          font-size: 12px;
+          color: #0A1931 !important;
+          outline: none;
+          background: #ffffff !important;
+        }
+        .newsletter-input:focus {
+          border-color: #00b8d9 !important;
+        }
+        .newsletter-input::placeholder {
+          color: #8290a5 !important;
+        }
+        .newsletter-btn {
+          height: 36px;
+          padding: 0 14px;
+          background: #0A1931 !important;
+          color: #ffffff !important;
+          font-size: 11px;
+          font-weight: 800;
+          border: 0;
+          border-radius: 2px;
+          cursor: pointer;
+          transition: background .18s ease;
+        }
+        .newsletter-btn:hover {
+          background: #00b8d9 !important;
+        }
+        .newsletter-subtext {
+          margin-top: 8px;
+          font-size: 10px;
+          color: rgba(10, 25, 49, 0.55) !important;
         }
 
         .footer-bottom-bar {
@@ -1767,7 +1917,7 @@ export default function Scholarship() {
           display: flex;
           justify-content: space-between;
           font-size: 12px;
-          color: #94a3b8;
+          color: rgba(255, 255, 255, 0.65) !important;
         }
 
         /* ── RESPONSIVE ── */

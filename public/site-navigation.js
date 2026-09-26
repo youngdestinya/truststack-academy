@@ -143,6 +143,9 @@
       .ts-home-footer .ts-footer-light-panel input::placeholder{color:#8290a5!important}
       .ts-home-footer .ts-footer-light-panel button{color:#fff!important}
       .ts-home-footer .ts-footer-light-panel button:hover{color:#00b8d9!important}
+      .site-footer, .site-footer :where(p,span,a,li,address){color:rgba(255,255,255,.88)!important}
+      .site-footer a:hover{color:#00b8d9!important}
+      .site-footer .newsletter-card :where(div,p,span,label){color:#0a1931!important}
       .ts-enrolment-section{position:relative;overflow:hidden;background:linear-gradient(118deg,#06162d 0%,#0a2849 52%,#063b54 100%)!important;color:#fff!important}
       .ts-enrolment-section::before{content:'';position:absolute;inset:-45% auto auto -8%;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.22),transparent 68%);pointer-events:none}
       .ts-enrolment-section::after{content:'';position:absolute;right:-9%;bottom:-80%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.2),transparent 67%);pointer-events:none}
