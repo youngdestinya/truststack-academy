@@ -43,7 +43,7 @@ export default function LearnerLogin() {
     <main className={styles.page}>
       <div className={styles.shell}>
         <section className={styles.story}>
-          <a className={styles.brand} href="/home.html"><img src="/truststack-home-logo.png" alt="TrustStack Academy" /><span>TrustStack Academy</span></a>
+          <a className={styles.brand} href="/"><img src="/truststack-home-logo.png" alt="TrustStack Academy" /><span>TrustStack Academy</span></a>
           <div className={styles.eyebrow}>SECURE LEARNER ACCESS</div>
           <h1>Your learning. Your evidence. Your future.</h1>
           <p>Continue your practical cybersecurity track, manage lab progress and access your verifiable learner record from one protected workspace.</p>
@@ -60,7 +60,7 @@ export default function LearnerLogin() {
           </form>
           {message && <div className={styles.notice}>{message}</div>}
           <div className={styles.help}>Older account or missing access? Contact <a href="mailto:helpdesk@truststack.academy?subject=Learner%20portal%20access">helpdesk@truststack.academy</a> for a one-time account update.</div>
-          <a className={styles.back} href="/home.html">← Return to TrustStack Academy</a>
+          <a className={styles.back} href="/">← Return to TrustStack Academy</a>
         </section>
       </div>
     </main>

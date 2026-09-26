@@ -102,8 +102,8 @@ export default function CdpoCourse({ index, lesson, intro, sources, isHome = fal
     </Head>
     <div className={styles.page}>
       <header className={styles.header}><div className={styles.headerInner}>
-        <Link className={styles.brand} href="/home.html"><img src="/truststack-home-logo.png" alt="TrustStack Academy official logo" /><span>TrustStack Academy</span></Link>
-        <nav aria-label="Main navigation"><Link href="/home.html">Home</Link><Link href="/courses">Career tracks</Link><Link href="/lms">LMS</Link><Link className={styles.activeNav} href="/cdpo">Free CDPO course</Link></nav>
+        <Link className={styles.brand} href="/"><img src="/truststack-home-logo.png" alt="TrustStack Academy official logo" /><span>TrustStack Academy</span></Link>
+        <nav aria-label="Main navigation"><Link href="/">Home</Link><Link href="/courses">Career tracks</Link><Link href="/lms">LMS</Link><Link className={styles.activeNav} href="/cdpo">Free CDPO course</Link></nav>
       </div></header>
       <section className={styles.hero}><div className={styles.heroInner}>
         <div><span className={styles.eyebrow}>FREE LEARNING PATH · DATA PROTECTION</span><h1>{isExam ? 'Test your CDPO knowledge' : isHome ? 'Become a stronger data protection professional.' : `Day ${day}: ${lesson.title}`}</h1>
@@ -126,7 +126,7 @@ export default function CdpoCourse({ index, lesson, intro, sources, isHome = fal
           <div className={styles.lessonNav}>{day > 1 && !isExam ? <Link href={dayUrl(day - 1)}>← Day {day - 1}</Link> : <span />}{isExam ? <Link href="/cdpo">Back to course overview →</Link> : <Link href={day < 30 ? dayUrl(day + 1) : '/cdpo/exam'}>{day < 30 ? `Day ${day + 1}` : 'Final practice exam'} →</Link>}</div>
         </main>
       </div>
-      <footer className={styles.footer}><div><Link className={styles.footerBrand} href="/home.html"><img src="/truststack-home-logo.png" alt="" />TrustStack Academy</Link><p>Free, practical data-protection learning for Nigeria. This independent study aid is not an NDPC-issued qualification or legal advice. Check current official sources before relying on any legal detail.</p></div><div><strong>Keep learning</strong><Link href="/cdpo">Course overview</Link><Link href="/cdpo/exam">Practice exam</Link><Link href="/courses">Career tracks</Link></div><div><strong>Primary sources</strong><a href={actUrl} target="_blank" rel="noopener noreferrer">Nigeria Data Protection Act 2023 ↗</a><a href={gaidUrl} target="_blank" rel="noopener noreferrer">NDPC GAID 2025 ↗</a><Link href="/home.html#contact">Contact TrustStack</Link></div></footer>
+      <footer className={styles.footer}><div><Link className={styles.footerBrand} href="/"><img src="/truststack-home-logo.png" alt="" />TrustStack Academy</Link><p>Free, practical data-protection learning for Nigeria. This independent study aid is not an NDPC-issued qualification or legal advice. Check current official sources before relying on any legal detail.</p></div><div><strong>Keep learning</strong><Link href="/cdpo">Course overview</Link><Link href="/cdpo/exam">Practice exam</Link><Link href="/courses">Career tracks</Link></div><div><strong>Primary sources</strong><a href={actUrl} target="_blank" rel="noopener noreferrer">Nigeria Data Protection Act 2023 ↗</a><a href={gaidUrl} target="_blank" rel="noopener noreferrer">NDPC GAID 2025 ↗</a><Link href="/#contact">Contact TrustStack</Link></div></footer>
     </div>
   </>;
 }

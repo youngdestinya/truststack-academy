@@ -35,13 +35,13 @@ export default function KnowledgeBase() {
       </>}
     </Head>
     <div className="top"/>
-    <header><a href="/home.html" className="brand"><img src="/truststack-home-logo.png" alt="TrustStack Academy logo"/>TrustStack Academy</a><nav><a href="/home.html">Home</a><a href="/courses">Courses</a><a href="/lms">LMS</a><a href="/verify">Verify Certificate</a></nav></header>
+    <header><a href="/" className="brand"><img src="/truststack-home-logo.png" alt="TrustStack Academy logo"/>TrustStack Academy</a><nav><a href="/">Home</a><a href="/courses">Courses</a><a href="/lms">LMS</a><a href="/verify">Verify Certificate</a></nav></header>
     {selected ? <main className="detail">
       <button className="back" onClick={close}>← All Field Notes</button>
       <article className="story"><span className="tag">{selected.category || 'Field Notes'}</span><h1>{selected.title}</h1><div className="byline">{selected.author || 'TrustStack Team'} · {selected.readTime || 'Practical guide'}</div>{selected.image && <img src={selected.image} alt={selected.imageAlt || selected.title}/>}<p className="intro">{selected.excerpt}</p><div className="copy" dangerouslySetInnerHTML={{ __html: selected.content || `<p>${selected.excerpt}</p>` }}/></article>
       <aside className="related"><h2>Related articles</h2><div>{related.map((article, index) => <button key={article.id} onClick={() => choose(article)} style={{ '--tint': article.color || ['#dff4fb','#fff0e5'][index] }}><span>{article.category}</span><strong>{article.title}</strong><small>{article.readTime || 'Practical guide'} →</small></button>)}</div></aside>
     </main> : <main><div className="introRow"><div><p className="eyebrow">FIELD NOTES</p><h1>Knowledge Base</h1><p className="lead">Practical guides from our team. SOC playbooks, NDPA breakdowns, and fintech threat briefs.</p></div><span>Research · Playbooks · Analysis</span></div><section className="grid">{articles.map((article, index) => <article key={article.id} className="card" onClick={() => choose(article)} style={{ '--tint': article.color || ['#dff4fb','#fff0e5','#f3e4ff'][index % 3] }}><div className="cover">{['🛡','🧪','☁'][index % 3]}<span>{article.category || 'Field Notes'}</span></div><div className="body"><h2>{article.title}</h2><p>{article.excerpt}</p><div>{article.author || 'TrustStack Team'} · {article.readTime || 'Practical guide'} <b>↗</b></div></div></article>)}</section></main>}
-    <footer><a href="/home.html">TrustStack Academy</a><span>Practical cybersecurity knowledge for Africa.</span><div><a href="/courses">Courses</a><a href="/verify">Verify</a><a href="/privacy">Privacy</a></div></footer>
+    <footer><a href="/">TrustStack Academy</a><span>Practical cybersecurity knowledge for Africa.</span><div><a href="/courses">Courses</a><a href="/verify">Verify</a><a href="/privacy">Privacy</a></div></footer>
     <style jsx>{styles}</style>
   </>;
 }

@@ -573,7 +573,7 @@
       @keyframes ts-badge-scroll{to{transform:translateX(-50%)}}
       header nav a.ts-menu-plus::after, header nav button.ts-menu-plus::after, header nav span.ts-menu-plus::after, .ts-menu-trigger.ts-menu-plus::after{content:'+';display:inline-block;margin-left:.38em;color:#00a8d4;font-weight:900}
       .ts-nav-new-badge{color:#ef4444!important;font-size:9.5px!important;font-weight:900!important;vertical-align:super!important;margin-left:2px!important;letter-spacing:.04em!important;line-height:1!important;text-transform:uppercase!important;display:inline-block!important}
-      img[data-site-destination="/home.html"]{cursor:pointer}
+      img[data-site-destination="/"]{cursor:pointer}
       @media (min-width:1024px){
         .ts-home-header-inner{width:fit-content!important;max-width:calc(100% - 48px)!important;margin-left:auto!important;margin-right:auto!important}
         .ts-home-header-inner>nav{margin-left:2.5rem!important;margin-right:0!important}
@@ -631,7 +631,7 @@
   function applyStaticSeo() {
     if (!path.endsWith('.html')) return;
     const seo = path.includes('home')
-      ? ['TrustStack Academy | Learn Cybersecurity by Doing','Build practical cybersecurity skills through eight role-based tracks, guided labs, Naira pricing and verifiable TrustStack learner credentials.','/home.html',false]
+      ? ['TrustStack Academy | Learn Cybersecurity by Doing','Build practical cybersecurity skills through eight role-based tracks, guided labs, Naira pricing and verifiable TrustStack learner credentials.','/',false]
       : path.includes('courses-tracks')
         ? ['Cybersecurity Career Tracks | TrustStack Academy','Compare eight practical cybersecurity career tracks covering SOC analysis, digital forensics, cloud security, GRC and offensive security.','/courses',false]
       : path.includes('lms') || path.includes('student-lms')
@@ -824,14 +824,14 @@
       drawer.className = 'ts-mobile-drawer';
       drawer.innerHTML = `
         <div class="ts-mobile-drawer-header">
-          <a href="/home.html" class="brand" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+          <a href="/" class="brand" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
             <img src="/truststack-home-logo.png" alt="TrustStack Logo" style="width:36px;height:36px;object-fit:contain;">
             <strong style="font-size:16px;font-weight:900;"><span style="color:#0A1931">TrustStack </span><span style="color:#00b8d9">Academy</span></strong>
           </a>
           <button type="button" class="ts-mobile-close" aria-label="Close navigation menu">✕</button>
         </div>
         <div class="ts-mobile-menu-body">
-          <a class="ts-mobile-nav-link" href="/home.html"><span>Home</span></a>
+          <a class="ts-mobile-nav-link" href="/"><span>Home</span></a>
           
           <!-- Courses Accordion: Has ONLY the course badge icon (NO pre-icon) -->
           <div class="ts-mobile-accordion-wrapper">
@@ -868,7 +868,7 @@
           </div>
 
           <a class="ts-mobile-nav-link" href="/scholarship"><span>Scholarship<sup class="ts-nav-new-badge">NEW</sup></span></a>
-          <a class="ts-mobile-nav-link" href="/home.html#whytruststack"><span>Why TrustStack</span></a>
+          <a class="ts-mobile-nav-link" href="/#whytruststack"><span>Why TrustStack</span></a>
           <a class="ts-mobile-nav-link" href="/about"><span>About</span></a>
           <a class="ts-mobile-nav-link" href="/contact"><span>Contact Support</span></a>
           <a class="ts-mobile-nav-link" href="/complaint" style="color:#00b8d9 !important;font-weight:900;"><span>⚖ Lodge a Complaint (24h SLA)</span></a>
@@ -1063,18 +1063,18 @@
       const signature = source.startsWith('data:') ? label : source + ' ' + label;
       if (/seal|certificate/.test(label) && !/logo/.test(label)) return;
       if (!/truststack.*logo|logo.*truststack|truststack.*shield|shield gear logo/.test(signature) && label !== 'truststack academy') return;
-      image.dataset.siteDestination = '/home.html';
+      image.dataset.siteDestination = '/';
       image.title = 'TrustStack Academy home';
       let brand = image.parentElement;
       for (let depth = 0; brand && depth < 4; depth++, brand = brand.parentElement) {
         const label = clean(brand.textContent);
         if (!label.includes('truststack academy') || label.length > 85) continue;
-        if (brand.tagName === 'A') brand.href = '/home.html';
+        if (brand.tagName === 'A') brand.href = '/';
         else if (!brand.closest('a') && !brand.matches('button,[role="button"]')) {
           brand.setAttribute('role', 'link');
           brand.tabIndex = 0;
         }
-        brand.dataset.siteDestination = '/home.html';
+        brand.dataset.siteDestination = '/';
         brand.title = 'Go to TrustStack Academy homepage';
         brand.style.cursor = 'pointer';
         break;
@@ -1082,7 +1082,7 @@
     });
     document.querySelectorAll('a').forEach((link) => {
       const label = clean(link.textContent);
-      if ((label === 'truststack academy' || label === '⚙ truststack academy') && link.textContent.length < 60) link.href = '/home.html';
+      if ((label === 'truststack academy' || label === '⚙ truststack academy') && link.textContent.length < 60) link.href = '/';
     });
   }
 
@@ -1267,7 +1267,7 @@
         card.style.setProperty('--ts-track', track.color);
         card.style.setProperty('--ts-tint', track.tint);
         const existingBadge = card.querySelector('[style*="clip-path"],[style*="clipPath"],.badge');
-        const iconImage = card.querySelector('img:not([data-site-destination="/home.html"])');
+        const iconImage = card.querySelector('img:not([data-site-destination="/"])');
         if (iconImage) {
           iconImage.classList.add('ts-track-badge-image');
           iconImage.style.setProperty('--ts-track', track.color);
@@ -1282,7 +1282,7 @@
     const raw = (element.textContent || '').toLowerCase();
     if (/^enroll bundle\b|^get bundle\b|^pay ₦150k bundle\b/.test(label)) return '/pay?track=bundle';
     if (/^enroll( at| now|$)/.test(label) || /^pay( in naira|$)/.test(label)) return '/pay';
-    if (label === 'home' || label === 'enter main website' || label === 'main website') return '/home.html';
+    if (label === 'home' || label === 'enter main website' || label === 'main website') return '/';
     if (label === 'courses' || label === 'tracks' || label === 'explore courses' || label === 'view all courses' || label === 'browse tracks' || label === 'browse 8 tracks') return '/courses';
     if (label === 'certificates' || label === 'verify' || label === 'verify certificate' || label === 'verify a certificate') return '/verify';
     if (label === 'my learning' || label === 'learner login' || label === 'login') return '/login';
@@ -1291,8 +1291,8 @@
     if (label === 'about' || label === 'our story') return '/about';
     if (label === 'contact' || label === 'contact us') return '/contact';
     if (label === 'scholarship') return '/scholarship';
-    if (label === 'why truststack' || label === 'why truststack?') return '/home.html#whytruststack';
-    if (label === 'our mission' || label === 'our core values' || label === 'our vision') return '/home.html#about';
+    if (label === 'why truststack' || label === 'why truststack?') return '/#whytruststack';
+    if (label === 'our mission' || label === 'our core values' || label === 'our vision') return '/#about';
     if (label === 'cap-adit' || label === 'securesme') return '/courses';
     if (label === 'privacy') return '/privacy';
     if (label === 'terms') return '/terms';
@@ -1536,7 +1536,7 @@
     if (!target) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    if (target === '/home.html#whytruststack' && path.includes('home') && focusWhyTrustStack(true)) {
+    if (target === '/#whytruststack' && path.includes('home') && focusWhyTrustStack(true)) {
       history.pushState(null, '', '#whytruststack');
       return;
     }

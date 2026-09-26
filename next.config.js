@@ -33,6 +33,8 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      { source: '/home', destination: '/', permanent: false },
+      { source: '/home.html', destination: '/', permanent: false },
       { source: '/knowledge-base.html', destination: '/knowledge-base', permanent: false },
       { source: '/admin/articles.html', destination: '/admin/articles', permanent: false },
       { source: '/privacy.html', destination: '/privacy', permanent: true },
@@ -42,12 +44,12 @@ const nextConfig = {
   },
   async rewrites() {
     return [
+      { source: '/', destination: '/home.html' },
+      { source: '/admin/login', destination: '/admin/login.html' },
       { source: '/central-login', destination: '/central-login.html' },
       { source: '/student-lms', destination: '/student-lms.html' },
       { source: '/lms-control', destination: '/lms-control.html' },
       { source: '/admin/scholarships', destination: '/admin/scholarships.html' },
-      { source: '/admin/login', destination: '/admin/login.html' },
-      { source: '/home', destination: '/home.html' },
       { source: '/complaint', destination: '/complaint.html' },
       { source: '/pay-checkout', destination: '/pay-checkout.html' },
       { source: '/verify-certificate', destination: '/verify-certificate.html' },
